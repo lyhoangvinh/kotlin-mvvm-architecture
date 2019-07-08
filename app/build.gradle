@@ -1,0 +1,101 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.lyhoangvinh.simple"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        debug {
+            buildConfigField("String", "COMIC_ENDPOINT", "\"http://api.comicvine.com\"")
+            buildConfigField("String", "AVGLE_ENDPOINT", "\"https://api.avgle.com/v1/\"")
+            buildConfigField("String", "HEADER_AUTH", "\"Authorization\"")
+            buildConfigField "boolean", "ENABLE_LOGCAT", "true"
+            buildConfigField("String", "API_KEY", "\"8c7bd28c573cebf75e30f9ecc109845810cf5024\"")
+            archivesBaseName = "mvvmarchitecture-app-$defaultConfig.versionName($defaultConfig.versionCode)"
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "COMIC_ENDPOINT", "\"http://api.comicvine.com\"")
+            buildConfigField("String", "AVGLE_ENDPOINT", "\"https://api.avgle.com/v1/\"")
+            buildConfigField "boolean", "ENABLE_LOGCAT", "false"
+            buildConfigField("String", "HEADER_AUTH", "\"Authorization\"")
+            buildConfigField("String", "API_KEY", "\"8c7bd28c573cebf75e30f9ecc109845810cf5024\"")
+            archivesBaseName = "mvvmarchitecture-app-$defaultConfig.versionName($defaultConfig.versionCode)"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.supportConstraintVersion"
+    implementation "com.android.support:multidex:$rootProject.ext.multidexVersion"
+    //noinspection GradleCompatible
+    implementation "com.android.support:design:$rootProject.ext.supportVersion"
+    implementation "com.android.support:support-v4:$rootProject.ext.supportVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.ext.supportVersion"
+    implementation "com.android.support:support-compat:$rootProject.ext.supportVersion"
+    implementation "com.android.support:support-fragment:$rootProject.ext.supportVersion"
+    implementation "com.android.support:support-vector-drawable:$rootProject.ext.supportVersion"
+    implementation "com.android.support:animated-vector-drawable:$rootProject.ext.supportVersion"
+
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+
+    //rx
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2Version"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.ext.rxbindingVersion"
+
+    //room
+    implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomDatabaseVersion"
+    kapt "android.arch.persistence.room:compiler:$rootProject.ext.roomDatabaseVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.roomDatabaseVersion"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.ext.retrofitConverterScalars"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpLoggingInterceptorVersion"
+
+    //dagger 2
+    implementation "com.google.dagger:dagger:$rootProject.ext.dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.ext.dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+
+    //my util
+    implementation "com.github.lyhoangvinh:myutil:$rootProject.ext.myutilVersion"
+}
