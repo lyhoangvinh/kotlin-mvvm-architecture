@@ -13,7 +13,6 @@ import com.lyhoangvinh.simple.ui.base.BaseViewModel
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-@Suppress("UNCHECKED_CAST")
 abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : BaseActivity() {
 
     @Inject
@@ -26,6 +25,7 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
 
     abstract fun getLayoutResource(): Int
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, getLayoutResource())

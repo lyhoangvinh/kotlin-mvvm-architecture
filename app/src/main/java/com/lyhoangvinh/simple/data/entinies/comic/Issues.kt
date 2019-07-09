@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.entinies
+package com.lyhoangvinh.simple.data.entinies.comic
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
@@ -15,7 +15,11 @@ data class Issues(
     var dateAdded: String? = "",
 
     @SerializedName("date_last_updated")
-    var dateLastUpdated: String? = ""
+    var dateLastUpdated: String? = "",
 
+    @SerializedName("image")
+    var images: ImageAll,
 
+    @SerializedName("volume")
+    var volume: Volume
 )

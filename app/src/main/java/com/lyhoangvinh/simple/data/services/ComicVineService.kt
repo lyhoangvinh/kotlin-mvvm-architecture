@@ -1,5 +1,4 @@
 package com.lyhoangvinh.simple.data.services
-import com.lyhoangvinh.simple.data.entinies.Issues
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import io.reactivex.Single
 import retrofit2.Response

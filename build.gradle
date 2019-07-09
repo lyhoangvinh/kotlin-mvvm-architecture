@@ -62,6 +62,12 @@ ext {
 
     myutilVersion = '2'
 
+    // google architecture components: live data
+    architectureVersion = '1.1.1'
+
+    //paging library
+    pagingVersion = "1.0.1"
+
     //Test dependencies
     junitVersion = '4.12'
     runnerVersion = '1.0.2'

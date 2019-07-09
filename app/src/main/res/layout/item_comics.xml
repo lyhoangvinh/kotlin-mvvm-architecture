@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content">
+
+    <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:paddingBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXX"/>
+
+    <ImageView
+            android:id="@+id/imv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:paddingStart="16dp"
+            android:paddingEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintDimensionRatio="H,3:1.8"
+            tools:src="@drawable/ic_placeholder_rectangle_200px"/>
+
+    <ImageView
+            android:id="@+id/imgTime"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_constraintStart_toEndOf="@id/imv"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:srcCompat="@drawable/ic_access_time_black_24dp"/>
+
+    <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintStart_toEndOf="@id/imgTime"
+            app:layout_constraintBottom_toBottomOf="@id/imgTime"
+            tools:text="xxxxxxxxxxxxxxx"
+            android:layout_marginEnd="16dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="10dp"/>
+
+    <ImageView
+            android:id="@+id/imgFavResource"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/imgTime"
+            app:layout_constraintStart_toEndOf="@id/imv"
+            app:srcCompat="@drawable/ic_access_time_black_24dp"/>
+
+    <TextView
+            android:id="@+id/tvDateLastUpdated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/imgTime"
+            app:layout_constraintStart_toEndOf="@id/imgFavResource"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            tools:text="xxxxxxxxxxxxxxxxxxxxxxxxx"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="10dp"/>
+
+    <TextView
+            android:id="@+id/tvMake"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/imv"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_corner_gray_thin"
+            android:text="Click"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="12sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"/>
+
+    <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/imv"
+            android:layout_marginTop="16dp"/>
+</android.support.constraint.ConstraintLayout>
