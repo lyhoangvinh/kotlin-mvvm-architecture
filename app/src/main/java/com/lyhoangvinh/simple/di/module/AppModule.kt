@@ -1,7 +1,6 @@
 package com.lyhoangvinh.simple.di.module
 
 import android.app.Application
-import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -21,9 +20,7 @@ class AppModule {
     @Provides
     @Singleton
     @ApplicationContext
-    internal fun provideContext(application: Application): Context {
-        return application
-    }
+    internal  fun provideContext(application: Application) = application
 
     @Provides
     @Singleton

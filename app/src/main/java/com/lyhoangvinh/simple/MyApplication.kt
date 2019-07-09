@@ -3,7 +3,6 @@ package com.lyhoangvinh.simple
 import android.app.Activity
 import android.app.Application
 import com.lyhoangvinh.simple.di.AppInjector
-import com.lyhoangvinh.simple.di.component.AppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -17,8 +16,6 @@ class MyApplication : Application(), HasActivityInjector {
         fun getInstance() = instance
     }
 
-    lateinit var sAppComponent: AppComponent
-
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
@@ -26,9 +23,9 @@ class MyApplication : Application(), HasActivityInjector {
         super.onCreate()
         instance = this
         //initAppComponent
-        sAppComponent = AppInjector(this)
-
-    }
+         AppInjector.init(this)
+     }
 
     override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
+
 }

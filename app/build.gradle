@@ -64,6 +64,7 @@ dependencies {
     implementation "com.android.support:support-fragment:$rootProject.ext.supportVersion"
     implementation "com.android.support:support-vector-drawable:$rootProject.ext.supportVersion"
     implementation "com.android.support:animated-vector-drawable:$rootProject.ext.supportVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.ext.architectureVersion"
 
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runnerVersion"
@@ -98,4 +99,5 @@ dependencies {
 
     //my util
     implementation "com.github.lyhoangvinh:myutil:$rootProject.ext.myutilVersion"
+
 }

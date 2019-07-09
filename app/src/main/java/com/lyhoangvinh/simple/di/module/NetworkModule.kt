@@ -4,6 +4,7 @@ import android.app.Application
 import com.google.gson.Gson
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.services.ComicVineService
+import com.lyhoangvinh.simple.di.qualifier.ApplicationContext
 import com.lyhoangvinh.simple.di.qualifier.OkHttpNoAuth
 import com.lyhoangvinh.simple.utils.ConnectionLiveData
 import com.lyhoangvinh.simple.utils.makeOkHttpClientBuilder
@@ -19,7 +20,7 @@ class NetworkModule {
     @Provides
     @OkHttpNoAuth
     @Singleton
-    internal fun provideOkHttpClientNoAuth(context: Application): OkHttpClient = makeOkHttpClientBuilder(context).build()
+    internal fun provideOkHttpClientNoAuth(@ApplicationContext context: Application): OkHttpClient = makeOkHttpClientBuilder(context).build()
 
     @Singleton
     @Provides

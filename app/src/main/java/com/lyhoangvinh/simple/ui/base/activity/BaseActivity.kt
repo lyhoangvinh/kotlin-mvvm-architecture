@@ -18,7 +18,15 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
-
-
     override fun supportFragmentInjector(): AndroidInjector<Fragment>  = dispatchingAndroidInjector
+
+
+    fun setLoading(loading: Boolean) {
+        if (loading) {
+//            showProgressDialog()
+        } else {
+//            hideProgressDialog()
+        }
+    }
+
 }
