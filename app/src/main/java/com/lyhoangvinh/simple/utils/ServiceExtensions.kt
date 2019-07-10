@@ -39,7 +39,7 @@ fun <T> makeRequest(
     request: Single<T>,
     shouldUpdateUi: Boolean,
     @NonNull responseConsumer: PlainConsumer<T>,
-    @Nullable errorConsumer: PlainConsumer<ErrorEntity>
+    @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
 ): Disposable {
 
     var single = request.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
@@ -50,9 +50,7 @@ fun <T> makeRequest(
     return single.subscribe(responseConsumer,  Consumer {
         // handle error
         it.printStackTrace()
-        if (errorConsumer != null) {
-            errorConsumer.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))
-        }
+        errorConsumer?.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))
     })
 }
 
