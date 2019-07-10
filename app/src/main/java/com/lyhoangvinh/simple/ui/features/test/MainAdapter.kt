@@ -14,7 +14,7 @@ class MainAdapter : BaseAdapter<Issues, MainAdapter.MainViewHolder>(IssuesDiffCa
 
     override fun itemLayoutResource() = R.layout.item_comics
 
-    override fun createViewHolder(itemView: View) =  MainViewHolder(itemView)
+    override fun createViewHolder(itemView: View) = MainViewHolder(itemView)
 
     override fun onBindViewHolder(vh: MainViewHolder, dto: Issues, position: Int) {
         vh.tvTitle.text = dto.volume.name
@@ -40,3 +40,4 @@ class MainAdapter : BaseAdapter<Issues, MainAdapter.MainViewHolder>(IssuesDiffCa
         }
     }
 }
+

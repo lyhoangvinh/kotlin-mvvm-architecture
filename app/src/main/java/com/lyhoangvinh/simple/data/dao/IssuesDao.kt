@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.data.dao
 
 import android.arch.lifecycle.LiveData
+import android.arch.paging.DataSource
 import android.arch.persistence.room.*
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
 
@@ -9,6 +10,9 @@ import com.lyhoangvinh.simple.data.entinies.comic.Issues
 interface IssuesDao : BaseDao<Issues> {
     @Query("SELECT * FROM Issues")
     fun liveData(): LiveData<List<Issues>>
+
+    @Query("SELECT * FROM Issues")
+    fun getAllPaged(): DataSource.Factory<Int, Issues>
 
     @Insert
     fun inserts(list: List<Issues>)
