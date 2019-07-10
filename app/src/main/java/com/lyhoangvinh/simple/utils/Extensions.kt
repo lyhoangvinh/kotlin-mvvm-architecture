@@ -1,5 +1,9 @@
 package com.lyhoangvinh.simple.utils
 
+import android.app.Activity
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.text.TextUtils
 import android.widget.ImageView
 import com.lyhoangvinh.simple.R
@@ -16,6 +20,17 @@ fun ImageView.loadImageIssues(url: String) {
         .centerCrop()
         .fit()
         .into(this)
+}
+
+fun Activity.createDialog(): Dialog? {
+    val progressDialog = Dialog(this)
+    progressDialog.let {
+        it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        it.setContentView(R.layout.progress_dialog)
+        it.setCancelable(false)
+        it.setCanceledOnTouchOutside(false)
+        return it
+    }
 }
 
 fun getAppDateFormatter(createdDate: String): String? {

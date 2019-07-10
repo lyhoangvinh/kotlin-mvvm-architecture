@@ -1,7 +1,9 @@
 package com.lyhoangvinh.simple.ui.base.activity
 
+import android.app.Dialog
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.lyhoangvinh.simple.utils.createDialog
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -15,18 +17,28 @@ import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
+    private var dialog: Dialog? = null
+
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment>  = dispatchingAndroidInjector
-
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 
     fun setLoading(loading: Boolean) {
         if (loading) {
-//            showProgressDialog()
+            hideProgress()
+            if (dialog == null) {
+                dialog = createDialog()
+            }
+            dialog?.show()
         } else {
-//            hideProgressDialog()
+            if (dialog != null && dialog!!.isShowing)
+                dialog?.dismiss()
         }
     }
 
+    private fun hideProgress() {
+        if (dialog != null && dialog!!.isShowing)
+            dialog?.dismiss()
+    }
 }
