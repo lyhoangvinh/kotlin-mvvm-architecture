@@ -3,9 +3,17 @@ package com.lyhoangvinh.simple.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
+import android.support.annotation.NonNull
+import android.support.annotation.Nullable
 import android.util.Log
 import com.google.gson.*
 import com.lyhoangvinh.simple.BuildConfig
+import com.lyhoangvinh.simple.data.entinies.ErrorEntity
+import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import lyhoangvinh.com.myutil.network.Tls12SocketFactory
 import okhttp3.Cache
@@ -13,10 +21,12 @@ import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.TlsVersion
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.io.IOException
 import java.lang.reflect.Type
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -24,6 +34,51 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
+
+fun <T> makeRequest(
+    request: Single<T>,
+    shouldUpdateUi: Boolean,
+    @NonNull responseConsumer: PlainConsumer<T>,
+    @Nullable errorConsumer: PlainConsumer<ErrorEntity>
+): Disposable {
+
+    var single = request.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+    if (shouldUpdateUi) {
+        single = single.observeOn(AndroidSchedulers.mainThread())
+    }
+
+    return single.subscribe(responseConsumer,  Consumer {
+        // handle error
+        it.printStackTrace()
+        if (errorConsumer != null) {
+            errorConsumer.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))
+        }
+    })
+}
+
+
+/**
+ * Get http error code from [Throwable] if it is instance of [HttpException]
+ * @param throwable input throwable
+ * @return http code or -1 if throwable isn't a instance of [HttpException]
+ */
+fun getErrorCode(throwable: Throwable): Int {
+    return (throwable as? HttpException)?.code() ?: -1
+}
+
+/**
+ * Get a error message from retrofit response throwable
+ * @param throwable retrofit rx throwable
+ * @return error message
+ */
+fun getPrettifiedErrorMessage(throwable: Throwable?): String {
+    if (throwable is HttpException) {
+        return ErrorEntity.NETWORK_UNAVAILABLE
+    } else if (throwable is IOException) {
+        return ErrorEntity.NETWORK_UNAVAILABLE
+    }
+    return ErrorEntity.OOPS
+}
 
 fun <T> makeService(serviceClass: Class<T>, gson: Gson, okHttpClient: OkHttpClient, url: String): T {
     val retrofit = Retrofit.Builder()

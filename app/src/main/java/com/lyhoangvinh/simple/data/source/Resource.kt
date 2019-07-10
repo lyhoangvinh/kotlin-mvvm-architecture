@@ -9,7 +9,7 @@ import com.lyhoangvinh.simple.data.source.Status.*
 
 class Resource<T>(status: Status, val data: T?, message: String?) {
 
-    private val state: State = State(status, message)
+      val state: State = State(status, message)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

@@ -30,11 +30,11 @@ class State(var status: Status, var message: String?) {
 
     companion object {
 
-        fun loading(message: String): State {
+        fun loading(message: String?): State {
             return State(Status.LOADING, message)
         }
 
-        fun error(message: String): State {
+        fun error(message: String?): State {
             return State(Status.ERROR, message)
         }
 
