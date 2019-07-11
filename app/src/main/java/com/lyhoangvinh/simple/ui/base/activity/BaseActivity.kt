@@ -24,7 +24,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 
-    fun setLoading(loading: Boolean) {
+    open fun setLoading(loading: Boolean) {
         if (loading) {
             hideProgress()
             if (dialog == null) {

@@ -1,16 +1,20 @@
 package com.lyhoangvinh.simple.ui.features.test
 
+import android.content.Context
 import android.support.v7.util.DiffUtil
 import android.view.View
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
+import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 import com.lyhoangvinh.simple.utils.getAppDateFormatter
 import com.lyhoangvinh.simple.utils.loadImageIssues
 import kotlinx.android.synthetic.main.item_comics.view.*
+import javax.inject.Inject
 
-class MainAdapter : BaseAdapter<Issues, MainAdapter.MainViewHolder>(IssuesDiffCallBack()) {
+class MainAdapter @Inject constructor(@ActivityContext context: Context) :
+    BaseAdapter<Issues, MainAdapter.MainViewHolder>(context, IssuesDiffCallBack()) {
 
     override fun itemLayoutResource() = R.layout.item_comics
 

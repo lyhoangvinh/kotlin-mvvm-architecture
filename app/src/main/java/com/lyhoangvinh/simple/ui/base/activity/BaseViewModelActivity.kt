@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import com.lyhoangvinh.simple.data.source.State
 import com.lyhoangvinh.simple.data.source.Status
-import com.lyhoangvinh.simple.ui.base.BaseViewModel
+import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
@@ -30,9 +30,10 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, getLayoutResource())
         // noinspection unchecked
-        val viewModelClass = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM> // 1 is BaseViewModel
+        val viewModelClass =
+            (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM> // 1 is BaseViewModel
         viewModel = ViewModelProviders.of(this, viewModelFactory)[viewModelClass]
-        viewModel.onCreate(intent.extras)
+        viewModel.onCreate(this, intent.extras)
         viewModel.stateLiveData.observe(this, Observer { handleState(it) })
     }
 

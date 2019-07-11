@@ -1,5 +1,6 @@
-package com.lyhoangvinh.simple.ui.base
+package com.lyhoangvinh.simple.ui.base.viewmodel
 
+import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import android.os.Handler
@@ -35,9 +36,9 @@ abstract class BaseViewModel : ViewModel() {
      * @param bundle argument data
      */
     @CallSuper
-    fun onCreate(bundle: Bundle?) {
+    fun onCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         if (isFirstTimeUiCreate) {
-            onFirsTimeUiCreate(bundle)
+            onFirsTimeUiCreate(lifecycleOwner, bundle)
             isFirstTimeUiCreate = false
         }
     }
@@ -47,14 +48,14 @@ abstract class BaseViewModel : ViewModel() {
      * we don't need to re-init data, because view model will survive, data aren't destroyed
      * @param bundle
      */
-    abstract fun onFirsTimeUiCreate(bundle: Bundle?)
+    abstract fun onFirsTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?)
 
     /**
      * It is importance to un-reference activity / fragment instance after they are destroyed
      * For situation of configuration changes, activity / fragment will be destroyed and recreated,
      * but view model will survive, so if we don't un-reference them, memory leaks will occur
      */
-    fun onDestroyView() {
+    open fun onDestroyView() {
 
     }
 
@@ -79,7 +80,11 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    protected fun <T> execute(showProgress: Boolean, resourceFollowable: Flowable<Resource<T>>, responseConsumer: PlainConsumer<T>?) {
+    protected fun <T> execute(
+        showProgress: Boolean,
+        resourceFollowable: Flowable<Resource<T>>,
+        responseConsumer: PlainConsumer<T>?
+    ) {
         val disposable = resourceFollowable.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
             .subscribe { resource ->
@@ -103,10 +108,10 @@ abstract class BaseViewModel : ViewModel() {
         responseConsumer: PlainConsumer<T>,
         errorConsumer: PlainConsumer<ErrorEntity>?
     ) {
-         if (showProgress && publishState) {
+        if (showProgress && publishState) {
             publishState(State.loading(null))
         }
-        val disposable =  makeRequest(request, true,  object : PlainConsumer<T> {
+        val disposable = makeRequest(request, true, object : PlainConsumer<T> {
             override fun accept(t: T) {
                 responseConsumer.accept(t)
                 if (publishState) {
@@ -114,13 +119,13 @@ abstract class BaseViewModel : ViewModel() {
                 }
             }
         }, object : PlainConsumer<ErrorEntity> {
-                override fun accept(t: ErrorEntity) {
-                    errorConsumer?.accept(t)
-                    if (publishState) {
-                        publishState(State.error(t.getMessage()))
-                    }
+            override fun accept(t: ErrorEntity) {
+                errorConsumer?.accept(t)
+                if (publishState) {
+                    publishState(State.error(t.getMessage()))
                 }
-            })
+            }
+        })
         mCompositeDisposable.add(disposable)
     }
 
