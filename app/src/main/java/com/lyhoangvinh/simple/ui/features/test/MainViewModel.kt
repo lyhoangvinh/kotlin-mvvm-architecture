@@ -13,17 +13,15 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
     BaseListDataViewModel<Issues, MainAdapter>() {
 
+    override fun canLoadMore() = false
+
     override fun onFirsTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         issuesRepo.liveData().observe(lifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
 
-    override fun callApi(page: Int, onCallApiDone: OnCallApiDone<Issues>) {
-        execute(true, issuesRepo.getRepoIssues(true, 0), object : PlainConsumer<BaseResponseComic<Issues>> {
-            override fun accept(t: BaseResponseComic<Issues>) {
-                onCallApiDone.onDone(page)
-            }
-        })
+    override fun fetchData() {
+        execute(false, issuesRepo.getRepoIssues(true, 0), null)
     }
 }

@@ -2,12 +2,11 @@ package com.lyhoangvinh.simple.ui.base.activity
 
 import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.*
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.ui.base.interfaces.Scrollable
+import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
-import com.lyhoangvinh.simple.ui.base.rcvscroll.OnLoadMore
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
 import kotlinx.android.synthetic.main.view_recyclerview.*
 import javax.inject.Inject
@@ -15,30 +14,85 @@ import javax.inject.Inject
 abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         VM : BaseListDataViewModel<T, A>,
         A : RecyclerView.Adapter<*>,
-        T> : BaseViewModelActivity<B, VM>(), UiRefreshable,
-    Scrollable {
+        T> : BaseViewModelActivity<B, VM>(),
+    UiRefreshable,
+    LoadMoreable,
+    SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var adapter: A
 
-    @Inject
-    lateinit var onLoadMore: OnLoadMore
+    private var isRefreshing: Boolean = false
 
-    var isRefreshing: Boolean = false
+    private var layoutManager: RecyclerView.LayoutManager? = null
+
+    private var mVisibleThreshold: Int = 5
 
     override fun getLayoutResource() = R.layout.view_recyclerview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.initAdapter(adapter)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        layoutManager = createLayoutManager()
+        recyclerView.layoutManager = layoutManager
+        recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
+        refreshLayout.setOnRefreshListener(this)
         refreshLayout.setColorSchemeResources(
             R.color.material_amber_700, R.color.material_blue_700,
             R.color.material_purple_700, R.color.material_lime_700
         )
-        refreshLayout.setOnRefreshListener { refresh() }
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                // dy < 0 mean scrolling up
+                if (dy < 0) return
+
+                val totalItemCount = layoutManager!!.itemCount
+
+                var lastVisibleItemPosition = 0
+                when (layoutManager) {
+                    is StaggeredGridLayoutManager -> {
+                        val lastVisibleItemPositions =
+                            (layoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
+                        lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
+                        mVisibleThreshold *= (layoutManager as StaggeredGridLayoutManager).spanCount
+                    }
+                    is GridLayoutManager -> {
+                        mVisibleThreshold *= (layoutManager as GridLayoutManager).spanCount
+                        lastVisibleItemPosition = (layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+                    }
+                    is LinearLayoutManager -> {
+                        lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                        val visibleItemCount = layoutManager!!.childCount
+                        val pastVisibleItems = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+//                        updateScrollTop(visibleItemCount, pastVisibleItems)
+                    }
+                }
+
+                if (lastVisibleItemPosition + mVisibleThreshold > totalItemCount) {
+                    loadMore()
+                }
+            }
+        })
     }
+
+    /**
+     * Load more item after scrolling down to bottom of current list
+     */
+    override fun loadMore() {
+        if ((viewModel as LoadMoreable).canLoadMore()) {
+            (viewModel as LoadMoreable).loadMore()
+            isRefreshing = true
+        }
+    }
+
+    override fun canLoadMore(): Boolean = false
+
+    open fun createLayoutManager(): RecyclerView.LayoutManager =
+        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
     override fun setLoading(loading: Boolean) {
         super.setLoading(loading)
@@ -49,17 +103,7 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        onLoadMore.init(recyclerView, viewModel)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        onLoadMore.unRegisterListener(recyclerView)
-    }
-
-    override fun scrollTop(animate: Boolean) {
+    fun scrollTop(animate: Boolean) {
         if (recyclerView != null) {
             if (animate) {
                 recyclerView.smoothScrollToPosition(0)
@@ -69,12 +113,15 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         }
     }
 
-    override fun refresh() {
+    override fun onRefresh() {
         if (!isRefreshing) {
-            viewModel.refresh()
-            onLoadMore.reset()
             isRefreshing = true
+            refresh()
         }
+    }
+
+    override fun refresh() {
+        viewModel.refresh()
     }
 
     override fun doneRefresh() {
@@ -92,18 +139,25 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         if (refreshLayout != null) {
             refreshLayout.postDelayed({
                 refreshUi()
-                refresh()
             }, delay.toLong())
         }
     }
 
-    protected fun refreshUi() {
+    private fun refreshUi() {
         if (refreshLayout != null) {
             refreshLayout.isRefreshing = true
         }
     }
 
-    override fun setRefreshEnabled(enabled: Boolean) {
-        refreshLayout.isEnabled = enabled
+    private fun getLastVisibleItem(lastVisibleItemPositions: IntArray): Int {
+        var maxSize = 0
+        for (i in lastVisibleItemPositions.indices) {
+            if (i == 0) {
+                maxSize = lastVisibleItemPositions[i]
+            } else if (lastVisibleItemPositions[i] > maxSize) {
+                maxSize = lastVisibleItemPositions[i]
+            }
+        }
+        return maxSize
     }
 }
