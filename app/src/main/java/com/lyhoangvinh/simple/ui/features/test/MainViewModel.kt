@@ -14,7 +14,9 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
     BaseListDataViewModel<MainAdapter>() {
 
-    override fun canLoadMore() = false
+    private var canLoadMore = false
+
+    override fun canLoadMore() = canLoadMore
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         fetchData(CURRENT_PAGE)
@@ -25,7 +27,12 @@ class MainViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
     }
 
     override fun fetchData(page: Int) {
-        execute(true, issuesRepo.getRepoIssues(isRefreshed, 0), null)
+        execute(true, issuesRepo.getRepoIssues(isRefreshed, page), object : PlainConsumer<BaseResponseComic<Issues>> {
+            override fun accept(t: BaseResponseComic<Issues>) {
+                isRefreshed = false
+                canLoadMore = t.results.isNotEmpty()
+            }
+        })
     }
 
     fun clearData() = issuesRepo.deleteAll()
