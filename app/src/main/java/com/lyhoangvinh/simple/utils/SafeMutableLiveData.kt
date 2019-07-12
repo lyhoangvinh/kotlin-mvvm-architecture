@@ -1,14 +1,15 @@
 package com.lyhoangvinh.simple.utils
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 
 /**
  * Thread-safe live data to resolve this issue: when perform  {@link LiveData#setValue(Object)}
  * not in main Thread. (almost case is in testing)
  */
 
-class SafeMutableLiveData<T> : LiveData<T>() {
-    public override fun setValue(value: T) {
+class SafeMutableLiveData<T> : MutableLiveData<T>() {
+    override fun setValue(value: T) {
         try {
             super.setValue(value)
         } catch (e: Exception) {
