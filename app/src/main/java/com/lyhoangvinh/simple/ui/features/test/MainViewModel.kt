@@ -17,14 +17,14 @@ class MainViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
     override fun canLoadMore() = false
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        fetchData()
+        fetchData(CURRENT_PAGE)
         issuesRepo.liveData().observe(lifecycleOwner, Observer {
             adapter.submitList(it)
             hideNoDataState(it.isNullOrEmpty())
         })
     }
 
-    override fun fetchData() {
+    override fun fetchData(page: Int) {
         execute(true, issuesRepo.getRepoIssues(isRefreshed, 0), null)
     }
 

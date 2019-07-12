@@ -21,6 +21,8 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
 
     var isRefreshed = false
 
+    private var page = CURRENT_PAGE
+
     var dataEmptySafeMutableLiveData = SafeMutableLiveData<DataEmpty>()
 
     @CallSuper
@@ -34,7 +36,7 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
     @CallSuper
     override fun refresh() {
         isRefreshed = true
-        fetchData()
+        fetchData(0)
     }
 
     fun refresh(delay: Int) {
@@ -47,13 +49,19 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
     @CallSuper
     override fun loadMore() {
         if (canLoadMore()) {
-            fetchData()
+            page += 1
+            fetchData(page)
         }
     }
 
-    protected abstract fun fetchData()
+    protected abstract fun fetchData(page: Int)
 
     fun hideNoDataState(isEmpty: Boolean) {
         dataEmptySafeMutableLiveData.setValue(DataEmpty(isEmpty))
+    }
+
+
+    companion object {
+        const val CURRENT_PAGE = 0
     }
 }
