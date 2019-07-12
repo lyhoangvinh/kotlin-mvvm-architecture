@@ -3,6 +3,7 @@ package com.lyhoangvinh.simple.ui.base.activity
 import android.app.Dialog
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
 import com.lyhoangvinh.simple.utils.createDialog
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -38,6 +39,9 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     private fun hideProgress() {
+        if (this is UiRefreshable) {
+            (this as UiRefreshable).doneRefresh()
+        }
         if (dialog != null && dialog!!.isShowing)
             dialog?.dismiss()
     }

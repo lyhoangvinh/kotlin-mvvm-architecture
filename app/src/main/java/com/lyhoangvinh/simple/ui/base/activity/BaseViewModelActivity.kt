@@ -33,6 +33,7 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
         val viewModelClass =
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM> // 1 is BaseViewModel
         viewModel = ViewModelProviders.of(this, viewModelFactory)[viewModelClass]
+
         viewModel.onCreate(this, intent.extras)
         viewModel.stateLiveData.observe(this, Observer { handleState(it) })
     }

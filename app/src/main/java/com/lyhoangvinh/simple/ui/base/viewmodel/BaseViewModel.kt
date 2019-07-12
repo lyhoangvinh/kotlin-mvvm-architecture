@@ -105,7 +105,7 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun <T> execute(
         showProgress: Boolean, publishState: Boolean, request: Single<T>,
-        responseConsumer: PlainConsumer<T>,
+        responseConsumer: PlainConsumer<T>?,
         errorConsumer: PlainConsumer<ErrorEntity>?
     ) {
         if (showProgress && publishState) {
@@ -113,7 +113,7 @@ abstract class BaseViewModel : ViewModel() {
         }
         val disposable = makeRequest(request, true, object : PlainConsumer<T> {
             override fun accept(t: T) {
-                responseConsumer.accept(t)
+                responseConsumer?.accept(t)
                 if (publishState) {
                     publishState(State.success(null))
                 }
@@ -131,5 +131,9 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun <T> execute(showProgress: Boolean, request: Single<T>, responseConsumer: PlainConsumer<T>) {
         execute(showProgress, true, request, responseConsumer, null)
+    }
+
+    protected fun <T> execute(showProgress: Boolean, request: Single<T>) {
+        execute(showProgress, true, request, null, null)
     }
 }

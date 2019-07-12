@@ -4,11 +4,15 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.*
+import android.view.View
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.ui.base.interfaces.ListData
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
+import kotlinx.android.synthetic.main.view_no_data.*
 import kotlinx.android.synthetic.main.view_recyclerview.*
+import kotlinx.android.synthetic.main.view_scroll_top.*
 import javax.inject.Inject
 
 abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
@@ -27,6 +31,8 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
     private var layoutManager: RecyclerView.LayoutManager? = null
 
     private var mVisibleThreshold: Int = 5
+
+    private var scrollTopPosition = DEFAULT_SCROLL_TOP_POSITION
 
     override fun getLayoutResource() = R.layout.view_recyclerview
 
@@ -68,7 +74,7 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
                         lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                         val visibleItemCount = layoutManager!!.childCount
                         val pastVisibleItems = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-//                        updateScrollTop(visibleItemCount, pastVisibleItems)
+                        updateScrollTop(visibleItemCount, pastVisibleItems)
                     }
                 }
 
@@ -77,6 +83,9 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
                 }
             }
         })
+        scrollTop.visibility = View.GONE
+        scrollTop.setOnClickListener { recyclerView.scrollToPosition(0) }
+        noDataView.visibility = View.GONE
     }
 
     /**
@@ -103,16 +112,6 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         }
     }
 
-    fun scrollTop(animate: Boolean) {
-        if (recyclerView != null) {
-            if (animate) {
-                recyclerView.smoothScrollToPosition(0)
-            } else {
-                recyclerView.scrollToPosition(0)
-            }
-        }
-    }
-
     override fun onRefresh() {
         if (!isRefreshing) {
             isRefreshing = true
@@ -125,6 +124,7 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
     }
 
     override fun doneRefresh() {
+        updateNoDataState()
         if (refreshLayout != null) {
             refreshLayout.isRefreshing = false
         }
@@ -132,14 +132,15 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
     }
 
     override fun refreshWithUi() {
-        refreshWithUi(0)
+        refreshWithUi(100L)
     }
 
-    override fun refreshWithUi(delay: Int) {
+    override fun refreshWithUi(delay: Long) {
         if (refreshLayout != null) {
             refreshLayout.postDelayed({
                 refreshUi()
-            }, delay.toLong())
+                refresh()
+            }, delay)
         }
     }
 
@@ -159,5 +160,59 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
             }
         }
         return maxSize
+    }
+
+    /**
+     * Show no data view if current adapter data is empty
+     * must be call inside or after [.doneRefresh]
+     */
+    private fun updateNoDataState() {
+        if (noDataView != null)
+            if (isDataEmpty()) {
+                noDataView.visibility = View.VISIBLE
+            } else {
+                noDataView.visibility = View.GONE
+            }
+    }
+
+    /**
+     * @return true if our adapter has no data
+     */
+    private fun isDataEmpty(): Boolean {
+        return adapter is ListData && (adapter as ListData).isDataEmpty()
+    }
+
+    /**
+     * Show scroll top view (click on it to scroll recycler view to top)
+     * if user scroll down more than [.DEFAULT_SCROLL_TOP_POSITION]
+     */
+
+    private fun getPastVisibleItems(): Int {
+        return if (layoutManager is LinearLayoutManager) {
+            (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        } else 0
+    }
+
+    private fun updateScrollTop() {
+        if (layoutManager != null) {
+            val visibleItemCount = layoutManager!!.childCount
+            updateScrollTop(visibleItemCount, getPastVisibleItems())
+        }
+    }
+
+    /**
+     * Show scroll top view (click on it to scroll recycler view to top)
+     * if user scroll down more than [.DEFAULT_SCROLL_TOP_POSITION]
+     */
+    private fun updateScrollTop(visibleItemCount: Int, pastVisibleItems: Int) {
+        if (visibleItemCount + pastVisibleItems >= scrollTopPosition) {
+            scrollTop.visibility = View.VISIBLE
+        } else {
+            scrollTop.visibility = View.GONE
+        }
+    }
+
+    companion object {
+        private const val DEFAULT_SCROLL_TOP_POSITION = 10
     }
 }
