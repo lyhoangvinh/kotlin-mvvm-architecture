@@ -32,6 +32,8 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
         this.adapter = adapter
     }
 
+    override fun canLoadMore() = canLoadMore
+
     /**
      * refreshUi all paging date and re-fetch data
      */
@@ -58,11 +60,12 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
 
     protected abstract fun fetchData(page: Int)
 
+    /**
+     *  update empty view
+     */
     fun hideNoDataState(isEmpty: Boolean) {
         dataEmptySafeMutableLiveData.setValue(DataEmpty(isEmpty))
     }
-
-    override fun canLoadMore() = canLoadMore
 
     companion object {
         const val CURRENT_PAGE = 0
