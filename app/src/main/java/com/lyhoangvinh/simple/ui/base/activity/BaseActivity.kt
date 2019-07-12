@@ -33,8 +33,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
             }
             dialog?.show()
         } else {
-            if (dialog != null && dialog!!.isShowing)
-                dialog?.dismiss()
+            hideProgress()
         }
     }
 

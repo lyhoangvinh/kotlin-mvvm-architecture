@@ -1,12 +1,12 @@
 package com.lyhoangvinh.simple.ui.base.activity
 
+import android.arch.lifecycle.Observer
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.*
 import android.view.View
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.ui.base.interfaces.ListData
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
@@ -16,9 +16,8 @@ import kotlinx.android.synthetic.main.view_scroll_top.*
 import javax.inject.Inject
 
 abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
-        VM : BaseListDataViewModel<T, A>,
-        A : RecyclerView.Adapter<*>,
-        T> : BaseViewModelActivity<B, VM>(),
+        VM : BaseListDataViewModel<A>,
+        A : RecyclerView.Adapter<*>> : BaseViewModelActivity<B, VM>(),
     UiRefreshable,
     LoadMoreable,
     SwipeRefreshLayout.OnRefreshListener {
@@ -49,15 +48,12 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
             R.color.material_purple_700, R.color.material_lime_700
         )
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
+                updateScrollTop()
                 // dy < 0 mean scrolling up
                 if (dy < 0) return
-
                 val totalItemCount = layoutManager!!.itemCount
-
                 var lastVisibleItemPosition = 0
                 when (layoutManager) {
                     is StaggeredGridLayoutManager -> {
@@ -77,7 +73,6 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
                         updateScrollTop(visibleItemCount, pastVisibleItems)
                     }
                 }
-
                 if (lastVisibleItemPosition + mVisibleThreshold > totalItemCount) {
                     loadMore()
                 }
@@ -86,6 +81,9 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         scrollTop.visibility = View.GONE
         scrollTop.setOnClickListener { recyclerView.scrollToPosition(0) }
         noDataView.visibility = View.GONE
+        viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
+            noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
+        })
     }
 
     /**
@@ -104,7 +102,6 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
     override fun setLoading(loading: Boolean) {
-        super.setLoading(loading)
         if (!loading) {
             doneRefresh()
         } else {
@@ -124,7 +121,7 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
     }
 
     override fun doneRefresh() {
-        updateNoDataState()
+        updateScrollTop()
         if (refreshLayout != null) {
             refreshLayout.isRefreshing = false
         }
@@ -162,25 +159,6 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         return maxSize
     }
 
-    /**
-     * Show no data view if current adapter data is empty
-     * must be call inside or after [.doneRefresh]
-     */
-    private fun updateNoDataState() {
-        if (noDataView != null)
-            if (isDataEmpty()) {
-                noDataView.visibility = View.VISIBLE
-            } else {
-                noDataView.visibility = View.GONE
-            }
-    }
-
-    /**
-     * @return true if our adapter has no data
-     */
-    private fun isDataEmpty(): Boolean {
-        return adapter is ListData && (adapter as ListData).isDataEmpty()
-    }
 
     /**
      * Show scroll top view (click on it to scroll recycler view to top)

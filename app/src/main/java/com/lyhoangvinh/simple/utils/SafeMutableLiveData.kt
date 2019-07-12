@@ -1,6 +1,5 @@
 package com.lyhoangvinh.simple.utils
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 
 /**

@@ -39,4 +39,10 @@ class IssuesRepo @Inject constructor(private val comicVineService: ComicVineServ
             }
         })
     }
+
+    fun deleteAll() {
+        execute {
+            issuesDao.removeAll()
+        }
+    }
 }

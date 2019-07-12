@@ -1,18 +1,19 @@
 package com.lyhoangvinh.simple.ui.base.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.paging.PagedList
 import android.os.Handler
 import android.os.Looper
 import android.support.annotation.CallSuper
 import android.support.annotation.NonNull
 import android.support.annotation.Nullable
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import com.lyhoangvinh.simple.data.entinies.DataEmpty
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.Refreshable
+import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 
 
-abstract class BaseListDataViewModel<T, A : RecyclerView.Adapter<*>> : BaseViewModel(),
+abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(),
     Refreshable, LoadMoreable {
 
     @Nullable
@@ -20,8 +21,7 @@ abstract class BaseListDataViewModel<T, A : RecyclerView.Adapter<*>> : BaseViewM
 
     var isRefreshed = false
 
-    @Nullable
-    protected lateinit var liveData: LiveData<PagedList<T>>
+    var dataEmptySafeMutableLiveData = SafeMutableLiveData<DataEmpty>()
 
     @CallSuper
     open fun initAdapter(@NonNull adapter: A) {
@@ -53,4 +53,7 @@ abstract class BaseListDataViewModel<T, A : RecyclerView.Adapter<*>> : BaseViewM
 
     protected abstract fun fetchData()
 
+    fun hideNoDataState(isEmpty: Boolean) {
+        dataEmptySafeMutableLiveData.setValue(DataEmpty(isEmpty))
+    }
 }

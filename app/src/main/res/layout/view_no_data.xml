@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/noDataView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                tools:visibility="visible">
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+            android:id="@+id/noDataView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-    <LinearLayout
-            android:id="@+id/stub_empty_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-        <ImageView
-                android:id="@+id/stub_empty_icon"
+        <LinearLayout
+                android:id="@+id/stub_empty_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_do_not_disturb_black_24dp"/>
-
-        <TextView
-                android:id="@+id/stub_empty_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center_horizontal"
-                android:text="No Data"
-                android:textSize="26sp"/>
+                android:orientation="vertical">
 
-    </LinearLayout>
+            <ImageView
+                    android:id="@+id/stub_empty_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_do_not_disturb_black_24dp"/>
 
-</RelativeLayout>
+            <TextView
+                    android:id="@+id/stub_empty_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="No Data"
+                    android:textSize="26sp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

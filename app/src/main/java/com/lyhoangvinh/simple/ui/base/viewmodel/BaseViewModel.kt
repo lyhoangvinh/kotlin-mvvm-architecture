@@ -38,7 +38,7 @@ abstract class BaseViewModel : ViewModel() {
     @CallSuper
     fun onCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         if (isFirstTimeUiCreate) {
-            onFirsTimeUiCreate(lifecycleOwner, bundle)
+            onFirstTimeUiCreate(lifecycleOwner, bundle)
             isFirstTimeUiCreate = false
         }
     }
@@ -48,7 +48,7 @@ abstract class BaseViewModel : ViewModel() {
      * we don't need to re-init data, because view model will survive, data aren't destroyed
      * @param bundle
      */
-    abstract fun onFirsTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?)
+    abstract fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?)
 
     /**
      * It is importance to un-reference activity / fragment instance after they are destroyed

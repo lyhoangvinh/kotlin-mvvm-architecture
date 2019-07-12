@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                  android:orientation="vertical"
-                                                  android:layout_width="match_parent"
-                                                  android:layout_height="match_parent"
-                                                  android:id="@+id/refreshLayout"
-                                                  android:background="@android:color/white"
-                                                  app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/refreshLayout"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
                 android:layout_width="match_parent"
@@ -21,7 +22,8 @@
 
             <include layout="@layout/view_scroll_top"/>
 
-            <include layout="@layout/view_no_data"/>
+            <include
+                    layout="@layout/view_no_data"/>
 
             <include layout="@layout/view_error_connection"/>
         </FrameLayout>

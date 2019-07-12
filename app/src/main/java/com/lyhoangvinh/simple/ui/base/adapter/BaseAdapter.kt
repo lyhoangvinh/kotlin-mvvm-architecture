@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
-import com.lyhoangvinh.simple.ui.base.interfaces.ListData
 
 abstract class BaseAdapter<T, VH : BaseViewHolder>(@ActivityContext val context: Context, diffUtil: DiffUtil.ItemCallback<T>) :
-    PagedListAdapter<T, VH>(diffUtil), ListData {
+    PagedListAdapter<T, VH>(diffUtil) {
 
     abstract fun itemLayoutResource(): Int
 
@@ -26,9 +25,5 @@ abstract class BaseAdapter<T, VH : BaseViewHolder>(@ActivityContext val context:
         if (item != null) {
             this.onBindViewHolder(vh, item, position)
         }
-    }
-
-    override fun isDataEmpty(): Boolean {
-        return itemCount == 0 || currentList.isNullOrEmpty()
     }
 }
