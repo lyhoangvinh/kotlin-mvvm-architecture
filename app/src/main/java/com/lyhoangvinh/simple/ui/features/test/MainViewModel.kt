@@ -14,12 +14,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
     BaseListDataViewModel<MainAdapter>() {
 
-    private var canLoadMore = false
-
-    override fun canLoadMore() = canLoadMore
-
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        fetchData(CURRENT_PAGE)
+        refresh()
         issuesRepo.liveData().observe(lifecycleOwner, Observer {
             adapter.submitList(it)
             hideNoDataState(it.isNullOrEmpty())

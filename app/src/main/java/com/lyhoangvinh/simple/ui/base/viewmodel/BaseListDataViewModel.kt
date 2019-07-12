@@ -6,24 +6,26 @@ import android.support.annotation.CallSuper
 import android.support.annotation.NonNull
 import android.support.annotation.Nullable
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import com.lyhoangvinh.simple.data.entinies.DataEmpty
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
+import com.lyhoangvinh.simple.ui.base.interfaces.PaginationListener
 import com.lyhoangvinh.simple.ui.base.interfaces.Refreshable
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 
 
 abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(),
-    Refreshable, LoadMoreable {
+    Refreshable, LoadMoreable, PaginationListener {
 
     @Nullable
     lateinit var adapter: A
 
-    var isRefreshed = false
-
-    private var page = CURRENT_PAGE
-
     var dataEmptySafeMutableLiveData = SafeMutableLiveData<DataEmpty>()
+
+    override var isRefreshed = false
+
+    override var canLoadMore = false
+
+    override var currentPage = CURRENT_PAGE
 
     @CallSuper
     open fun initAdapter(@NonNull adapter: A) {
@@ -44,13 +46,13 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
     }
 
     /**
-     * load next page
+     * load next currentPage
      */
     @CallSuper
     override fun loadMore() {
-        if (canLoadMore()) {
-            page += 1
-            fetchData(page)
+        if (canLoadMore) {
+            currentPage += 1
+            fetchData(currentPage)
         }
     }
 
@@ -60,6 +62,7 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
         dataEmptySafeMutableLiveData.setValue(DataEmpty(isEmpty))
     }
 
+    override fun canLoadMore() = canLoadMore
 
     companion object {
         const val CURRENT_PAGE = 0
