@@ -1,6 +1,9 @@
 package com.lyhoangvinh.simple.ui.base.activity
 
 import android.app.Dialog
+import android.os.Build
+import android.os.Bundle
+import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
@@ -25,6 +28,14 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (!shouldUseDataBinding()) {
+            // set contentView if child activity not use dataBinding
+            setContentView(getLayoutResource())
+        }
+    }
+
     open fun setLoading(loading: Boolean) {
         if (loading) {
             hideProgress()
@@ -44,4 +55,28 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
         if (dialog != null && dialog!!.isShowing)
             dialog?.dismiss()
     }
+
+    fun addFragment(@IdRes res: Int, fragment: Fragment, tag: String?) {
+        supportFragmentManager.beginTransaction()
+            .add(res, fragment, tag)
+            .commit()
+    }
+
+
+    protected fun finishWithAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition()
+        } else {
+            finish()
+        }
+    }
+
+    /**
+     * @return true if child activity should use data binding instead of [.setContentView]
+     */
+    protected open fun shouldUseDataBinding(): Boolean {
+        return false
+    }
+
+    protected abstract fun getLayoutResource(): Int
 }

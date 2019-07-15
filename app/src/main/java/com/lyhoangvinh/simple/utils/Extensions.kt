@@ -2,10 +2,16 @@ package com.lyhoangvinh.simple.utils
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.support.v4.app.Fragment
 import android.text.TextUtils
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
 import java.text.ParseException
@@ -73,4 +79,42 @@ fun parseToDate(date: String?): Date? {
 
     }
     return d
+}
+
+fun Activity.showToastMessage(message: String) {
+    if (!message.isEmpty()) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+}
+
+fun Fragment.showToastMessage(message: String) {
+    if (this.context != null && !message.isEmpty()) {
+        Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+    }
+}
+
+fun Fragment.hideKeyboard() {
+    view?.let { activity?.hideKeyboard(it) }
+}
+
+fun Fragment.showKeyboard(editText: EditText) {
+    activity?.showKeyboard(editText)
+}
+
+fun Activity.hideKeyboard() {
+    hideKeyboard(if (currentFocus == null) View(this) else currentFocus)
+}
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Activity.showKeyboard(yourEditText: EditText) {
+    try {
+        val input = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        input.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        input.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT)
+    } catch (ignored: Exception) {
+    }
 }

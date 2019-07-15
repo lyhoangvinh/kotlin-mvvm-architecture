@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="vm"
+                  type="com.lyhoangvinh.simple.ui.features.test2.TestViewModel"/>
+
+    </data>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:onClick="@{()->vm.clearData()}"/>
+        <include
+                layout="@layout/view_recyclerview"/>
+    </LinearLayout>
+</layout>
+

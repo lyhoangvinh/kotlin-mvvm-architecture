@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import com.lyhoangvinh.simple.di.ViewModelFactory
 import com.lyhoangvinh.simple.di.qualifier.ViewModelKey
 import com.lyhoangvinh.simple.ui.features.test.MainViewModel
+import com.lyhoangvinh.simple.ui.features.test2.TestViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -19,4 +20,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     internal abstract fun mainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TestViewModel::class)
+    internal abstract fun testViewModel(viewModel: TestViewModel): ViewModel
 }

@@ -23,8 +23,6 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
 
     lateinit var viewModel: VM
 
-    abstract fun getLayoutResource(): Int
-
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,4 +48,6 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
         super.onDestroy()
         viewModel.onDestroyView()
     }
+
+    override fun shouldUseDataBinding() = true
 }
