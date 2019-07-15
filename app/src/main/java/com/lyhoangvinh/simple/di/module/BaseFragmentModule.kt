@@ -26,8 +26,8 @@ abstract class BaseFragmentModule<T : Fragment> {
 
     @Provides
     @ActivityContext
-    fun provideContext(fragment: T): Context? {
-        return fragment.context
+    fun provideContext(fragment: T): Context {
+        return fragment.context!!
     }
 
     @Provides
