@@ -11,6 +11,7 @@ import com.lyhoangvinh.simple.di.qualifier.ChildFragmentManager
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import dagger.Module
 import dagger.Provides
+import dagger.android.support.DaggerFragment
 import lyhoangvinh.com.myutil.navigation.ChildFragmentNavigator
 import lyhoangvinh.com.myutil.navigation.FragmentNavigator
 
@@ -22,7 +23,7 @@ import lyhoangvinh.com.myutil.navigation.FragmentNavigator
  *
  */
 @Module
-abstract class BaseFragmentModule<T : Fragment> {
+abstract class BaseFragmentModule<T : DaggerFragment> {
 
     @Provides
     @ActivityContext

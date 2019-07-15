@@ -4,6 +4,7 @@ import android.app.Application
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.di.qualifier.ApplicationContext
 import com.lyhoangvinh.simple.utils.DateDeserializer
 import dagger.Module
@@ -20,7 +21,7 @@ class AppModule {
     @Provides
     @Singleton
     @ApplicationContext
-    internal  fun provideContext(application: Application) = application
+    internal fun provideContext(application: MyApplication) = application
 
     @Provides
     @Singleton

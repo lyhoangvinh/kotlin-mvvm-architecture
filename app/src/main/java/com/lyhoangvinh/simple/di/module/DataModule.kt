@@ -2,6 +2,7 @@ package com.lyhoangvinh.simple.di.module
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.data.DatabaseManager
 import com.lyhoangvinh.simple.data.SharedPrefs
 import com.lyhoangvinh.simple.data.dao.IssuesDao
@@ -14,7 +15,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun providesRoomDatabase(context: Application): DatabaseManager {
+    fun providesRoomDatabase(context: MyApplication): DatabaseManager {
         return Room.databaseBuilder(context, DatabaseManager::class.java, "my-database")
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
@@ -23,7 +24,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    internal fun providesSharePeres(context: Application): SharedPrefs = SharedPrefs.getInstance(context)
+    internal fun providesSharePeres(context: MyApplication): SharedPrefs = SharedPrefs.getInstance(context)
 
     @Provides
     @Singleton

@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.utils.AutoClearedValue
 import com.lyhoangvinh.simple.utils.hideKeyboard
+import dagger.android.support.DaggerFragment
 
 
 /**
@@ -23,7 +24,7 @@ import com.lyhoangvinh.simple.utils.hideKeyboard
  * Base class using data binding. The binding object reference will be removed as soon as the fragment view is destroyed
  */
 
-abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<B : ViewDataBinding> : DaggerFragment() {
 
     private var dialog: Dialog? = null
 

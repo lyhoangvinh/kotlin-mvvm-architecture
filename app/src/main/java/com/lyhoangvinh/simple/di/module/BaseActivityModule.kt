@@ -10,12 +10,13 @@ import com.lyhoangvinh.simple.di.qualifier.ActivityFragmentManager
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import dagger.Module
 import dagger.Provides
+import dagger.android.support.DaggerAppCompatActivity
 import lyhoangvinh.com.myutil.glide.loader.SimpleGlideLoader
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
 import lyhoangvinh.com.myutil.navigation.Navigator
 
 @Module
-abstract class BaseActivityModule<T : AppCompatActivity> {
+abstract class BaseActivityModule<T : DaggerAppCompatActivity> {
 
     @Provides
     @ActivityContext

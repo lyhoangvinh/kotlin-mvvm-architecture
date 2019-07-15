@@ -119,7 +119,7 @@ fun makeOkHttpClientBuilder(context: Context): OkHttpClient.Builder {
 
 /**
  * Enable TLS 1.2 on Pre Lollipop android versions
- * @param client OkHttpClient Builder
+ * @param client OkHttpClient builder
  * @return builder with SSL Socket Factory set
  * according to [OkHttpClient.Builder.sslSocketFactory] deprecation,
  * Please add config SSL with [X509TrustManager] by using [CustomTrustManager]

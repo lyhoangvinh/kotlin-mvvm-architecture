@@ -1,14 +1,11 @@
 package com.lyhoangvinh.simple
-
-import android.app.Activity
-import android.app.Application
-import com.lyhoangvinh.simple.di.AppInjector
+import com.lyhoangvinh.simple.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import dagger.android.support.DaggerApplication
 
-class MyApplication : Application(), HasActivityInjector {
+class MyApplication : DaggerApplication() {
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.builder().create(this)
 
     companion object {
         private lateinit var instance: MyApplication
@@ -16,16 +13,8 @@ class MyApplication : Application(), HasActivityInjector {
         fun getInstance() = instance
     }
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-
     override fun onCreate() {
         super.onCreate()
         instance = this
-        //initAppComponent
-         AppInjector.init(this)
-     }
-
-    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
-
+    }
 }

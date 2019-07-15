@@ -10,6 +10,7 @@ import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
 import com.lyhoangvinh.simple.utils.createDialog
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.DaggerAppCompatActivity
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
@@ -19,14 +20,9 @@ import javax.inject.Inject
  * All fragment inside this activity is injected as well
  */
 
-abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
+abstract class BaseActivity : DaggerAppCompatActivity() {
 
     private var dialog: Dialog? = null
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
