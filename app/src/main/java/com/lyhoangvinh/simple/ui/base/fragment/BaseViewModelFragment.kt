@@ -10,7 +10,6 @@ import android.support.annotation.CallSuper
 import android.view.View
 import com.lyhoangvinh.simple.data.source.State
 import com.lyhoangvinh.simple.data.source.Status
-import com.lyhoangvinh.simple.di.Injectable
 import com.lyhoangvinh.simple.ui.base.activity.BaseActivity
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import javax.inject.Inject
@@ -23,7 +22,7 @@ import javax.inject.Inject
  * through [BaseViewModel.stateLiveData]
  */
 
-abstract class BaseViewModelFragment<B : ViewDataBinding, VM : BaseViewModel> : BaseFragment<B>(), Injectable {
+abstract class BaseViewModelFragment<B : ViewDataBinding, VM : BaseViewModel> : BaseFragment<B>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
