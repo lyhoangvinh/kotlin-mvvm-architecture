@@ -31,5 +31,8 @@ class MainViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
         })
     }
 
-    fun clearData() = issuesRepo.deleteAll()
+    fun clearData() {
+        issuesRepo.deleteAll()
+        canLoadMore = false
+    }
 }

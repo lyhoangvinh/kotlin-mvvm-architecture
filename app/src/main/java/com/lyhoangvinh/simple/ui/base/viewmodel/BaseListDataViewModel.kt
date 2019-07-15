@@ -8,24 +8,23 @@ import android.support.annotation.Nullable
 import android.support.v7.widget.RecyclerView
 import com.lyhoangvinh.simple.data.entinies.DataEmpty
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
-import com.lyhoangvinh.simple.ui.base.interfaces.PaginationListener
 import com.lyhoangvinh.simple.ui.base.interfaces.Refreshable
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 
 
 abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(),
-    Refreshable, LoadMoreable, PaginationListener {
+    Refreshable, LoadMoreable {
 
     @Nullable
     lateinit var adapter: A
 
     var dataEmptySafeMutableLiveData = SafeMutableLiveData<DataEmpty>()
 
-    override var isRefreshed = false
+    var isRefreshed = false
 
-    override var canLoadMore = false
+    var canLoadMore = false
 
-    override var currentPage = CURRENT_PAGE
+    var currentPage = CURRENT_PAGE
 
     @CallSuper
     open fun initAdapter(@NonNull adapter: A) {
@@ -52,7 +51,7 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
      */
     @CallSuper
     override fun loadMore() {
-        if (canLoadMore) {
+        if (canLoadMore()) {
             currentPage += 1
             fetchData(currentPage)
         }
