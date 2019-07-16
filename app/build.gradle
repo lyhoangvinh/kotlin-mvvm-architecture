@@ -20,21 +20,21 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField("String", "COMIC_ENDPOINT", "\"http://api.comicvine.com\"")
-            buildConfigField("String", "AVGLE_ENDPOINT", "\"https://api.avgle.com/v1/\"")
-            buildConfigField("String", "HEADER_AUTH", "\"Authorization\"")
+            buildConfigField "String", "COMIC_ENDPOINT", (project.findProperty("COMIC_ENDPOINT") ?: "")
+            buildConfigField "String", "AVGLE_ENDPOINT", (project.findProperty("AVGLE_ENDPOINT") ?: "")
+            buildConfigField "String", "HEADER_AUTH", "\"Authorization\""
             buildConfigField "boolean", "ENABLE_LOGCAT", "true"
-            buildConfigField("String", "API_KEY", "\"8c7bd28c573cebf75e30f9ecc109845810cf5024\"")
+            buildConfigField "String", "API_KEY", (project.findProperty("API_KEY") ?: "")
             archivesBaseName = "mvvmarchitecture-app-$defaultConfig.versionName($defaultConfig.versionCode)"
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "COMIC_ENDPOINT", "\"http://api.comicvine.com\"")
-            buildConfigField("String", "AVGLE_ENDPOINT", "\"https://api.avgle.com/v1/\"")
+            buildConfigField "String", "COMIC_ENDPOINT", (project.findProperty("COMIC_ENDPOINT") ?: "")
+            buildConfigField "String", "AVGLE_ENDPOINT", (project.findProperty("AVGLE_ENDPOINT") ?: "")
             buildConfigField "boolean", "ENABLE_LOGCAT", "false"
-            buildConfigField("String", "HEADER_AUTH", "\"Authorization\"")
-            buildConfigField("String", "API_KEY", "\"8c7bd28c573cebf75e30f9ecc109845810cf5024\"")
+            buildConfigField "String", "HEADER_AUTH", "\"Authorization\""
+            buildConfigField "String", "API_KEY", (project.findProperty("API_KEY") ?: "")
             archivesBaseName = "mvvmarchitecture-app-$defaultConfig.versionName($defaultConfig.versionCode)"
         }
     }
@@ -47,6 +47,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    androidExtensions {
+        experimental = true
+    }
+
 }
 
 dependencies {
