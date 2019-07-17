@@ -1,10 +1,9 @@
 package com.lyhoangvinh.simple.di.module
 
 import android.app.Activity
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import android.content.Context
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.di.qualifier.ActivityFragmentManager
 import com.lyhoangvinh.simple.utils.NavigatorHelper

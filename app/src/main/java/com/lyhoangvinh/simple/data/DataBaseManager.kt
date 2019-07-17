@@ -1,8 +1,8 @@
 package com.lyhoangvinh.simple.data
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.lyhoangvinh.simple.data.dao.IssuesDao
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
 import com.lyhoangvinh.simple.data.typecoverter.ImageTypeConverter

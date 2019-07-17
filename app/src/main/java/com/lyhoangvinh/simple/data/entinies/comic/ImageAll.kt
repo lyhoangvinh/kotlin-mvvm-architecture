@@ -1,6 +1,6 @@
 package com.lyhoangvinh.simple.data.entinies.comic
 
-import android.arch.persistence.room.Entity
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 @Entity

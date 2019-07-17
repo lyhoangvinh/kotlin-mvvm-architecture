@@ -1,7 +1,7 @@
 package com.lyhoangvinh.simple.data.repo
 
 
-import android.arch.paging.LivePagedListBuilder
+import androidx.paging.LivePagedListBuilder
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.IssuesDao
 import com.lyhoangvinh.simple.data.entinies.comic.Issues

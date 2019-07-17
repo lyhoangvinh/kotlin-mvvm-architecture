@@ -1,6 +1,5 @@
 package com.lyhoangvinh.simple.di.module
 
-import android.app.Application
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

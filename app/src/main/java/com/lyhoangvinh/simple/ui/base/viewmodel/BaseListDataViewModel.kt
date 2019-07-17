@@ -2,17 +2,17 @@ package com.lyhoangvinh.simple.ui.base.viewmodel
 
 import android.os.Handler
 import android.os.Looper
-import android.support.annotation.CallSuper
-import android.support.annotation.NonNull
-import android.support.annotation.Nullable
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.CallSuper
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
+import androidx.recyclerview.widget.RecyclerView
 import com.lyhoangvinh.simple.data.entinies.DataEmpty
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.Refreshable
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 
 
-abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(),
+abstract class BaseListDataViewModel<A : androidx.recyclerview.widget.RecyclerView.Adapter<*>> : BaseViewModel(),
     Refreshable, LoadMoreable {
 
     @Nullable

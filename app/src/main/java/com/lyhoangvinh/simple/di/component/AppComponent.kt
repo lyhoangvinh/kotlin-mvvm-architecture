@@ -24,6 +24,7 @@ import javax.inject.Singleton
         BuildersModule::class]
 )
 interface AppComponent : AndroidInjector<MyApplication> {
+    @Suppress("DEPRECATION")
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<MyApplication>()
 }

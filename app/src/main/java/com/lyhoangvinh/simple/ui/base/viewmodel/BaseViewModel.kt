@@ -1,11 +1,11 @@
 package com.lyhoangvinh.simple.ui.base.viewmodel
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.CallSuper
-import android.support.annotation.NonNull
+import androidx.annotation.CallSuper
+import androidx.annotation.NonNull
 import android.text.TextUtils
 import android.util.Log
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity

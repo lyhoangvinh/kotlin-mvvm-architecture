@@ -3,9 +3,9 @@ package com.lyhoangvinh.simple.ui.base.activity
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
 import com.lyhoangvinh.simple.utils.createDialog
 import dagger.android.AndroidInjector
@@ -52,7 +52,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             dialog?.dismiss()
     }
 
-    fun addFragment(@IdRes res: Int, fragment: Fragment, tag: String?) {
+    fun addFragment(@IdRes res: Int, fragment: androidx.fragment.app.Fragment, tag: String?) {
         supportFragmentManager.beginTransaction()
             .add(res, fragment, tag)
             .commit()

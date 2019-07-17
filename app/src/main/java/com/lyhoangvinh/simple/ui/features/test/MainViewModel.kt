@@ -1,7 +1,7 @@
 package com.lyhoangvinh.simple.ui.features.test
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import android.os.Bundle
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
 import com.lyhoangvinh.simple.data.repo.IssuesRepo

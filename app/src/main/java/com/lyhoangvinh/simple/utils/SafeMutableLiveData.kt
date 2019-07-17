@@ -1,6 +1,6 @@
 package com.lyhoangvinh.simple.utils
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 
 /**
  * Thread-safe live data to resolve this issue: when perform  {@link LiveData#setValue(Object)}

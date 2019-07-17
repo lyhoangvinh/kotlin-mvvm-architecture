@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -87,17 +87,17 @@ fun Activity.showToastMessage(message: String) {
     }
 }
 
-fun Fragment.showToastMessage(message: String) {
+fun androidx.fragment.app.Fragment.showToastMessage(message: String) {
     if (this.context != null && !message.isEmpty()) {
         Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
     }
 }
 
-fun Fragment.hideKeyboard() {
+fun androidx.fragment.app.Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }
 }
 
-fun Fragment.showKeyboard(editText: EditText) {
+fun androidx.fragment.app.Fragment.showKeyboard(editText: EditText) {
     activity?.showKeyboard(editText)
 }
 

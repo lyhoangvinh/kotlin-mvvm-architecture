@@ -2,14 +2,14 @@ package com.lyhoangvinh.simple.ui.base.fragment
 
 import android.app.Dialog
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.Nullable
-import android.support.v4.app.Fragment
+import androidx.annotation.Nullable
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

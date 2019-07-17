@@ -15,7 +15,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -57,24 +57,25 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.supportConstraintVersion"
-    implementation "com.android.support:multidex:$rootProject.ext.multidexVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.supportConstraintVersion"
+    implementation "androidx.multidex:multidex:$rootProject.ext.multidexVersion"
     //noinspection GradleCompatible
-    implementation "com.android.support:design:$rootProject.ext.supportVersion"
-    implementation "com.android.support:support-v4:$rootProject.ext.supportVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
-    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
-    implementation "com.android.support:cardview-v7:$rootProject.ext.supportVersion"
-    implementation "com.android.support:support-compat:$rootProject.ext.supportVersion"
-    implementation "com.android.support:support-fragment:$rootProject.ext.supportVersion"
-    implementation "com.android.support:support-vector-drawable:$rootProject.ext.supportVersion"
-    implementation "com.android.support:animated-vector-drawable:$rootProject.ext.supportVersion"
-    implementation "android.arch.lifecycle:extensions:$rootProject.ext.architectureVersion"
-    implementation "android.arch.paging:runtime:$rootProject.ext.pagingVersion"
+    implementation "com.google.android.material:material:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.cardview:cardview:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.fragment:fragment:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.vectordrawable:vectordrawable:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.vectordrawable:vectordrawable-animated:$rootProject.ext.androidxSupportVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.lifecycleExtensionsVersion"
+    implementation "androidx.paging:paging-runtime:$rootProject.ext.pagingVersion"
+    implementation "androidx.core:core:$rootProject.ext.coreVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ext.coreKtxVersion"
 
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runnerVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.ext.runnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
 
     //rx
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxandroidVersion"
@@ -82,9 +83,9 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.ext.rxbindingVersion"
 
     //room
-    implementation "android.arch.persistence.room:runtime:$rootProject.ext.roomDatabaseVersion"
-    kapt "android.arch.persistence.room:compiler:$rootProject.ext.roomDatabaseVersion"
-    implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.roomDatabaseVersion"
+    implementation "androidx.room:room-runtime:$rootProject.ext.roomDatabaseVersion"
+    kapt "androidx.room:room-compiler:$rootProject.ext.roomDatabaseVersion"
+    implementation "androidx.room:room-rxjava2:$rootProject.ext.roomDatabaseVersion"
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"

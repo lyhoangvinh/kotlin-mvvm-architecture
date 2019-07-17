@@ -1,6 +1,6 @@
 package com.lyhoangvinh.simple.data.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 interface BaseDao<T> {
 

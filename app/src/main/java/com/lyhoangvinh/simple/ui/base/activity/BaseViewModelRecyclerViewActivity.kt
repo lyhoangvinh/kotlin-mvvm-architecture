@@ -1,10 +1,10 @@
 package com.lyhoangvinh.simple.ui.base.activity
 
-import android.arch.lifecycle.Observer
-import android.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.*
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.appcompat.widget.*
 import android.view.View
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
@@ -17,17 +17,17 @@ import javax.inject.Inject
 
 abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         VM : BaseListDataViewModel<A>,
-        A : RecyclerView.Adapter<*>> : BaseViewModelActivity<B, VM>(),
+        A : androidx.recyclerview.widget.RecyclerView.Adapter<*>> : BaseViewModelActivity<B, VM>(),
     UiRefreshable,
     LoadMoreable,
-    SwipeRefreshLayout.OnRefreshListener {
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var adapter: A
 
     private var isRefreshing: Boolean = false
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager? = null
 
     private var mVisibleThreshold: Int = 5
 
@@ -40,15 +40,15 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         viewModel.initAdapter(adapter)
         layoutManager = createLayoutManager()
         recyclerView.layoutManager = layoutManager
-        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         recyclerView.adapter = adapter
         refreshLayout.setOnRefreshListener(this)
         refreshLayout.setColorSchemeResources(
             R.color.material_amber_700, R.color.material_blue_700,
             R.color.material_purple_700, R.color.material_lime_700
         )
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        recyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 updateScrollTop()
                 // dy < 0 mean scrolling up
@@ -56,20 +56,20 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
                 val totalItemCount = layoutManager!!.itemCount
                 var lastVisibleItemPosition = 0
                 when (layoutManager) {
-                    is StaggeredGridLayoutManager -> {
+                    is androidx.recyclerview.widget.StaggeredGridLayoutManager -> {
                         val lastVisibleItemPositions =
-                            (layoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
+                            (layoutManager as androidx.recyclerview.widget.StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
                         lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
-                        mVisibleThreshold *= (layoutManager as StaggeredGridLayoutManager).spanCount
+                        mVisibleThreshold *= (layoutManager as androidx.recyclerview.widget.StaggeredGridLayoutManager).spanCount
                     }
-                    is GridLayoutManager -> {
-                        mVisibleThreshold *= (layoutManager as GridLayoutManager).spanCount
-                        lastVisibleItemPosition = (layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+                    is androidx.recyclerview.widget.GridLayoutManager -> {
+                        mVisibleThreshold *= (layoutManager as androidx.recyclerview.widget.GridLayoutManager).spanCount
+                        lastVisibleItemPosition = (layoutManager as androidx.recyclerview.widget.GridLayoutManager).findLastVisibleItemPosition()
                     }
-                    is LinearLayoutManager -> {
-                        lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    is androidx.recyclerview.widget.LinearLayoutManager -> {
+                        lastVisibleItemPosition = (layoutManager as androidx.recyclerview.widget.LinearLayoutManager).findLastVisibleItemPosition()
                         val visibleItemCount = layoutManager!!.childCount
-                        val pastVisibleItems = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                        val pastVisibleItems = (layoutManager as androidx.recyclerview.widget.LinearLayoutManager).findFirstVisibleItemPosition()
                         updateScrollTop(visibleItemCount, pastVisibleItems)
                     }
                 }
@@ -98,8 +98,12 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
 
     override fun canLoadMore(): Boolean = false
 
-    open fun createLayoutManager(): RecyclerView.LayoutManager =
-        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    open fun createLayoutManager(): androidx.recyclerview.widget.RecyclerView.LayoutManager =
+        androidx.recyclerview.widget.LinearLayoutManager(
+            this,
+            androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+            false
+        )
 
     override fun setLoading(loading: Boolean) {
         if (!loading) {
@@ -166,8 +170,8 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
      */
 
     private fun getPastVisibleItems(): Int {
-        return if (layoutManager is LinearLayoutManager) {
-            (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        return if (layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
+            (layoutManager as androidx.recyclerview.widget.LinearLayoutManager).findFirstVisibleItemPosition()
         } else 0
     }
 

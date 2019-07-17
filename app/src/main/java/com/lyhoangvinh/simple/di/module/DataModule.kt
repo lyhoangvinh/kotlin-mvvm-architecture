@@ -1,7 +1,7 @@
 package com.lyhoangvinh.simple.di.module
 
 import android.app.Application
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.data.DatabaseManager
 import com.lyhoangvinh.simple.data.SharedPrefs

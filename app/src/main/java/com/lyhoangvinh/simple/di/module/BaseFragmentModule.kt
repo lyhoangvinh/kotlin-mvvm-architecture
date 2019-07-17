@@ -1,10 +1,10 @@
 package com.lyhoangvinh.simple.di.module
 
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.di.qualifier.ActivityFragmentManager
 import com.lyhoangvinh.simple.di.qualifier.ChildFragmentManager
@@ -33,13 +33,13 @@ abstract class BaseFragmentModule<T : DaggerFragment> {
 
     @Provides
     @ChildFragmentManager
-    fun provideChildFragmentManager(fragment: T): FragmentManager {
+    fun provideChildFragmentManager(fragment: T): androidx.fragment.app.FragmentManager {
         return fragment.childFragmentManager
     }
 
     @Provides
     @ActivityFragmentManager
-    fun provideActivityFragmentManager(activity: FragmentActivity): FragmentManager {
+    fun provideActivityFragmentManager(activity: androidx.fragment.app.FragmentActivity): androidx.fragment.app.FragmentManager {
         return activity.supportFragmentManager
     }
 
@@ -49,7 +49,7 @@ abstract class BaseFragmentModule<T : DaggerFragment> {
     }
 
     @Provides
-    fun provideActivity(fragment: T): FragmentActivity? {
+    fun provideActivity(fragment: T): androidx.fragment.app.FragmentActivity? {
         return fragment.activity
     }
 
