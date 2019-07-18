@@ -179,6 +179,6 @@ class SafeMutableLiveData<T> : MutableLiveData<T>() {
     }
 ```
 
-### Contributing to Android Kotlin MVP Architecture
+### Contributing to Android Kotlin MVVM Architecture
 All pull requests are welcome, make sure to follow the [contribution guidelines](CONTRIBUTING.md)
 when you submit pull request.
