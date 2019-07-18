@@ -33,13 +33,13 @@ abstract class BaseFragmentModule<T : DaggerFragment> {
 
     @Provides
     @ChildFragmentManager
-    fun provideChildFragmentManager(fragment: T): androidx.fragment.app.FragmentManager {
+    fun provideChildFragmentManager(fragment: T): FragmentManager {
         return fragment.childFragmentManager
     }
 
     @Provides
     @ActivityFragmentManager
-    fun provideActivityFragmentManager(activity: androidx.fragment.app.FragmentActivity): androidx.fragment.app.FragmentManager {
+    fun provideActivityFragmentManager(activity: FragmentActivity): FragmentManager {
         return activity.supportFragmentManager
     }
 
@@ -49,7 +49,7 @@ abstract class BaseFragmentModule<T : DaggerFragment> {
     }
 
     @Provides
-    fun provideActivity(fragment: T): androidx.fragment.app.FragmentActivity? {
+    fun provideActivity(fragment: T): FragmentActivity? {
         return fragment.activity
     }
 

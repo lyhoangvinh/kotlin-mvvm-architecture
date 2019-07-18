@@ -87,17 +87,17 @@ fun Activity.showToastMessage(message: String) {
     }
 }
 
-fun androidx.fragment.app.Fragment.showToastMessage(message: String) {
+fun Fragment.showToastMessage(message: String) {
     if (this.context != null && !message.isEmpty()) {
         Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
     }
 }
 
-fun androidx.fragment.app.Fragment.hideKeyboard() {
+fun Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }
 }
 
-fun androidx.fragment.app.Fragment.showKeyboard(editText: EditText) {
+fun Fragment.showKeyboard(editText: EditText) {
     activity?.showKeyboard(editText)
 }
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
 import com.lyhoangvinh.simple.data.repo.IssuesRepo
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
-import com.lyhoangvinh.simple.data.source.State
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
 import javax.inject.Inject

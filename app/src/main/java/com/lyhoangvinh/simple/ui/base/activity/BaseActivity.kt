@@ -5,14 +5,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
 import com.lyhoangvinh.simple.utils.createDialog
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
-import dagger.android.support.HasSupportFragmentInjector
-import javax.inject.Inject
 
 /**
  * Base activity that will be injected automatically by implementing {@link HasSupportFragmentInjector}
@@ -52,7 +47,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             dialog?.dismiss()
     }
 
-    fun addFragment(@IdRes res: Int, fragment: androidx.fragment.app.Fragment, tag: String?) {
+    fun addFragment(@IdRes res: Int, fragment: Fragment, tag: String?) {
         supportFragmentManager.beginTransaction()
             .add(res, fragment, tag)
             .commit()

@@ -9,10 +9,6 @@ import com.lyhoangvinh.simple.databinding.ItemComicsBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
-import com.lyhoangvinh.simple.utils.BindingUtil
-import com.lyhoangvinh.simple.utils.getAppDateFormatter
-import com.lyhoangvinh.simple.utils.loadImageIssues
-import kotlinx.android.synthetic.main.item_comics.view.*
 import javax.inject.Inject
 
 class MainAdapter @Inject constructor(@ActivityContext context: Context) :

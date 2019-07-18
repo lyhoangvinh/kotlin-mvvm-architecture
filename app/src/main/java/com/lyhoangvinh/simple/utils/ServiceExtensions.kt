@@ -162,10 +162,10 @@ class DateDeserializer : JsonDeserializer<Date> {
         val date = element.asString
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         formatter.timeZone = TimeZone.getTimeZone("UTC")
-        try {
-            return formatter.parse(date)
+        return try {
+            formatter.parse(date)
         } catch (e: ParseException) {
-            return null
+            null
         }
 
     }

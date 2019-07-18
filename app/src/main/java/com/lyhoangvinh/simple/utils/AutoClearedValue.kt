@@ -7,12 +7,12 @@ import androidx.fragment.app.FragmentManager
  * A value holder that automatically clears the reference if the Fragment's view is destroyed.
  * @param <T>
 </T> */
-class AutoClearedValue<T>(fragment: androidx.fragment.app.Fragment, private var value: T?) {
+class AutoClearedValue<T>(fragment: Fragment, private var value: T?) {
     init {
         val fragmentManager = fragment.fragmentManager
         fragmentManager!!.registerFragmentLifecycleCallbacks(
-            object : androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks() {
-                override fun onFragmentViewDestroyed(fm: androidx.fragment.app.FragmentManager, f: androidx.fragment.app.Fragment) {
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
                     this@AutoClearedValue.value = null
                     fragmentManager.unregisterFragmentLifecycleCallbacks(this)
                 }

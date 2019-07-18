@@ -1,12 +1,9 @@
 package com.lyhoangvinh.simple.ui.base.activity
 
-
 import android.content.Intent
-import androidx.databinding.ViewDataBinding
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.annotation.Nullable
-import androidx.fragment.app.Fragment
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.base.fragment.BaseFragment
 

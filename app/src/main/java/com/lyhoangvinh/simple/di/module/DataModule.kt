@@ -1,6 +1,5 @@
 package com.lyhoangvinh.simple.di.module
 
-import android.app.Application
 import androidx.room.Room
 import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.data.DatabaseManager

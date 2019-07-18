@@ -12,7 +12,7 @@ import com.lyhoangvinh.simple.ui.base.interfaces.Refreshable
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 
 
-abstract class BaseListDataViewModel<A : androidx.recyclerview.widget.RecyclerView.Adapter<*>> : BaseViewModel(),
+abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(),
     Refreshable, LoadMoreable {
 
     @Nullable
