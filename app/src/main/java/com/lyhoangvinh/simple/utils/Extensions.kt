@@ -3,15 +3,21 @@ package com.lyhoangvinh.simple.utils
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.text.TextUtils
+import android.transition.ChangeBounds
+import android.transition.Slide
+import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
 import java.text.ParseException
@@ -116,5 +122,29 @@ fun Activity.showKeyboard(yourEditText: EditText) {
         input.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
         input.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT)
     } catch (ignored: Exception) {
+    }
+}
+
+fun Fragment.addAnimations(): Fragment {
+    return this.apply {
+        val slideTransition = Slide(Gravity.END)
+        slideTransition.duration = 300L
+        val changeBoundsTransition = ChangeBounds()
+        changeBoundsTransition.duration = 300L
+        enterTransition = slideTransition
+        allowEnterTransitionOverlap = false
+        allowReturnTransitionOverlap = false
+        sharedElementEnterTransition = changeBoundsTransition
+    }
+}
+
+fun Activity.startActivityTransition(cls: Class<*>, finishAct: Boolean) {
+    this.let {
+        val pairs = TransitionUtil.createSafeTransitionParticipants(it, true)
+        val intent = Intent(it, cls)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(it, *pairs)
+        it.startActivity(intent, options.toBundle())
+        if (finishAct)
+            Handler().postDelayed({ it.finish() }, 300L)
     }
 }

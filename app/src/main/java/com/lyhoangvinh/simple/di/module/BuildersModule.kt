@@ -1,23 +1,23 @@
 package com.lyhoangvinh.simple.di.module
 
-import com.lyhoangvinh.simple.ui.features.test.MainActivity
-import com.lyhoangvinh.simple.ui.features.test.MainActivityModule
-import com.lyhoangvinh.simple.ui.features.test2.TestActivity
-import com.lyhoangvinh.simple.ui.features.test2.TestActivityModule
-import com.lyhoangvinh.simple.ui.features.test2.TestFragment
-import com.lyhoangvinh.simple.ui.features.test2.TestFragmentModule
+import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
+import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivityModule
+import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleActivity
+import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleActivityModule
+import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicFragment
+import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicFragmentModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule {
 
-    @ContributesAndroidInjector(modules = [MainActivityModule::class])
-    abstract fun mainActivity(): MainActivity
+    @ContributesAndroidInjector(modules = [ComicActivityModule::class])
+    abstract fun mainActivity(): ComicActivity
 
-    @ContributesAndroidInjector(modules = [TestActivityModule::class])
-    abstract fun testActivity(): TestActivity
+    @ContributesAndroidInjector(modules = [ComicSingleActivityModule::class])
+    abstract fun testActivity(): ComicSingleActivity
 
-    @ContributesAndroidInjector(modules = [TestFragmentModule::class])
-    abstract fun testFragment(): TestFragment
+    @ContributesAndroidInjector(modules = [ComicFragmentModule::class])
+    abstract fun testFragment(): ComicFragment
 }

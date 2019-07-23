@@ -12,7 +12,7 @@
             android:roundIcon="@drawable/kotlin_logo"
             android:supportsRtl="true"
             android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.features.test2.TestActivity" android:screenOrientation="portrait">
+        <activity android:name="com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

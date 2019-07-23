@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.lyhoangvinh.simple.di.ViewModelFactory
 import com.lyhoangvinh.simple.di.qualifier.ViewModelKey
-import com.lyhoangvinh.simple.ui.features.test.MainViewModel
-import com.lyhoangvinh.simple.ui.features.test2.TestViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,11 +16,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    internal abstract fun mainViewModel(viewModel: MainViewModel): ViewModel
+    @ViewModelKey(ComicViewModel::class)
+    internal abstract fun mainViewModel(viewModel: ComicViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(TestViewModel::class)
-    internal abstract fun testViewModel(viewModel: TestViewModel): ViewModel
+    @ViewModelKey(ComicViewModel::class)
+    internal abstract fun testViewModel(viewModel: com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicViewModel): ViewModel
 }

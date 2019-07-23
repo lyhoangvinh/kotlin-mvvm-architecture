@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.test
+package com.lyhoangvinh.simple.ui.features.comic.testactivity
 
 import android.content.Context
 import androidx.recyclerview.widget.DiffUtil
@@ -11,8 +11,8 @@ import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 import javax.inject.Inject
 
-class MainAdapter @Inject constructor(@ActivityContext context: Context) :
-    BaseAdapter<Issues, ItemComicsBinding, MainAdapter.MainViewHolder>(context, IssuesDiffCallBack()) {
+class ComicAdapter @Inject constructor(@ActivityContext context: Context) :
+    BaseAdapter<Issues, ItemComicsBinding, ComicAdapter.MainViewHolder>(context, IssuesDiffCallBack()) {
 
     override fun itemLayoutResource() = R.layout.item_comics
 

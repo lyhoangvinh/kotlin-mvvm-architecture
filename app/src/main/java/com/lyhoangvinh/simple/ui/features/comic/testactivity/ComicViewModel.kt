@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.test2
+package com.lyhoangvinh.simple.ui.features.comic.testactivity
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -8,10 +8,11 @@ import com.lyhoangvinh.simple.data.repo.IssuesRepo
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
-import com.lyhoangvinh.simple.ui.features.test.MainAdapter
 import javax.inject.Inject
 
-class TestViewModel @Inject constructor(private val issuesRepo: IssuesRepo) : BaseListDataViewModel<MainAdapter>() {
+class ComicViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
+    BaseListDataViewModel<ComicAdapter>() {
+
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         refresh()
         issuesRepo.liveData().observe(lifecycleOwner, Observer {
@@ -33,5 +34,4 @@ class TestViewModel @Inject constructor(private val issuesRepo: IssuesRepo) : Ba
         issuesRepo.deleteAll()
         canLoadMore = false
     }
-
 }
