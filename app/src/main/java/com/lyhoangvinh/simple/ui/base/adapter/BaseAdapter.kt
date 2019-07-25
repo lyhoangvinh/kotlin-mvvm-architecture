@@ -1,18 +1,17 @@
 package com.lyhoangvinh.simple.ui.base.adapter
 
-import androidx.paging.PagedListAdapter
 import android.content.Context
-import androidx.recyclerview.widget.DiffUtil
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 
 abstract class BaseAdapter<T, B : ViewDataBinding, VH : BaseViewHolder<B>>(
     @ActivityContext val context: Context, diffUtil: DiffUtil.ItemCallback<T>
-) :
-    PagedListAdapter<T, VH>(diffUtil) {
+) : PagedListAdapter<T, VH>(diffUtil) {
 
     abstract fun itemLayoutResource(): Int
 

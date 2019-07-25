@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="dto"
+                  type="com.lyhoangvinh.simple.data.entinies.avgle.Category"/>
+    </data>
+
+    <RelativeLayout
+            android:layout_width="@dimen/size_image_references"
+            android:layout_height="@dimen/size_image_references"
+            android:background="@drawable/bg_empty_corner">
+
+        <com.lyhoangvinh.simple.ui.widget.AspectConerImageView
+                android:id="@+id/imv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:sriv_left_bottom_corner_radius="4dp"
+                app:sriv_left_top_corner_radius="4dp"
+                app:sriv_right_bottom_corner_radius="4dp"
+                app:sriv_right_top_corner_radius="4dp"
+                app:loadImageURL="@{dto.coverUrl}"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_image_references_half"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/linear_gradient"/>
+
+        <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/padding_8dp"
+                android:layout_marginLeft="@dimen/padding_8dp"
+                android:layout_marginRight="@dimen/padding_8dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="2"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/ts_13_sp"
+                android:text="@{dto.name}"/>
+
+        <View
+                android:id="@+id/view_selected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_corner"/>
+    </RelativeLayout>
+</layout>

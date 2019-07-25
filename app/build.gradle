@@ -69,7 +69,6 @@ dependencies {
     implementation "androidx.vectordrawable:vectordrawable:$rootProject.ext.androidxSupportVersion"
     implementation "androidx.vectordrawable:vectordrawable-animated:$rootProject.ext.androidxSupportVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.lifecycleExtensionsVersion"
-    implementation "androidx.paging:paging-runtime:$rootProject.ext.pagingVersion"
     implementation "androidx.core:core:$rootProject.ext.coreVersion"
     implementation "androidx.core:core-ktx:$rootProject.ext.coreKtxVersion"
 
@@ -109,4 +108,11 @@ dependencies {
 
     //picasso
     implementation "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
+
+    //paging
+    implementation "androidx.paging:paging-runtime:$rootProject.ext.pagingVersion"
+    // alternatively - without Android dependencies for testing
+    testImplementation "androidx.paging:paging-common:$rootProject.ext.pagingVersion" // For Kotlin use paging-common-ktx
+    // optional - RxJava support
+    implementation "androidx.paging:paging-rxjava2:$rootProject.ext.pagingVersion" // For Kotlin use paging-rxjava2-ktx
 }

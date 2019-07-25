@@ -3,7 +3,7 @@
 
     <data>
         <variable name="vm"
-                  type="com.lyhoangvinh.simple.ui.features.test.MainViewModel"/>
+                  type="com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel"/>
 
         <variable name="dataEmpty"
                   type="com.lyhoangvinh.simple.data.entinies.DataEmpty"/>

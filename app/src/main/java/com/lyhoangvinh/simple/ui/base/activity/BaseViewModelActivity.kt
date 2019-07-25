@@ -1,15 +1,16 @@
 package com.lyhoangvinh.simple.ui.base.activity
 
+import android.os.Bundle
+import androidx.annotation.VisibleForTesting
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-import android.os.Bundle
-import androidx.annotation.VisibleForTesting
 import com.lyhoangvinh.simple.data.source.State
 import com.lyhoangvinh.simple.data.source.Status
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
+import com.lyhoangvinh.simple.utils.NavigatorHelper
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
@@ -17,6 +18,9 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var navigatorHelper: NavigatorHelper
 
     @VisibleForTesting
     lateinit var binding: B
@@ -32,7 +36,7 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM> // 1 is BaseViewModel
         viewModel = ViewModelProviders.of(this, viewModelFactory)[viewModelClass]
 
-        viewModel.onCreate(this, intent.extras)
+        viewModel.onCreate(this, intent.extras, navigatorHelper)
         viewModel.stateLiveData.observe(this, Observer { handleState(it) })
     }
 

@@ -3,17 +3,20 @@ package com.lyhoangvinh.simple.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import android.util.Log
 import com.google.gson.*
 import com.lyhoangvinh.simple.BuildConfig
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
+import com.lyhoangvinh.simple.data.response.ResponseFourZip
+import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
+import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
 import lyhoangvinh.com.myutil.network.Tls12SocketFactory
 import okhttp3.Cache
@@ -47,7 +50,7 @@ fun <T> makeRequest(
         single = single.observeOn(AndroidSchedulers.mainThread())
     }
 
-    return single.subscribe(responseConsumer,  Consumer {
+    return single.subscribe(responseConsumer, Consumer {
         // handle error
         it.printStackTrace()
         errorConsumer?.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))
@@ -87,6 +90,49 @@ fun <T> makeService(serviceClass: Class<T>, gson: Gson, okHttpClient: OkHttpClie
         .build()
     return retrofit.create(serviceClass)
 }
+
+/**
+ * Make 4 Request
+ *
+ */
+
+fun <T1, T2, T3, T4> makeRequest(
+    request1: Single<T1>,
+    request2: Single<T2>,
+    request3: Single<T3>,
+    request4: Single<T4>,
+    shouldUpdateUi: Boolean,
+    @NonNull responseConsumer: PlainResponseZipFourConsumer<T1, T2, T3, T4>,
+    @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
+): Disposable {
+    var single1 = request1.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+    var single2 = request2.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+    var single3 = request3.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+    var single4 = request4.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+
+    if (shouldUpdateUi) {
+        single1 = single1.observeOn(AndroidSchedulers.mainThread())
+        single2 = single2.observeOn(AndroidSchedulers.mainThread())
+        single3 = single3.observeOn(AndroidSchedulers.mainThread())
+        single4 = single4.observeOn(AndroidSchedulers.mainThread())
+    }
+
+    return Single.zip(single1, single2, single3, single4,
+        Function4<T1, T2, T3, T4, ResponseFourZip<T1, T2, T3, T4>> { t1, t2, t3, t4 -> ResponseFourZip(t1, t2, t3, t4)
+    })
+        .subscribeOn(Schedulers.io())
+        .unsubscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({ o ->
+            responseConsumer.accept(o)
+
+        }, { throwable ->
+            // handle error
+//                throwable.printStackTrace()
+            errorConsumer?.accept(ErrorEntity.getError(throwable))
+        })
+}
+
 
 fun makeOkHttpClientBuilder(context: Context): OkHttpClient.Builder {
     val logging = HttpLoggingInterceptor()

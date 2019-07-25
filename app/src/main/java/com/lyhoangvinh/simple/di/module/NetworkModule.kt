@@ -3,6 +3,7 @@ package com.lyhoangvinh.simple.di.module
 import com.google.gson.Gson
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.MyApplication
+import com.lyhoangvinh.simple.data.services.AvgleService
 import com.lyhoangvinh.simple.data.services.ComicVineService
 import com.lyhoangvinh.simple.di.qualifier.ApplicationContext
 import com.lyhoangvinh.simple.di.qualifier.OkHttpNoAuth
@@ -30,4 +31,9 @@ class NetworkModule {
     @Singleton
     internal fun provideComicVineService(gSon: Gson, @OkHttpNoAuth okHttpClient: OkHttpClient): ComicVineService =
         makeService(ComicVineService::class.java, gSon, okHttpClient, Constants.COMIC_ENDPOINT)
+
+    @Provides
+    @Singleton
+    internal fun provideAvgleService(gson: Gson, @OkHttpNoAuth okHttpClient: OkHttpClient): AvgleService =
+        makeService(AvgleService::class.java, gson, okHttpClient, Constants.AVGLE_ENDPOINT)
 }

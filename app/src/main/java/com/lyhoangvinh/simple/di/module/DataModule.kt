@@ -1,9 +1,12 @@
 package com.lyhoangvinh.simple.di.module
 
 import androidx.room.Room
+import com.lyhoangvinh.simple.data.dao.VideosDao
 import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.data.DatabaseManager
 import com.lyhoangvinh.simple.data.SharedPrefs
+import com.lyhoangvinh.simple.data.dao.CategoriesDao
+import com.lyhoangvinh.simple.data.dao.CollectionDao
 import com.lyhoangvinh.simple.data.dao.IssuesDao
 import dagger.Module
 import dagger.Provides
@@ -29,4 +32,15 @@ class DataModule {
     @Singleton
     fun provideIssuesDao(databaseManager: DatabaseManager): IssuesDao = databaseManager.issuesDao()
 
+    @Provides
+    @Singleton
+    fun provideCategoriesDao(databaseManager: DatabaseManager): CategoriesDao = databaseManager.categoriesDao()
+
+    @Provides
+    @Singleton
+    fun provideCollectionDao(databaseManager: DatabaseManager): CollectionDao = databaseManager.collectionDao()
+
+    @Provides
+    @Singleton
+    fun provideVideosDao(databaseManager: DatabaseManager): VideosDao = databaseManager.videosDao()
 }

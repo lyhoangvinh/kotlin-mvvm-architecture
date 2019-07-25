@@ -3,7 +3,7 @@
 
     <data>
         <variable name="vm"
-                  type="com.lyhoangvinh.simple.ui.features.test2.TestViewModel"/>
+                  type="com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleViewModel"/>
 
     </data>
     <LinearLayout android:layout_width="match_parent"

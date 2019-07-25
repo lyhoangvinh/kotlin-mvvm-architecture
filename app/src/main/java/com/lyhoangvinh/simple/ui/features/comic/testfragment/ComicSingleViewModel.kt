@@ -11,7 +11,7 @@ import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicAdapter
 import javax.inject.Inject
 
-class ComicViewModel @Inject constructor(private val issuesRepo: IssuesRepo) : BaseListDataViewModel<ComicAdapter>() {
+class ComicSingleViewModel @Inject constructor(private val issuesRepo: IssuesRepo) : BaseListDataViewModel<ComicAdapter>() {
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         refresh()
         issuesRepo.liveData().observe(lifecycleOwner, Observer {

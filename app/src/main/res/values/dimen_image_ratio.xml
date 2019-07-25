@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_image_references">100dp</dimen>
+    <dimen name="size_image_references_half">
+        50dp
+    </dimen>
+    <dimen name="size_image_merchant">150dp</dimen>
+    <dimen name="size_header_images">260dp</dimen>
+    <dimen name="size_gradient_header_images">140dp</dimen>
+
+    <dimen name="size_width_image_city">130dp</dimen>
+    <dimen name="size_width_image_country_city">100dp</dimen>
+
+
+    <dimen name="size_height_image_city">195dp</dimen>
+
+    <dimen name="size_shadow">6dp</dimen>
+    <dimen name="size_image_for_all_screen">270dp</dimen>
+    <dimen name="size_image_promotion">260dp</dimen>
+</resources>

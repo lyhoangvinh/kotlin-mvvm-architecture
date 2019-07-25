@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.lyhoangvinh.simple.di.ViewModelFactory
 import com.lyhoangvinh.simple.di.qualifier.ViewModelKey
+import com.lyhoangvinh.simple.ui.features.avg.home.HomeViewModel
+import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
+import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
+import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -17,10 +21,20 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ComicViewModel::class)
-    internal abstract fun mainViewModel(viewModel: ComicViewModel): ViewModel
+    internal abstract fun comicViewModel(viewModel: ComicViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(ComicViewModel::class)
-    internal abstract fun testViewModel(viewModel: com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicViewModel): ViewModel
+    @ViewModelKey(ComicSingleViewModel::class)
+    internal abstract fun comicSingleViewModel(viewModel: ComicSingleViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    internal abstract fun homeViewModel(viewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    internal abstract fun splashViewModel(viewModel: SplashViewModel): ViewModel
 }

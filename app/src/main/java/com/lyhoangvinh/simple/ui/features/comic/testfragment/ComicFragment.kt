@@ -6,9 +6,10 @@ import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.FragmentTestBinding
 import com.lyhoangvinh.simple.ui.base.fragment.BaseViewModelRecyclerViewFragment
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicAdapter
+import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
 
-class ComicFragment : BaseViewModelRecyclerViewFragment<FragmentTestBinding, ComicViewModel, ComicAdapter>() {
-    override fun createViewModelClass() = ComicViewModel::class.java
+class ComicFragment : BaseViewModelRecyclerViewFragment<FragmentTestBinding, ComicSingleViewModel, ComicAdapter>() {
+    override fun createViewModelClass() = ComicSingleViewModel::class.java
     override fun getLayoutResource() = R.layout.fragment_test
     override fun initialize(view: View, ctx: Context?) {
         super.initialize(view, ctx)

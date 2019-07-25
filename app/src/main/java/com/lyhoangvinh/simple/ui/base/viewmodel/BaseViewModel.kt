@@ -1,18 +1,19 @@
 package com.lyhoangvinh.simple.ui.base.viewmodel
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
 import android.os.Bundle
 import android.os.Handler
-import androidx.annotation.CallSuper
-import androidx.annotation.NonNull
 import android.text.TextUtils
 import android.util.Log
+import androidx.annotation.CallSuper
+import androidx.annotation.NonNull
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
 import com.lyhoangvinh.simple.data.source.Resource
 import com.lyhoangvinh.simple.data.source.State
 import com.lyhoangvinh.simple.data.source.Status
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
+import com.lyhoangvinh.simple.utils.NavigatorHelper
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.makeRequest
 import io.reactivex.Flowable
@@ -31,12 +32,15 @@ abstract class BaseViewModel : ViewModel() {
 
     private var isFirstTimeUiCreate = true
 
+    protected lateinit var navigatorHelper: NavigatorHelper
+
     /**
      * called after fragment / activity is created with input bundle arguments
      * @param bundle argument data
      */
     @CallSuper
-    fun onCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
+    fun onCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?, navigatorHelper: NavigatorHelper) {
+        this.navigatorHelper = navigatorHelper
         if (isFirstTimeUiCreate) {
             onFirstTimeUiCreate(lifecycleOwner, bundle)
             isFirstTimeUiCreate = false
