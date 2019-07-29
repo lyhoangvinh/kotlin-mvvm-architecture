@@ -8,8 +8,10 @@ import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.IssuesDao
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
 import com.lyhoangvinh.simple.data.paging.source.Resource
+import com.lyhoangvinh.simple.data.paging.source.State
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.services.ComicVineService
+import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
 import javax.inject.Inject
 
@@ -22,12 +24,13 @@ class IssuesRepo @Inject constructor(
 
     fun liveData() = LivePagedListBuilder(issuesDao.getAllPaged(), 10).build()
 
-    fun livePagingData(): LiveData<PagedList<Issues>> {
+    fun livePagingData(stateLiveData: SafeMutableLiveData<State>): LiveData<PagedList<Issues>> {
         val config = PagedList.Config.Builder()
             .setPageSize(20)
             .setEnablePlaceholders(true)
             .setInitialLoadSizeHint(40)
             .build()
+        comicPagingDataSource.setStateLiveData(stateLiveData)
         return LivePagedListBuilder(comicPagingDataSource, config).build()
     }
 

@@ -2,7 +2,6 @@ package com.lyhoangvinh.simple.data.paging.source
 
 import android.os.Handler
 import android.text.TextUtils
-import androidx.annotation.NonNull
 import androidx.paging.DataSource
 import androidx.paging.ItemKeyedDataSource
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
@@ -22,8 +21,7 @@ abstract class BaseItemKeyedDataComicSource<T> :
 
     var pageNumber = 0
 
-    @NonNull
-    private var stateLiveData = SafeMutableLiveData<State>()
+    lateinit var stateLiveData: SafeMutableLiveData<State>
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -73,7 +71,7 @@ abstract class BaseItemKeyedDataComicSource<T> :
         }
     }
 
-    abstract class Factory<T> (private val provider: Provider<BaseItemKeyedDataComicSource<T>>) :
+    abstract class Factory<T>(private val provider: Provider<BaseItemKeyedDataComicSource<T>>) :
         DataSource.Factory<Int, T>() {
 
         override fun create(): DataSource<Int, T> {
