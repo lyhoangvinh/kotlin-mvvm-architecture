@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.repo
+package com.lyhoangvinh.simple.data.paging.repo
 
 import androidx.arch.core.util.Function
 import androidx.lifecycle.LiveData
@@ -14,10 +14,10 @@ import com.lyhoangvinh.simple.data.itemviewmodel.CategoryItem
 import com.lyhoangvinh.simple.data.itemviewmodel.CollectionBannerItem
 import com.lyhoangvinh.simple.data.itemviewmodel.CollectionBottomItem
 import com.lyhoangvinh.simple.data.itemviewmodel.VideoItem
+import com.lyhoangvinh.simple.data.paging.source.PlainResponseZipFourConsumer
+import com.lyhoangvinh.simple.data.paging.source.Resource
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.data.services.AvgleService
-import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
-import com.lyhoangvinh.simple.data.source.Resource
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
@@ -28,11 +28,8 @@ class HomeRepo @Inject constructor(
     private val avgleService: AvgleService,
     private val categoriesDao: CategoriesDao,
     private val collectionDao: CollectionDao,
-    private val videosDao: VideosDao,
-    private val homeDataSourceFactory: HomeDataSource.Factory
-) : BaseRepo() {
-
-    fun liveData() = LivePagedListBuilder(homeDataSourceFactory, 10).build()
+    private val videosDao: VideosDao
+ ) : BaseRepo() {
 
     /**
      * Use MediatorLiveData To Query And Merge Multiple Data Source Type Into Single LiveData

@@ -1,6 +1,6 @@
-package com.lyhoangvinh.simple.data.source
+package com.lyhoangvinh.simple.data.paging.source
 
-import com.lyhoangvinh.simple.data.source.Status.*
+import com.lyhoangvinh.simple.data.paging.source.Status.*
 
 /**
  * A generic class that holds a value with its loading status.

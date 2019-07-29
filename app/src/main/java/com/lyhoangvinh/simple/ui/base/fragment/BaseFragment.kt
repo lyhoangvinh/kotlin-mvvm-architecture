@@ -2,6 +2,7 @@ package com.lyhoangvinh.simple.ui.base.fragment
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import android.graphics.Color

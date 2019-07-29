@@ -12,6 +12,8 @@ import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicFragment
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicFragmentModule
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleActivity
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleActivityModule
+import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
+import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -35,4 +37,7 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [SplashModule::class])
     abstract fun splashActivity(): SplashActivity
+
+    @ContributesAndroidInjector(modules = [ComicPagingActivityModule::class])
+    abstract fun comicPagingActivity(): ComicPagingActivity
 }

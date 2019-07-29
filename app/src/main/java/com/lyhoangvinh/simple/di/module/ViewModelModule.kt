@@ -8,6 +8,7 @@ import com.lyhoangvinh.simple.ui.features.avg.home.HomeViewModel
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleViewModel
+import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -37,4 +38,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SplashViewModel::class)
     internal abstract fun splashViewModel(viewModel: SplashViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ComicPagingViewModel::class)
+    internal abstract fun comicPagingViewModel(viewModel: ComicPagingViewModel): ViewModel
 }

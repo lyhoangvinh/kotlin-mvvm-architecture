@@ -1,20 +1,39 @@
-package com.lyhoangvinh.simple.data.repo
+package com.lyhoangvinh.simple.data.paging.repo
 
 
+import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.IssuesDao
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
+import com.lyhoangvinh.simple.data.paging.source.Resource
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.services.ComicVineService
-import com.lyhoangvinh.simple.data.source.Resource
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class IssuesRepo @Inject constructor(private val comicVineService: ComicVineService, private val issuesDao: IssuesDao) :
+class IssuesRepo @Inject constructor(
+    private val comicVineService: ComicVineService,
+    private val issuesDao: IssuesDao,
+    private val comicPagingDataSource: ComicPagingDataSource.ComicPagingFactory
+) :
     BaseRepo() {
 
     fun liveData() = LivePagedListBuilder(issuesDao.getAllPaged(), 10).build()
+
+    fun livePagingData(): LiveData<PagedList<Issues>> {
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setEnablePlaceholders(true)
+            .setInitialLoadSizeHint(40)
+            .build()
+        return LivePagedListBuilder(comicPagingDataSource, config).build()
+    }
+
+    fun clear() {
+        comicPagingDataSource.clear()
+    }
 
     fun delete(t: Issues) = issuesDao.delete(t)
 

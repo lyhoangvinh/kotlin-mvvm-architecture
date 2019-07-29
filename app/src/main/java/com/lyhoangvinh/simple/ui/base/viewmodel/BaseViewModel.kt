@@ -9,9 +9,9 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
-import com.lyhoangvinh.simple.data.source.Resource
-import com.lyhoangvinh.simple.data.source.State
-import com.lyhoangvinh.simple.data.source.Status
+import com.lyhoangvinh.simple.data.paging.source.Resource
+import com.lyhoangvinh.simple.data.paging.source.State
+import com.lyhoangvinh.simple.data.paging.source.Status
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData

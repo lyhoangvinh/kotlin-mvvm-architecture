@@ -9,9 +9,11 @@ import androidx.annotation.Nullable
 import com.google.gson.*
 import com.lyhoangvinh.simple.BuildConfig
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
+import com.lyhoangvinh.simple.data.paging.source.PlainResponseZipFourConsumer
+import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
-import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
+import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -51,6 +53,24 @@ fun <T> makeRequest(
     }
 
     return single.subscribe(responseConsumer, Consumer {
+        // handle error
+        it.printStackTrace()
+        errorConsumer?.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))
+    })
+}
+
+fun <T> makeRequest(
+    request: Single<BaseResponseComic<T>>,
+    @NonNull responseConsumer: PlainPagingConsumer<T>,
+    @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
+): Disposable {
+
+    var single = request.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+    single = single.observeOn(AndroidSchedulers.mainThread())
+    return single.subscribe({
+        if (it != null && it.results.isNotEmpty())
+            responseConsumer.accept(it.results)
+    }, {
         // handle error
         it.printStackTrace()
         errorConsumer?.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))
@@ -118,8 +138,9 @@ fun <T1, T2, T3, T4> makeRequest(
     }
 
     return Single.zip(single1, single2, single3, single4,
-        Function4<T1, T2, T3, T4, ResponseFourZip<T1, T2, T3, T4>> { t1, t2, t3, t4 -> ResponseFourZip(t1, t2, t3, t4)
-    })
+        Function4<T1, T2, T3, T4, ResponseFourZip<T1, T2, T3, T4>> { t1, t2, t3, t4 ->
+            ResponseFourZip(t1, t2, t3, t4)
+        })
         .subscribeOn(Schedulers.io())
         .unsubscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
