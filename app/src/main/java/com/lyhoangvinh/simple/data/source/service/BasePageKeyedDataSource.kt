@@ -25,7 +25,7 @@ import javax.inject.Provider
  * https://medium.com/@SaurabhSandav/using-android-paging-library-with-retrofit-fa032cac15f8
  */
 
-abstract class BaseItemKeyedDataSource<T> :
+abstract class BasePageKeyedDataSource<T> :
 
     PageKeyedDataSource<Int, T>() {
 
@@ -95,7 +95,7 @@ abstract class BaseItemKeyedDataSource<T> :
         }
     }
 
-    abstract class Factory<T>(private val provider: Provider<BaseItemKeyedDataSource<T>>) :
+    abstract class Factory<T>(private val provider: Provider<BasePageKeyedDataSource<T>>) :
         DataSource.Factory<Int, T>() {
 
         fun setUpProvider(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable) {
