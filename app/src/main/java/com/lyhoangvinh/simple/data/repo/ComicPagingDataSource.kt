@@ -14,8 +14,8 @@ import javax.inject.Singleton
 class ComicPagingDataSource @Inject constructor(private val comicVineService: ComicVineService) :
     BasePageKeyedDataSource<Issues>(), Provider<BasePageKeyedDataSource<Issues>> {
 
-    override fun getRequest(): Single<BaseResponseComic<Issues>> =
-        comicVineService.getIssues(20, pageNumber, Constants.KEY, "json", "cover_date: desc")
+    override fun getRequest(page: Int): Single<BaseResponseComic<Issues>> =
+        comicVineService.getIssues(20, page, Constants.KEY, "json", "cover_date: desc")
 
     @Singleton
     class ComicPagingFactory @Inject constructor(provider: ComicPagingDataSource) : Factory<Issues>(provider)

@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.source.service
+package com.lyhoangvinh.simple.data.source.local
 
 import android.os.Handler
 import android.text.TextUtils
@@ -25,7 +25,9 @@ import javax.inject.Provider
  * https://medium.com/@SaurabhSandav/using-android-paging-library-with-retrofit-fa032cac15f8
  */
 
-abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
+abstract class BaseLocalPageKeyedDataSource<T> :
+
+    PageKeyedDataSource<Int, T>() {
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, T>) {
         Log.d(TAG_X, "1-loadInitial: requestedLoadSize ${params.requestedLoadSize}")
@@ -43,6 +45,8 @@ abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
 
     private var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
+    var pageNumber = 0
+
     lateinit var stateLiveData: SafeMutableLiveData<State>
 
     lateinit var compositeDisposable: CompositeDisposable
@@ -58,12 +62,13 @@ abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
         loadCallback: LoadCallback<Int, T>? = null
     ) {
         publishState(State.loading(null))
-        compositeDisposable.add(makeRequest(this.getRequest(page), object : PlainPagingConsumer<T> {
+        compositeDisposable.add(makeRequest(this.getRequest(), object : PlainPagingConsumer<T> {
             override fun accept(t: List<T>) {
                 val nextPage = page + 1
                 loadInitialCallback?.onResult(t, 0, t.size, null, nextPage)
                 loadCallback?.onResult(t, nextPage)
                 publishState(State.success(null))
+                pageNumber = nextPage
             }
         }, object : PlainConsumer<ErrorEntity> {
             override fun accept(t: ErrorEntity) {
@@ -73,7 +78,7 @@ abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
     }
 
 
-    abstract fun getRequest(page: Int): Single<BaseResponseComic<T>>
+    abstract fun getRequest(): Single<BaseResponseComic<T>>
 
     fun publishState(state: State) {
         stateLiveData.setValue(state)
@@ -90,7 +95,7 @@ abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
         }
     }
 
-    abstract class Factory<T>(private val provider: Provider<BasePageKeyedDataSource<T>>) :
+    abstract class Factory<T>(private val provider: Provider<BaseLocalPageKeyedDataSource<T>>) :
         DataSource.Factory<Int, T>() {
 
         fun setUpProvider(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable) {
