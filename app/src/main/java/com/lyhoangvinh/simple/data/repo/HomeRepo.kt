@@ -1,10 +1,11 @@
-package com.lyhoangvinh.simple.data.paging.repo
+package com.lyhoangvinh.simple.data.repo
 
 import androidx.arch.core.util.Function
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.CategoriesDao
 import com.lyhoangvinh.simple.data.dao.CollectionDao
@@ -14,8 +15,8 @@ import com.lyhoangvinh.simple.data.itemviewmodel.CategoryItem
 import com.lyhoangvinh.simple.data.itemviewmodel.CollectionBannerItem
 import com.lyhoangvinh.simple.data.itemviewmodel.CollectionBottomItem
 import com.lyhoangvinh.simple.data.itemviewmodel.VideoItem
-import com.lyhoangvinh.simple.data.paging.source.PlainResponseZipFourConsumer
-import com.lyhoangvinh.simple.data.paging.source.Resource
+import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
+import com.lyhoangvinh.simple.data.source.Resource
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.data.services.AvgleService
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
@@ -23,13 +24,12 @@ import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-
 class HomeRepo @Inject constructor(
     private val avgleService: AvgleService,
     private val categoriesDao: CategoriesDao,
     private val collectionDao: CollectionDao,
     private val videosDao: VideosDao
- ) : BaseRepo() {
+) : BaseRepo() {
 
     /**
      * Use MediatorLiveData To Query And Merge Multiple Data Source Type Into Single LiveData
@@ -38,6 +38,7 @@ class HomeRepo @Inject constructor(
 
     fun fetchData(): LiveData<List<ItemViewModel>> {
         val liveDataMerger = MediatorLiveData<MergedData>()
+
         liveDataMerger.addSource(LivePagedListBuilder(categoriesDao.liveDataFactory(), 10).build()) {
             liveDataMerger.value = CategoryData(it!!)
         }
@@ -77,6 +78,44 @@ class HomeRepo @Inject constructor(
             liveData.setValue(pagedList)
             return@Function liveData
         })
+    }
+
+    fun fetchData2():  MediatorLiveData<MergedData> {
+        var config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setInitialLoadSizeHint(40)
+            .setEnablePlaceholders(true)
+            .build()
+        val liveDataMerger = MediatorLiveData<MergedData>()
+
+        liveDataMerger.addSource(LivePagedListBuilder(categoriesDao.liveDataFactory(), 10).build()) {
+            liveDataMerger.value = CategoryData(it!!)
+        }
+        liveDataMerger.addSource(
+            LivePagedListBuilder(
+                collectionDao.liveDataFactoryFromType(Constants.TYPE_HOME_BANNER),
+                10
+            ).build()
+        ) {
+            liveDataMerger.value = CollectionBannerData(it!!)
+        }
+        liveDataMerger.addSource(
+            LivePagedListBuilder(
+                collectionDao.liveDataFactoryFromType(Constants.TYPE_HOME_BOTTOM),
+                10
+            ).build()
+        ) {
+            liveDataMerger.value = CollectionBottomData(it!!)
+        }
+        liveDataMerger.addSource(
+            LivePagedListBuilder(
+                videosDao.liveDataFactoryFromType(Constants.TYPE_HOME),
+                10
+            ).build()
+        ) {
+            liveDataMerger.value = VideoData(it!!)
+        }
+        return liveDataMerger
     }
 
     fun getRepoHome(): Flowable<Resource<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>>> {

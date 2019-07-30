@@ -9,7 +9,7 @@ import androidx.annotation.Nullable
 import com.google.gson.*
 import com.lyhoangvinh.simple.BuildConfig
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
-import com.lyhoangvinh.simple.data.paging.source.PlainResponseZipFourConsumer
+import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer

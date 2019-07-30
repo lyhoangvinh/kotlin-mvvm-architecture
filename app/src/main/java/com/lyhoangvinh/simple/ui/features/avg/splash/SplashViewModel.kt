@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.lyhoangvinh.simple.data.paging.repo.HomeRepo
+import com.lyhoangvinh.simple.data.repo.HomeRepo
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel

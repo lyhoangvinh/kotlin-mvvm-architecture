@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.paging.source
+package com.lyhoangvinh.simple.data.source
 
 class State(var status: Status, var message: String?) {
 

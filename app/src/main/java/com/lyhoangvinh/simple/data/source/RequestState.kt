@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.paging.source
+package com.lyhoangvinh.simple.data.source
 
 data class RequestState<out T>(val status: Status, val data: T?, val message: String? = null) {
     companion object {

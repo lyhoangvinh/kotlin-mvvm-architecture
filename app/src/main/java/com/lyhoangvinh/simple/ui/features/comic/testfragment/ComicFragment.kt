@@ -6,7 +6,6 @@ import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.FragmentTestBinding
 import com.lyhoangvinh.simple.ui.base.fragment.BaseViewModelRecyclerViewFragment
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicAdapter
-import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
 
 class ComicFragment : BaseViewModelRecyclerViewFragment<FragmentTestBinding, ComicSingleViewModel, ComicAdapter>() {
     override fun createViewModelClass() = ComicSingleViewModel::class.java

@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
-import com.lyhoangvinh.simple.data.paging.repo.IssuesRepo
+import com.lyhoangvinh.simple.data.repo.IssuesRepo
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel

@@ -16,7 +16,7 @@ import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.*
 import javax.inject.Inject
 
-class HomeAdapter @Inject constructor(@ActivityContext val context: Context) : BaseItemAdapter(ItemCallback) {
+class HomeAdapter @Inject constructor(@ActivityContext val context: Context) : BaseItemPagerAdapter(ItemCallback) {
 
     companion object {
         private const val ITEM_LOADING = 0
@@ -81,10 +81,7 @@ class HomeAdapter @Inject constructor(@ActivityContext val context: Context) : B
         }
 
         private class CategoryAdapter(context: Context) :
-            BaseAdapter<Category, ItemCategoriesBinding, CategoryAdapter.CategoryItemViewHolder>(
-                context,
-                CategoryDiffCallBack
-            ) {
+            BaseAdapter<Category, ItemCategoriesBinding, CategoryAdapter.CategoryItemViewHolder>(context, CategoryDiffCallBack) {
             override fun itemLayoutResource() = R.layout.item_categories
             override fun createViewHolder(itemView: View) = CategoryItemViewHolder(itemView)
             override fun onBindViewHolder(binding: ItemCategoriesBinding, dto: Category, position: Int) {
