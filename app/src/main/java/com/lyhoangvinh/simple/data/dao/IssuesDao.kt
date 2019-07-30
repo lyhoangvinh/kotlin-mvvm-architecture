@@ -12,6 +12,9 @@ interface IssuesDao : BaseDao<Issues> {
     fun liveData(): LiveData<List<Issues>>
 
     @Query("SELECT * FROM Issues")
+    fun getAll(): List<Issues>
+
+    @Query("SELECT * FROM Issues")
     fun getAllPaged(): DataSource.Factory<Int, Issues>
 
     @Insert

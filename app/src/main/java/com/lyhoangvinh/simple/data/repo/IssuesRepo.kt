@@ -19,11 +19,20 @@ import javax.inject.Inject
 class IssuesRepo @Inject constructor(
     private val comicVineService: ComicVineService,
     private val issuesDao: IssuesDao,
-    private val comicPagingDataSource: ComicPagingDataSource.ComicPagingFactory
+    private val comicPagingDataSource: ComicPagingDataSource.ComicPagingFactory,
+    private val comicLocalPagingDataSource: ComicLocalPagingDataSource.ComicLocalPagingFactory
 ) :
     BaseRepo() {
 
-    fun liveData() = LivePagedListBuilder(issuesDao.getAllPaged(), 10).build()
+    fun liveData(): LiveData<PagedList<Issues>> {
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(20)
+            .setPrefetchDistance(10)
+            .build()
+        return LivePagedListBuilder(issuesDao.getAllPaged(), config).build()
+    }
 
     fun livePagingData(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable): LiveData<PagedList<Issues>> {
         val config = PagedList.Config.Builder()
@@ -37,11 +46,24 @@ class IssuesRepo @Inject constructor(
     }
 
     fun clear() {
-        comicPagingDataSource.clear()
+//        comicPagingDataSource.clear()
+//        comicLocalPagingDataSource.clear()
     }
 
     fun invalidate() {
-        comicPagingDataSource.invalidate()
+//        comicPagingDataSource.invalidate()
+//        comicLocalPagingDataSource.invalidate()
+    }
+
+    fun liveLocalPagingData(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable): LiveData<PagedList<Issues>> {
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(20)
+            .setPrefetchDistance(10)
+            .build()
+        comicLocalPagingDataSource.setUpProvider(stateLiveData, compositeDisposable)
+        return LivePagedListBuilder(comicLocalPagingDataSource, config).build()
     }
 
     fun delete(t: Issues) = issuesDao.delete(t)

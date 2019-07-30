@@ -25,9 +25,18 @@ import javax.inject.Provider
  * https://medium.com/@SaurabhSandav/using-android-paging-library-with-retrofit-fa032cac15f8
  */
 
-abstract class BaseLocalPageKeyedDataSource<T> :
+abstract class BaseLocalPageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
 
-    PageKeyedDataSource<Int, T>() {
+    private var TAG_X = "LOG_BaseLocalPageKeyedDataSource"
+
+    lateinit var stateLiveData: SafeMutableLiveData<State>
+
+    lateinit var compositeDisposable: CompositeDisposable
+
+    open fun clear() {
+        compositeDisposable.clear()
+    }
+
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, T>) {
         Log.d(TAG_X, "1-loadInitial: requestedLoadSize ${params.requestedLoadSize}")
@@ -43,32 +52,21 @@ abstract class BaseLocalPageKeyedDataSource<T> :
         // Do nothing, since data is loaded from our initial load itself
     }
 
-    private var TAG_X = "LOG_BASE_PageKeyedDataSource"
-
-    var pageNumber = 0
-
-    lateinit var stateLiveData: SafeMutableLiveData<State>
-
-    lateinit var compositeDisposable: CompositeDisposable
-
-
-    open fun clear() {
-        compositeDisposable.clear()
-    }
-
     private fun callApi(
         page: Int,
         loadInitialCallback: LoadInitialCallback<Int, T>? = null,
         loadCallback: LoadCallback<Int, T>? = null
     ) {
         publishState(State.loading(null))
-        compositeDisposable.add(makeRequest(this.getRequest(), object : PlainPagingConsumer<T> {
+        compositeDisposable.add(makeRequest(this.getRequest(page), object : PlainPagingConsumer<T> {
             override fun accept(t: List<T>) {
                 val nextPage = page + 1
+                publishState(State.success(null))
+                execute {
+                    saveResultListener(isRefresh = page == 0, data = t)
+                }
                 loadInitialCallback?.onResult(t, 0, t.size, null, nextPage)
                 loadCallback?.onResult(t, nextPage)
-                publishState(State.success(null))
-                pageNumber = nextPage
             }
         }, object : PlainConsumer<ErrorEntity> {
             override fun accept(t: ErrorEntity) {
@@ -77,8 +75,11 @@ abstract class BaseLocalPageKeyedDataSource<T> :
         }))
     }
 
+    abstract fun getResult(): List<T>
 
-    abstract fun getRequest(): Single<BaseResponseComic<T>>
+    abstract fun saveResultListener(isRefresh: Boolean, data: List<T>)
+
+    abstract fun getRequest(page: Int): Single<BaseResponseComic<T>>
 
     fun publishState(state: State) {
         stateLiveData.setValue(state)
@@ -127,9 +128,4 @@ abstract class BaseLocalPageKeyedDataSource<T> :
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
-
-    interface OnSaveResultListener<T> {
-        fun onSave(data: T, isRefresh: Boolean)
-    }
-
 }

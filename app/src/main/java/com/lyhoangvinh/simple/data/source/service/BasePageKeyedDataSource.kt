@@ -27,6 +27,13 @@ import javax.inject.Provider
 
 abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
 
+    private var TAG_X = "LOG_BASE_PageKeyedDataSource"
+
+    lateinit var stateLiveData: SafeMutableLiveData<State>
+
+    lateinit var compositeDisposable: CompositeDisposable
+
+
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, T>) {
         Log.d(TAG_X, "1-loadInitial: requestedLoadSize ${params.requestedLoadSize}")
         callApi(page = 0, loadInitialCallback = callback)
@@ -40,13 +47,6 @@ abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, T>) {
         // Do nothing, since data is loaded from our initial load itself
     }
-
-    private var TAG_X = "LOG_BASE_PageKeyedDataSource"
-
-    lateinit var stateLiveData: SafeMutableLiveData<State>
-
-    lateinit var compositeDisposable: CompositeDisposable
-
 
     open fun clear() {
         compositeDisposable.clear()
