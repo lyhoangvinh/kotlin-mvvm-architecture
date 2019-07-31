@@ -62,7 +62,7 @@ abstract class BaseLocalPageKeyedDataSource<T>(connectionLiveData: ConnectionLiv
         }
     }
 
-    open fun clear() {
+    fun clear() {
         compositeDisposable.clear()
     }
 
