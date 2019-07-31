@@ -1,7 +1,6 @@
 package com.lyhoangvinh.simple.ui.features.avg.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.data.repo.HomeRepo
@@ -12,7 +11,7 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : BaseVi
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         homeRepo.fetchData().observe(lifecycleOwner, Observer {
-            Log.d("ABC", "Log TEST: ${it.size}")
+
         })
     }
 }

@@ -19,8 +19,8 @@ import javax.inject.Inject
 class IssuesRepo @Inject constructor(
     private val comicVineService: ComicVineService,
     private val issuesDao: IssuesDao,
-    private val comicPagingDataSource: ComicPagingDataSource.ComicPagingFactory,
-    private val comicLocalPagingDataSource: ComicLocalPagingDataSource.ComicLocalPagingFactory
+    private val comicPagingFactory: ComicPagingDataSource.ComicPagingFactory,
+    private val comicLocalPagingFactory: ComicLocalPagingDataSource.ComicLocalPagingFactory
 ) :
     BaseRepo() {
 
@@ -34,36 +34,42 @@ class IssuesRepo @Inject constructor(
         return LivePagedListBuilder(issuesDao.getAllPaged(), config).build()
     }
 
-    fun livePagingData(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable): LiveData<PagedList<Issues>> {
+    fun livePagingData(
+        stateLiveData: SafeMutableLiveData<State>,
+        compositeDisposable: CompositeDisposable
+    ): LiveData<PagedList<Issues>> {
         val config = PagedList.Config.Builder()
             .setPageSize(20)
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(20)
             .setPrefetchDistance(10)
             .build()
-        comicPagingDataSource.setUpProvider(stateLiveData, compositeDisposable)
-        return LivePagedListBuilder(comicPagingDataSource, config).build()
+        comicPagingFactory.setUpProvider(stateLiveData, compositeDisposable)
+        return LivePagedListBuilder(comicPagingFactory, config).build()
     }
 
     fun clear() {
-//        comicPagingDataSource.clear()
-//        comicLocalPagingDataSource.clear()
+//        comicPagingFactory.clear()
+        comicLocalPagingFactory.clear()
     }
 
     fun invalidate() {
-//        comicPagingDataSource.invalidate()
-//        comicLocalPagingDataSource.invalidate()
+//        comicPagingFactory.invalidate()
+        comicLocalPagingFactory.reset()
     }
 
-    fun liveLocalPagingData(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable): LiveData<PagedList<Issues>> {
+    fun liveLocalPagingData(
+        stateLiveData: SafeMutableLiveData<State>,
+        compositeDisposable: CompositeDisposable
+    ): LiveData<PagedList<Issues>> {
         val config = PagedList.Config.Builder()
             .setPageSize(20)
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(20)
+            .setInitialLoadSizeHint(40)
             .setPrefetchDistance(10)
             .build()
-        comicLocalPagingDataSource.setUpProvider(stateLiveData, compositeDisposable)
-        return LivePagedListBuilder(comicLocalPagingDataSource, config).build()
+        comicLocalPagingFactory.setUpProvider(stateLiveData, compositeDisposable)
+        return LivePagedListBuilder(comicLocalPagingFactory, config).build()
     }
 
     fun delete(t: Issues) = issuesDao.delete(t)

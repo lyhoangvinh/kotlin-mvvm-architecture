@@ -13,6 +13,7 @@ import com.lyhoangvinh.simple.data.source.Status
 import com.lyhoangvinh.simple.ui.base.activity.BaseActivity
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.lyhoangvinh.simple.utils.NavigatorHelper
+import com.lyhoangvinh.simple.utils.showToastMessage
 import javax.inject.Inject
 
 /**
@@ -59,11 +60,14 @@ abstract class BaseViewModelFragment<B : ViewDataBinding, VM : BaseViewModel> : 
      * @param state viewModel's state
      */
     private fun handleState(state: State?) {
-        setLoading(state != null && state.status == Status.LOADING)
+        setLoading(state != null && state.status == Status.LOADING, state?.message.toString())
     }
 
-    protected open fun setLoading(loading: Boolean) {
+    protected open fun setLoading(loading: Boolean, message: String) {
         (activity as BaseActivity).setLoading(loading)
+        if (message.isNotEmpty()) {
+            showToastMessage(message)
+        }
     }
 
     override fun onDestroyView() {

@@ -1,11 +1,11 @@
 package com.lyhoangvinh.simple.ui.base.fragment
 
-import androidx.lifecycle.Observer
 import android.content.Context
-import androidx.databinding.ViewDataBinding
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.View
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.*
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.UiRefreshable
@@ -103,7 +103,7 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
 
     open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)
 
-    override fun setLoading(loading: Boolean) {
+    override fun setLoading(loading: Boolean, message: String) {
         if (!loading) {
             doneRefresh()
         } else {

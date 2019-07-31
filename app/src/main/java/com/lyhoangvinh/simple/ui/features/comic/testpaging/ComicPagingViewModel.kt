@@ -23,7 +23,7 @@ class ComicPagingViewModel @Inject constructor(private val issuesRepo: IssuesRep
             adapter.submitList(it)
         })
 
-     }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

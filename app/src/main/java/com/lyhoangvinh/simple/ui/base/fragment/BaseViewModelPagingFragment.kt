@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
+import com.lyhoangvinh.simple.utils.showToastMessage
 import kotlinx.android.synthetic.main.view_no_data.*
 import kotlinx.android.synthetic.main.view_recyclerview.*
 import kotlinx.android.synthetic.main.view_scroll_top.*
@@ -70,11 +71,14 @@ abstract class BaseViewModelPagingFragment<B : ViewDataBinding,
 
     open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)
 
-    override fun setLoading(loading: Boolean) {
+    override fun setLoading(loading: Boolean, message: String) {
         if (!loading) {
             doneRefresh()
         } else {
             refreshUi()
+        }
+        if (message.isNotEmpty()) {
+            showToastMessage(message)
         }
     }
 

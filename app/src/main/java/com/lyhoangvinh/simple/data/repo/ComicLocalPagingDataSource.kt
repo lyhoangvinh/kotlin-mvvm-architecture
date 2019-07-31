@@ -6,6 +6,7 @@ import com.lyhoangvinh.simple.data.entinies.comic.Issues
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.services.ComicVineService
 import com.lyhoangvinh.simple.data.source.local.BaseLocalPageKeyedDataSource
+import com.lyhoangvinh.simple.utils.ConnectionLiveData
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Provider
@@ -14,9 +15,10 @@ import javax.inject.Singleton
 @Singleton
 class ComicLocalPagingDataSource @Inject constructor(
     private val comicVineService: ComicVineService,
-    private val issuesDao: IssuesDao
+    private val issuesDao: IssuesDao,
+    connectionLiveData: ConnectionLiveData
 ) :
-    BaseLocalPageKeyedDataSource<Issues>(), Provider<BaseLocalPageKeyedDataSource<Issues>> {
+    BaseLocalPageKeyedDataSource<Issues>(connectionLiveData), Provider<BaseLocalPageKeyedDataSource<Issues>> {
 
     override fun getResult(): List<Issues> = issuesDao.getAll()
 
