@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.home
+package com.lyhoangvinh.simple.ui.features.avg.home.adapter.paging
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import com.lyhoangvinh.simple.data.entinies.avgle.Category
 import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.databinding.ItemCategoriesBinding
 import com.lyhoangvinh.simple.databinding.ItemSearchBinding
-import com.lyhoangvinh.simple.databinding.ViewCategoryBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.*
 import javax.inject.Inject
@@ -43,9 +42,13 @@ class HomeAdapter @Inject constructor(@ActivityContext val context: Context) : B
         viewType: Int
     ): BaseItemViewHolder<ItemViewModel, ViewDataBinding> {
         when (viewType) {
-            ITEM_SEARCH -> SearchViewHolder(LayoutInflater.from(context).inflate(R.layout.item_search, parent, false))
-            ITEM_CATEGORY -> CategoryViewHolder(context, parent, R.layout.view_category)
-            else -> LoadingViewHolder(LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false))
+            ITEM_SEARCH -> SearchViewHolder(
+                LayoutInflater.from(context).inflate(R.layout.item_search, parent, false)
+            )
+
+            else -> LoadingViewHolder(
+                LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false)
+            )
         }
         throw RuntimeException("Not support type=$viewType")
     }
@@ -70,34 +73,31 @@ class HomeAdapter @Inject constructor(@ActivityContext val context: Context) : B
 
     private class LoadingViewHolder(itemView: View) : BaseViewHolder<ItemSearchBinding>(itemView)
 
-    private class CategoryViewHolder(@ActivityContext context: Context, parent: ViewGroup, resId: Int) :
-        BaseItemViewHolder<CategoryItem, ViewCategoryBinding>(context, parent, resId) {
 
-        override fun setItem(data: CategoryItem) {
-            super.setItem(data)
-            val adapter = CategoryAdapter(context)
-            binding.rcvCategory.adapter = adapter
-            adapter.submitList(data.categories)
+    private class CategoryAdapter(context: Context) :
+        BaseAdapter<Category, ItemCategoriesBinding, CategoryAdapter.CategoryItemViewHolder>(
+            context,
+            CategoryDiffCallBack
+        ) {
+        override fun itemLayoutResource() = R.layout.item_categories
+        override fun createViewHolder(itemView: View) =
+            CategoryItemViewHolder(
+                itemView
+            )
+
+        override fun onBindViewHolder(binding: ItemCategoriesBinding, dto: Category, position: Int) {
+            binding.dto = dto
         }
 
-        private class CategoryAdapter(context: Context) :
-            BaseAdapter<Category, ItemCategoriesBinding, CategoryAdapter.CategoryItemViewHolder>(context, CategoryDiffCallBack) {
-            override fun itemLayoutResource() = R.layout.item_categories
-            override fun createViewHolder(itemView: View) = CategoryItemViewHolder(itemView)
-            override fun onBindViewHolder(binding: ItemCategoriesBinding, dto: Category, position: Int) {
-                binding.dto = dto
+        private class CategoryItemViewHolder(itemView: View) : BaseViewHolder<ItemCategoriesBinding>(itemView)
+
+        private object CategoryDiffCallBack : DiffUtil.ItemCallback<Category>() {
+            override fun areItemsTheSame(currentItem: Category, nextItem: Category): Boolean {
+                return currentItem.id == nextItem.id
             }
 
-            private class CategoryItemViewHolder(itemView: View) : BaseViewHolder<ItemCategoriesBinding>(itemView)
-
-            private object CategoryDiffCallBack : DiffUtil.ItemCallback<Category>() {
-                override fun areItemsTheSame(currentItem: Category, nextItem: Category): Boolean {
-                    return currentItem.id == nextItem.id
-                }
-
-                override fun areContentsTheSame(currentItem: Category, nextItem: Category): Boolean {
-                    return currentItem == nextItem
-                }
+            override fun areContentsTheSame(currentItem: Category, nextItem: Category): Boolean {
+                return currentItem == nextItem
             }
         }
     }

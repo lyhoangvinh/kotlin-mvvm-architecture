@@ -7,7 +7,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.text.TextUtils
 import android.transition.ChangeBounds
 import android.transition.Slide
@@ -18,6 +17,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.Fragment
 import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
 import java.text.ParseException
@@ -25,6 +25,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun ImageView.loadImageIssues(url: String) {
+    Picasso.get()
+        .load(url)
+        .placeholder(R.drawable.ic_placeholder_rectangle_200px)
+        .error(R.drawable.ic_placeholder_rectangle_200px)
+        .centerCrop()
+        .fit()
+        .into(this)
+}
+
+fun ImageView.loadImage(url: String) {
     Picasso.get()
         .load(url)
         .placeholder(R.drawable.ic_placeholder_rectangle_200px)
@@ -147,4 +157,9 @@ fun Activity.startActivityTransition(cls: Class<*>, finishAct: Boolean) {
         if (finishAct)
             Handler().postDelayed({ it.finish() }, 300L)
     }
+}
+
+
+inline fun <reified T> genericCastOrNull(anything: Any):T {
+    return anything as T
 }

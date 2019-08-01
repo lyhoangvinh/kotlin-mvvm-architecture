@@ -31,4 +31,23 @@ object BindingUtil {
     fun setLastUpdated(textView: TextView, date: String?) {
         textView.text = String.format("Last updated: %s", getAppDateFormatter(date!!))
     }
+
+    @JvmStatic
+    @BindingAdapter("setTotalView")
+    fun setTotalView(textView: TextView, totalView: Int?) {
+        textView.text = String.format("TotalView: %s", totalView)
+    }
+
+    @JvmStatic
+    @BindingAdapter("setTotalLike")
+    fun setTotalLike(textView: TextView, totalLike: Int?) {
+        textView.text = String.format("TotalView: %s", totalLike)
+    }
+
+    @JvmStatic
+    @BindingAdapter("setVideoCount")
+    fun setVideoCount(textView: TextView, videoCount: Int?) {
+        textView.text = String.format("Video count: %s", videoCount)
+    }
+
 }

@@ -4,4 +4,4 @@ import androidx.paging.PagedList
 import com.lyhoangvinh.simple.data.entinies.avgle.Collection
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
 
-data class CollectionBottomItem(var collections: PagedList<Collection>) : ItemViewModel
+data class CollectionBottomItem(var collections: PagedList<Collection>, override val idViewModel: String) : ItemViewModel

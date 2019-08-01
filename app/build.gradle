@@ -115,4 +115,9 @@ dependencies {
     testImplementation "androidx.paging:paging-common:$rootProject.ext.pagingVersion" // For Kotlin use paging-common-ktx
     // optional - RxJava support
     implementation "androidx.paging:paging-rxjava2:$rootProject.ext.pagingVersion" // For Kotlin use paging-rxjava2-ktx
+
+    //ultraviewpager
+    implementation ('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
+        transitive = true
+    }
 }

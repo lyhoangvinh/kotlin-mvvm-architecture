@@ -11,14 +11,11 @@ import com.lyhoangvinh.simple.data.dao.CategoriesDao
 import com.lyhoangvinh.simple.data.dao.CollectionDao
 import com.lyhoangvinh.simple.data.dao.VideosDao
 import com.lyhoangvinh.simple.data.entinies.avgle.*
-import com.lyhoangvinh.simple.data.itemviewmodel.CategoryItem
-import com.lyhoangvinh.simple.data.itemviewmodel.CollectionBannerItem
-import com.lyhoangvinh.simple.data.itemviewmodel.CollectionBottomItem
-import com.lyhoangvinh.simple.data.itemviewmodel.VideoItem
-import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
-import com.lyhoangvinh.simple.data.source.Resource
+import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.data.services.AvgleService
+import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
+import com.lyhoangvinh.simple.data.source.Resource
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
@@ -42,12 +39,7 @@ class HomeRepo @Inject constructor(
         liveDataMerger.addSource(LivePagedListBuilder(categoriesDao.liveDataFactory(), 10).build()) {
             liveDataMerger.value = CategoryData(it!!)
         }
-        liveDataMerger.addSource(
-            LivePagedListBuilder(
-                collectionDao.liveDataFactoryFromType(Constants.TYPE_HOME_BANNER),
-                10
-            ).build()
-        ) {
+        liveDataMerger.addSource(collectionDao.liveDataFromType(Constants.TYPE_HOME_BANNER)) {
             liveDataMerger.value = CollectionBannerData(it!!)
         }
         liveDataMerger.addSource(
@@ -68,19 +60,20 @@ class HomeRepo @Inject constructor(
         }
         return Transformations.switchMap(liveDataMerger, Function {
             val pagedList = ArrayList<ItemViewModel>()
+            pagedList.add(SearchItem("SearchItem"))
             val liveData = SafeMutableLiveData<List<ItemViewModel>>()
             when (it) {
-                is CategoryData -> pagedList.add(CategoryItem(it.categoryItems))
-                is CollectionBannerData -> pagedList.add(CollectionBannerItem(it.collectionBannerItems))
-                is CollectionBottomData -> pagedList.add(CollectionBottomItem(it.collectionBottomItems))
-                is VideoData -> pagedList.add(VideoItem(it.videoItems))
+                is CategoryData -> pagedList.add(CategoryItem(it.categoryItems, "CategoryItem ${it.categoryItems.size}"))
+                is CollectionBannerData -> pagedList.add(CollectionBannerItem(it.collectionBannerItems, "CollectionBannerItem ${it.collectionBannerItems.size}"))
+                is CollectionBottomData -> pagedList.add(CollectionBottomItem(it.collectionBottomItems, "CollectionBottomItem ${it.collectionBottomItems.size}"))
+                is VideoData -> pagedList.add(VideoItem(it.videoItems, "VideoItem ${it.videoItems.size}"))
             }
             liveData.setValue(pagedList)
             return@Function liveData
         })
     }
 
-    fun fetchData2():  MediatorLiveData<MergedData> {
+    fun fetchData2(): MediatorLiveData<MergedData> {
         var config = PagedList.Config.Builder()
             .setPageSize(20)
             .setInitialLoadSizeHint(40)

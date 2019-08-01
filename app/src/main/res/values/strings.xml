@@ -1,4 +1,13 @@
 <resources>
-    <string name="app_name">mvvm</string>
+    <string name="app_name">Mvvm Architecture</string>
     <string name="added">Added</string>
+    <string name="see_all">See All</string>
+    <string name="category">Category</string>
+    <string name="collection">Collection</string>
+    <string name="videos">Videos</string>
+    <string name="all">All</string>
+    <string name="preview">Preview</string>
+    <string name="search">Search</string>
+    <string name="success">Success</string>
+    <string name="loading">Loading</string>
 </resources>

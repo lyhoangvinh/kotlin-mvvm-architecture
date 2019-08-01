@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="color_disable_date">#b4b4b4</color>
+
     <color name="material_amber_700">#FFA000</color>
     <color name="material_blue_700">#1976D2</color>
     <color name="material_purple_700">#7B1FA2</color>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable name="video"
+                  type="com.lyhoangvinh.simple.data.entinies.avgle.Video"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:id="@+id/lnlMain"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:background="@drawable/bg_corner_gray_thin"
+                  android:orientation="vertical">
+
+        <com.lyhoangvinh.simple.ui.widget.AspectConerImageView
+                android:id="@+id/imv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:padding="@dimen/padding_2dp"
+                app:sriv_left_top_corner_radius="3dp"
+                app:sriv_right_top_corner_radius="3dp"
+                app:loadImageURL="@{video.previewUrl}"
+                tools:src="@drawable/ic_placeholder_rectangle_200px"/>
+
+        <TextView
+                android:id="@+id/tvName"
+                android:text="@{video.title}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_4dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/ts_15_sp"
+                tools:text="高橋しょう子"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="@dimen/padding_10dp"
+                android:layout_marginRight="@dimen/padding_6dp"/>
+
+        <TextView
+                android:id="@+id/tvKeyword"
+                android:text="@{video.keyword}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="三上悠亜"
+                android:textSize="@dimen/ts_12_sp"
+                android:layout_marginStart="@dimen/padding_10dp"/>
+
+
+        <TextView
+                android:id="@+id/tvPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_6dp"
+                android:background="@drawable/bg_red_status"
+                android:paddingBottom="@dimen/padding_6dp"
+                android:paddingLeft="@dimen/padding_8dp"
+                android:paddingRight="@dimen/padding_8dp"
+                android:paddingTop="@dimen/padding_6dp"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/ts_11_sp"
+                android:layout_marginStart="@dimen/padding_10dp"
+                android:text="@string/preview"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/tvTotalViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_4dp"
+                    android:layout_marginStart="@dimen/padding_10dp"
+                    android:layout_marginBottom="@dimen/padding_4dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:lines="1"
+                    app:setTotalLike="@{video.likes}"
+                    android:textSize="@dimen/ts_15_sp"
+                    tools:text="Total 204011"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_marginEnd="@dimen/padding_6dp"/>
+
+            <TextView
+                    android:id="@+id/tvVideoCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_4dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="@dimen/padding_8dp"
+                    android:layout_toEndOf="@+id/tvTotalViews"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:maxLines="2"
+                    app:setTotalView="@{video.viewNumber}"
+                    android:textSize="@dimen/ts_10_sp"
+                    tools:text="Count 17"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>
