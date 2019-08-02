@@ -15,14 +15,14 @@ abstract class BaseItemSimpleAdapter(
     diffUtil: DiffUtil.ItemCallback<ItemViewModel>) :
     RecyclerView.Adapter<BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding>>() {
 
-    private var mDiffer: AsyncListDiffer<ItemViewModel> =  AsyncListDiffer(this, diffUtil)
+    private var mDiffer: AsyncListDiffer<ItemViewModel> = AsyncListDiffer(this, diffUtil)
 
     override fun getItemViewType(position: Int): Int {
         return setItemViewType(getItemAt(position)!!)
     }
 
     override fun onBindViewHolder(holder: BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding>, position: Int) {
-        holder.setItem(mDiffer.currentList[position], holder.binding)
+        holder.setItem(getItemAt(position)!!, holder.binding)
     }
 
     override fun onCreateViewHolder(
@@ -37,7 +37,7 @@ abstract class BaseItemSimpleAdapter(
         return mDiffer.currentList.size
     }
 
-    fun getItemAt(position: Int): ItemViewModel? {
+    private fun getItemAt(position: Int): ItemViewModel? {
         return mDiffer.currentList[position]
     }
 
