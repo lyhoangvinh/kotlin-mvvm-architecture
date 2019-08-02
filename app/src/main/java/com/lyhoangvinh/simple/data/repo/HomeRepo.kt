@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.CategoriesDao
 import com.lyhoangvinh.simple.data.dao.CollectionDao
@@ -18,6 +17,7 @@ import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
 import com.lyhoangvinh.simple.data.source.Resource
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
+import com.lyhoangvinh.simple.utils.genericCastOrNull
 import io.reactivex.Flowable
 import javax.inject.Inject
 
@@ -35,7 +35,6 @@ class HomeRepo @Inject constructor(
 
     fun fetchData(): LiveData<List<ItemViewModel>> {
         val liveDataMerger = MediatorLiveData<MergedData>()
-
         liveDataMerger.addSource(LivePagedListBuilder(categoriesDao.liveDataFactory(), 10).build()) {
             liveDataMerger.value = CategoryData(it!!)
         }
@@ -58,14 +57,29 @@ class HomeRepo @Inject constructor(
         ) {
             liveDataMerger.value = VideoData(it!!)
         }
+        val pagedList = ArrayList<ItemViewModel>()
+        pagedList.add(SearchItem("SearchItem"))
         return Transformations.switchMap(liveDataMerger, Function {
-            val pagedList = ArrayList<ItemViewModel>()
-            pagedList.add(SearchItem("SearchItem"))
             val liveData = SafeMutableLiveData<List<ItemViewModel>>()
             when (it) {
-                is CategoryData -> pagedList.add(CategoryItem(it.categoryItems, "CategoryItem ${it.categoryItems.size}"))
-                is CollectionBannerData -> pagedList.add(CollectionBannerItem(it.collectionBannerItems, "CollectionBannerItem ${it.collectionBannerItems.size}"))
-                is CollectionBottomData -> pagedList.add(CollectionBottomItem(it.collectionBottomItems, "CollectionBottomItem ${it.collectionBottomItems.size}"))
+                is CategoryData -> pagedList.add(
+                    CategoryItem(
+                        it.categoryItems,
+                        "CategoryItem ${it.categoryItems.size}"
+                    )
+                )
+                is CollectionBannerData -> pagedList.add(
+                    CollectionBannerItem(
+                        it.collectionBannerItems,
+                        "CollectionBannerItem ${it.collectionBannerItems.size}"
+                    )
+                )
+                is CollectionBottomData -> pagedList.add(
+                    CollectionBottomItem(
+                        it.collectionBottomItems,
+                        "CollectionBottomItem ${it.collectionBottomItems.size}"
+                    )
+                )
                 is VideoData -> pagedList.add(VideoItem(it.videoItems, "VideoItem ${it.videoItems.size}"))
             }
             liveData.setValue(pagedList)
@@ -73,12 +87,53 @@ class HomeRepo @Inject constructor(
         })
     }
 
+    fun liveDataHome(): LiveData<List<ItemViewModel>> {
+        return Transformations.map(fetchData()) {
+            val newList = ArrayList<ItemViewModel>()
+            var searchItem = SearchItem(null)
+            var categoryItem = CategoryItem(null, null)
+            var collectionBannerItem = CollectionBannerItem(null, null)
+            var collectionBottomItem = CollectionBottomItem(null, null)
+            var videoItem = VideoItem(null, null)
+            for (i in 0 until it.size) {
+                when (it[i]) {
+                    is SearchItem -> searchItem = genericCastOrNull(it[i])
+                    is CategoryItem -> categoryItem = genericCastOrNull(it[i])
+                    is CollectionBannerItem -> collectionBannerItem = genericCastOrNull(it[i])
+                    is CollectionBottomItem -> collectionBottomItem = genericCastOrNull(it[i])
+                    is VideoItem -> videoItem = genericCastOrNull(it[i])
+                }
+            }
+
+            if (searchItem.idViewModel != null) {
+                newList.add(searchItem)
+            }
+
+            if (categoryItem.idViewModel != null) {
+                newList.add(categoryItem)
+            }
+
+            if (collectionBannerItem.idViewModel != null) {
+                newList.add(collectionBannerItem)
+            }
+
+            if (collectionBottomItem.idViewModel != null) {
+                newList.add(collectionBottomItem)
+            }
+
+            if (videoItem.idViewModel != null) {
+                newList.add(videoItem)
+            }
+            return@map newList
+        }
+    }
+
     fun fetchData2(): MediatorLiveData<MergedData> {
-        var config = PagedList.Config.Builder()
-            .setPageSize(20)
-            .setInitialLoadSizeHint(40)
-            .setEnablePlaceholders(true)
-            .build()
+//        var config = PagedList.Config.Builder()
+//            .setPageSize(20)
+//            .setInitialLoadSizeHint(40)
+//            .setEnablePlaceholders(true)
+//            .build()
         val liveDataMerger = MediatorLiveData<MergedData>()
 
         liveDataMerger.addSource(LivePagedListBuilder(categoriesDao.liveDataFactory(), 10).build()) {
@@ -114,8 +169,8 @@ class HomeRepo @Inject constructor(
     fun getRepoHome(): Flowable<Resource<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>>> {
         return createResource(
             avgleService.getCategories(),
-            avgleService.getCollections((1..10).random(), (10..20).random()),
-            avgleService.getCollections(0, 20),
+            avgleService.getCollections((1..10).random(), (5..10).random()),
+            avgleService.getCollections(0, 10),
             avgleService.getAllVideos((0..20).random()),
             object :
                 PlainResponseZipFourConsumer<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>> {

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.lyhoangvinh.simple.di.ViewModelFactory
 import com.lyhoangvinh.simple.di.qualifier.ViewModelKey
 import com.lyhoangvinh.simple.ui.features.avg.home.HomeViewModel
-import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
+import com.lyhoangvinh.simple.ui.features.splash.SplashViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingViewModel

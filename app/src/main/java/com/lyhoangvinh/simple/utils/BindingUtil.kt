@@ -34,14 +34,20 @@ object BindingUtil {
 
     @JvmStatic
     @BindingAdapter("setTotalView")
+    fun setTotalView(textView: TextView, totalView: Long?) {
+        textView.text = String.format("TotalView: %s", totalView)
+    }
+
+    @JvmStatic
+    @BindingAdapter("setTotalView")
     fun setTotalView(textView: TextView, totalView: Int?) {
         textView.text = String.format("TotalView: %s", totalView)
     }
 
     @JvmStatic
     @BindingAdapter("setTotalLike")
-    fun setTotalLike(textView: TextView, totalLike: Int?) {
-        textView.text = String.format("TotalView: %s", totalLike)
+    fun setTotalLike(textView: TextView, totalLike: Long?) {
+        textView.text = String.format("Likes: %s", totalLike)
     }
 
     @JvmStatic

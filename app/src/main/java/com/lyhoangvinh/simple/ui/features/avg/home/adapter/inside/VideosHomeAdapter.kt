@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entinies.avgle.Video
 import com.lyhoangvinh.simple.databinding.ItemVideoHomeBinding
+import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 
 
-class VideosHomeAdapter(context: Context) :
+class VideosHomeAdapter(@ActivityContext context: Context) :
     BaseAdapter<Video, ItemVideoHomeBinding, VideosHomeAdapter.VideoViewHolder>(context, DiffCallBack) {
 
 
@@ -41,6 +42,7 @@ class VideosHomeAdapter(context: Context) :
         binding.imv.layoutParams.height = mHeight
         binding.lnlMain.layoutParams = RelativeLayout.LayoutParams(mWidth, RelativeLayout.LayoutParams.WRAP_CONTENT)
         binding.imv.requestLayout()
+        binding.video = dto
     }
 
     class VideoViewHolder(itemView: View) : BaseViewHolder<ItemVideoHomeBinding>(itemView)

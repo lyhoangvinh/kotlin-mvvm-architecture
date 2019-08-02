@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.splash
+package com.lyhoangvinh.simple.ui.features.splash
 
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.ActivitySplashBinding

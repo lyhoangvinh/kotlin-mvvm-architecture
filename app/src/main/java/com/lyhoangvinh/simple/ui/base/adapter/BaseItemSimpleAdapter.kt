@@ -8,11 +8,14 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 
-abstract class BaseItemSimpleAdapter(private val context: Context, diffUtil: DiffUtil.ItemCallback<ItemViewModel>) :
+abstract class BaseItemSimpleAdapter(
+    @ActivityContext val context: Context,
+    diffUtil: DiffUtil.ItemCallback<ItemViewModel>) :
     RecyclerView.Adapter<BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding>>() {
 
-    private var mDiffer: AsyncListDiffer<ItemViewModel> = AsyncListDiffer(this, diffUtil)
+    private var mDiffer: AsyncListDiffer<ItemViewModel> =  AsyncListDiffer(this, diffUtil)
 
     override fun getItemViewType(position: Int): Int {
         return setItemViewType(getItemAt(position)!!)
@@ -22,7 +25,10 @@ abstract class BaseItemSimpleAdapter(private val context: Context, diffUtil: Dif
         holder.setItem(mDiffer.currentList[position], holder.binding)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
         val view = LayoutInflater.from(context).inflate(getLayoutResource(viewType), parent, false)
         return createItemViewHolder(view, viewType)
     }
@@ -43,6 +49,9 @@ abstract class BaseItemSimpleAdapter(private val context: Context, diffUtil: Dif
 
     abstract fun getLayoutResource(viewType: Int): Int
 
-    abstract fun createItemViewHolder(view: View, viewType: Int): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding>
+    abstract fun createItemViewHolder(
+        view: View,
+        viewType: Int
+    ): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding>
 
 }

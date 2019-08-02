@@ -1,10 +1,9 @@
 package com.lyhoangvinh.simple.utils
 
-import com.lyhoangvinh.simple.ui.features.avg.home.HomeActivity
+import com.lyhoangvinh.simple.ui.features.avg.AgvActivity
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
 import lyhoangvinh.com.myutil.navigation.FragmentNavigator
 import lyhoangvinh.com.myutil.navigation.Navigator
-import lyhoangvinh.com.myutil.navigation.PlainConsumer
 
 class NavigatorHelper(private var mNavigator: Navigator) {
 
@@ -21,6 +20,8 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     }
 
     fun navigateAvgleActivity() {
-        mNavigator.startActivityWithTransition(HomeActivity::class.java, PlainConsumer { }, true, true)
+//        mNavigator.startActivityWithTransition(AgvActivity::class.java, PlainConsumer { }, true, true)
+        mNavigator.startActivity(AgvActivity::class.java)
+        mNavigator.finishActivity()
     }
 }

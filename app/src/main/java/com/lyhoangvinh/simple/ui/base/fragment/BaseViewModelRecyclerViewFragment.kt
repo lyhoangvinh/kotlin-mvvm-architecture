@@ -63,12 +63,12 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
                         lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
                         mVisibleThreshold *= (layoutManager as StaggeredGridLayoutManager).spanCount
                     }
-                    is androidx.recyclerview.widget.GridLayoutManager -> {
+                    is GridLayoutManager -> {
                         mVisibleThreshold *= (layoutManager as GridLayoutManager).spanCount
                         lastVisibleItemPosition =
                             (layoutManager as GridLayoutManager).findLastVisibleItemPosition()
                     }
-                    is androidx.recyclerview.widget.LinearLayoutManager -> {
+                    is LinearLayoutManager -> {
                         lastVisibleItemPosition =
                             (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                         val visibleItemCount = layoutManager!!.childCount

@@ -28,7 +28,7 @@ import com.lyhoangvinh.simple.utils.genericCastOrNull
 import com.tmall.ultraviewpager.UltraViewPager
 import javax.inject.Inject
 
-class HomeSimpleAdapter @Inject constructor(@ActivityContext private val context: Context) :
+class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
     BaseItemSimpleAdapter(context, ItemCallback) {
 
     private var mWidth = 0
@@ -96,7 +96,9 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext private val context
             binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_16dp)))
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.categories)
-            GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+            if (binding.rcv.onFlingListener == null){
+                GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+            }
         }
     }
 
@@ -104,7 +106,8 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext private val context
         BaseItemSimpleViewHolder<CollectionBannerItem, ViewBannerBinding>(view) {
         override fun setItem(data: CollectionBannerItem, binding: ViewBannerBinding) {
             super.setItem(data, binding)
-            val pixel = genericCastOrNull<AppCompatActivity>(context).windowManager.defaultDisplay.width / 2
+            @Suppress("DEPRECATION") val pixel =
+                genericCastOrNull<AppCompatActivity>(context).windowManager.defaultDisplay.width / 2
             binding.viewPage.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, pixel)
             binding.viewPage.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
             binding.viewPage.initIndicator()
@@ -123,10 +126,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext private val context
                 .setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM)
                 .build()
             binding.viewPage.setAutoScroll(3000)
-            binding.viewPage.adapter = ImageBannerAdapter(
-                genericCastOrNull<AppCompatActivity>(context).supportFragmentManager,
-                data.collections
-            )
+            binding.viewPage.adapter = ImageBannerAdapter(genericCastOrNull<AppCompatActivity>(context).supportFragmentManager, data.collections!!)
         }
     }
 
@@ -145,7 +145,9 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext private val context
             binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_16dp)))
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.collections)
-            GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+            if (binding.rcv.onFlingListener == null){
+                GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+            }
         }
     }
 
@@ -164,7 +166,9 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext private val context
             binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_16dp)))
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.videos)
-            GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+            if (binding.rcv.onFlingListener == null){
+                GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+            }
         }
     }
 

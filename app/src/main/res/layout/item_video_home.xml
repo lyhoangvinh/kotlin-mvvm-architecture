@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable name="video"
                   type="com.lyhoangvinh.simple.data.entinies.avgle.Video"/>
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:id="@+id/lnlMain"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:background="@drawable/bg_corner_gray_thin"
-                  android:orientation="vertical">
+    <LinearLayout
+            android:id="@+id/lnlMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_corner_gray_thin"
+            android:orientation="vertical">
 
         <com.lyhoangvinh.simple.ui.widget.AspectConerImageView
                 android:id="@+id/imv"
