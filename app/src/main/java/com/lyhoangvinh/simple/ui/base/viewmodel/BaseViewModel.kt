@@ -34,12 +34,15 @@ abstract class BaseViewModel : ViewModel() {
 
     protected lateinit var navigatorHelper: NavigatorHelper
 
+    protected lateinit var lifecycleOwner: LifecycleOwner
+
     /**
      * called after fragment / activity is created with input bundle arguments
      * @param bundle argument data
      */
     @CallSuper
     fun onCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?, navigatorHelper: NavigatorHelper) {
+        this.lifecycleOwner = lifecycleOwner
         this.navigatorHelper = navigatorHelper
         if (isFirstTimeUiCreate) {
             onFirstTimeUiCreate(lifecycleOwner, bundle)

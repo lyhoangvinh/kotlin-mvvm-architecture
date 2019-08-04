@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.ui.widget.recycleview;
 
 import android.graphics.Rect;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
@@ -12,10 +13,9 @@ public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-        if (itemPosition != parent.getAdapter().getItemCount() - 1) {
+    public void getItemOffsets(@NonNull Rect outRect, int itemPosition,@NonNull RecyclerView parent) {
+        if (parent.getAdapter() != null && itemPosition != parent.getAdapter().getItemCount() - 1) {
             outRect.right = mVerticalSpaceHeight;
         }
     }
-
 }

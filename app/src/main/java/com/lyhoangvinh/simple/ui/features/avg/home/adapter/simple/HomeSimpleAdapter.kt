@@ -92,9 +92,11 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
 
     private class SearchItemSimpleViewHolder(view: View) : BaseItemSimpleViewHolder<SearchItem, ItemSearchBinding>(view)
 
-    private class DividerItemSimpleViewHolder(view: View) : BaseItemSimpleViewHolder<DividerItem, ViewDividerBinding>(view)
+    private class DividerItemSimpleViewHolder(view: View) :
+        BaseItemSimpleViewHolder<DividerItem, ViewDividerBinding>(view)
 
-    private class TitleSeeAllItemViewHolder(view: View): BaseItemSimpleViewHolder<TitleSeeAllItem, ItemTitleSeeAllBinding>(view){
+    private class TitleSeeAllItemViewHolder(view: View) :
+        BaseItemSimpleViewHolder<TitleSeeAllItem, ItemTitleSeeAllBinding>(view) {
         override fun setItem(data: TitleSeeAllItem, binding: ItemTitleSeeAllBinding) {
             super.setItem(data, binding)
             binding.title = data
@@ -103,15 +105,18 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
 
     private class CategoriesItemSimpleViewHolder(private val context: Context, view: View) :
         BaseItemSimpleViewHolder<CategoryItem, ViewRcyHorizontalBinding>(view) {
-
+        private var isItemDecoration = false
         override fun setItem(data: CategoryItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
             val adapter = CategoriesAdapter(context)
             binding.rcv.adapter = adapter
-            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
+            if (!isItemDecoration){
+                isItemDecoration = true
+                binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
+            }
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.categories)
-            if (binding.rcv.onFlingListener == null){
+            if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }
         }
@@ -141,7 +146,10 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
                 .setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM)
                 .build()
             binding.viewPage.setAutoScroll(3000)
-            binding.viewPage.adapter = ImageBannerAdapter(genericCastOrNull<AppCompatActivity>(context).supportFragmentManager, data.collections!!)
+            binding.viewPage.adapter = ImageBannerAdapter(
+                genericCastOrNull<AppCompatActivity>(context).supportFragmentManager,
+                data.collections!!
+            )
         }
     }
 
@@ -152,15 +160,18 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
         private val mHeight: Int
     ) :
         BaseItemSimpleViewHolder<CollectionBottomItem, ViewRcyHorizontalBinding>(view) {
-
+        private var isItemDecoration = false
         override fun setItem(data: CollectionBottomItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
             val adapter = CollectionHomeAdapter(context).setLayoutParams(mWidth, mHeight)
             binding.rcv.adapter = adapter
-            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
+            if (!isItemDecoration){
+                isItemDecoration = true
+                binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
+            }
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.collections)
-            if (binding.rcv.onFlingListener == null){
+            if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }
         }
@@ -173,15 +184,18 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
         private val mHeight: Int
     ) :
         BaseItemSimpleViewHolder<VideoItem, ViewRcyHorizontalBinding>(view) {
-
+        private var isItemDecoration = false
         override fun setItem(data: VideoItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
             val adapter = VideosHomeAdapter(context)
             binding.rcv.adapter = adapter.setLayoutParams(mWidth, mHeight)
-            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
+            if (!isItemDecoration){
+                isItemDecoration = true
+                binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
+            }
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.videos)
-            if (binding.rcv.onFlingListener == null){
+            if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }
         }

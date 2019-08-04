@@ -33,6 +33,11 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : BaseLi
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
+        updateData(lifecycleOwner)
+    }
+
+    private fun updateData(lifecycleOwner: LifecycleOwner) {
+        homeRepo.liveDataHome().removeObservers(lifecycleOwner)
         homeRepo.liveDataHome().observe(lifecycleOwner, Observer {
             adapter.submitList(it)
         })
