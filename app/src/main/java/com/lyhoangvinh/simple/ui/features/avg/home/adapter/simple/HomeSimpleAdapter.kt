@@ -11,9 +11,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.itemviewmodel.*
-import com.lyhoangvinh.simple.databinding.ItemSearchBinding
-import com.lyhoangvinh.simple.databinding.ViewBannerBinding
-import com.lyhoangvinh.simple.databinding.ViewRcyHorizontalBinding
+import com.lyhoangvinh.simple.databinding.*
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseItemSimpleAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseItemSimpleViewHolder
@@ -46,6 +44,8 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
         private const val ITEM_BANNER = 3
         private const val ITEM_VIDEO = 4
         private const val ITEM_COLLECTION_BOTTOM = 5
+        private const val ITEM_DIVIDER = 6
+        private const val ITEM_TITLE_SEE_ALL = 7
     }
 
     override fun setItemViewType(item: ItemViewModel): Int {
@@ -55,6 +55,8 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
             is CollectionBannerItem -> ITEM_BANNER
             is VideoItem -> ITEM_VIDEO
             is CollectionBottomItem -> ITEM_COLLECTION_BOTTOM
+            is DividerItem -> ITEM_DIVIDER
+            is TitleSeeAllItem -> ITEM_TITLE_SEE_ALL
             else -> throw RuntimeException("Not support item $item")
         }
     }
@@ -66,6 +68,8 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
             ITEM_BANNER -> R.layout.view_banner
             ITEM_COLLECTION_BOTTOM -> R.layout.view_rcy_horizontal
             ITEM_VIDEO -> R.layout.view_rcy_horizontal
+            ITEM_DIVIDER -> R.layout.view_divider
+            ITEM_TITLE_SEE_ALL -> R.layout.item_title_see_all
             else -> throw RuntimeException("Not support layoutResource $viewType")
         }
     }
@@ -80,11 +84,22 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
             ITEM_BANNER -> genericCastOrNull(BannerItemSimpleViewHolder(context, view))
             ITEM_COLLECTION_BOTTOM -> genericCastOrNull(CollectionItemSimpleViewHolder(context, view, mWidth, mHeight))
             ITEM_VIDEO -> genericCastOrNull(VideoItemSimpleViewHolder(context, view, mWidth, mHeight))
+            ITEM_DIVIDER -> genericCastOrNull(DividerItemSimpleViewHolder(view))
+            ITEM_TITLE_SEE_ALL -> genericCastOrNull(TitleSeeAllItemViewHolder(view))
             else -> throw RuntimeException("Not support type=$viewType")
         }
     }
 
     private class SearchItemSimpleViewHolder(view: View) : BaseItemSimpleViewHolder<SearchItem, ItemSearchBinding>(view)
+
+    private class DividerItemSimpleViewHolder(view: View) : BaseItemSimpleViewHolder<DividerItem, ViewDividerBinding>(view)
+
+    private class TitleSeeAllItemViewHolder(view: View): BaseItemSimpleViewHolder<TitleSeeAllItem, ItemTitleSeeAllBinding>(view){
+        override fun setItem(data: TitleSeeAllItem, binding: ItemTitleSeeAllBinding) {
+            super.setItem(data, binding)
+            binding.title = data
+        }
+    }
 
     private class CategoriesItemSimpleViewHolder(private val context: Context, view: View) :
         BaseItemSimpleViewHolder<CategoryItem, ViewRcyHorizontalBinding>(view) {
@@ -93,7 +108,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
             super.setItem(data, binding)
             val adapter = CategoriesAdapter(context)
             binding.rcv.adapter = adapter
-            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_16dp)))
+            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.categories)
             if (binding.rcv.onFlingListener == null){
@@ -142,7 +157,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
             super.setItem(data, binding)
             val adapter = CollectionHomeAdapter(context).setLayoutParams(mWidth, mHeight)
             binding.rcv.adapter = adapter
-            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_16dp)))
+            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.collections)
             if (binding.rcv.onFlingListener == null){
@@ -163,7 +178,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
             super.setItem(data, binding)
             val adapter = VideosHomeAdapter(context)
             binding.rcv.adapter = adapter.setLayoutParams(mWidth, mHeight)
-            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_16dp)))
+            binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             binding.rcv.isNestedScrollingEnabled = false
             adapter.submitList(data.videos)
             if (binding.rcv.onFlingListener == null){
@@ -175,6 +190,8 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
     private object ItemCallback : DiffUtil.ItemCallback<ItemViewModel>() {
         override fun areItemsTheSame(oldItem: ItemViewModel, newItem: ItemViewModel): Boolean {
             return when {
+                oldItem is TitleSeeAllItem && newItem is TitleSeeAllItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is DividerItem && newItem is DividerItem -> oldItem.idViewModel == newItem.idViewModel
                 oldItem is SearchItem && newItem is SearchItem -> oldItem.idViewModel == newItem.idViewModel
                 oldItem is CategoryItem && newItem is CategoryItem -> oldItem.idViewModel == newItem.idViewModel
                 oldItem is CollectionBannerItem && newItem is CollectionBannerItem -> oldItem.idViewModel == newItem.idViewModel
@@ -186,6 +203,8 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
 
         override fun areContentsTheSame(oldItem: ItemViewModel, newItem: ItemViewModel): Boolean {
             return when {
+                oldItem is TitleSeeAllItem && newItem is TitleSeeAllItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is DividerItem && newItem is DividerItem -> oldItem.idViewModel == newItem.idViewModel
                 oldItem is SearchItem && newItem is SearchItem -> oldItem.idViewModel == newItem.idViewModel
                 oldItem is CategoryItem && newItem is CategoryItem -> oldItem.categories == newItem.categories
                 oldItem is CollectionBannerItem && newItem is CollectionBannerItem -> oldItem.collections == newItem.collections

@@ -1,22 +1,27 @@
 package com.lyhoangvinh.simple.utils
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Handler
 import android.text.TextUtils
 import android.transition.ChangeBounds
 import android.transition.Slide
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
@@ -159,7 +164,38 @@ fun Activity.startActivityTransition(cls: Class<*>, finishAct: Boolean) {
     }
 }
 
-
 inline fun <reified T> genericCastOrNull(anything: Any):T {
     return anything as T
+}
+
+@Suppress("DEPRECATION")
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+fun Activity.setStatusBarGradients() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val background = resources.getDrawable(R.drawable.bg_gradient_evening_sunshine)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = resources.getColor(android.R.color.transparent)
+        window.navigationBarColor = resources.getColor(android.R.color.transparent)
+        window.setBackgroundDrawable(background)
+    }
+}
+
+fun Fragment.setStatusBarGradient() {
+    activity?.setStatusBarGradients()
+}
+
+fun Activity.setStatusBarColor(@ColorRes id: Int) {
+    window.statusBarColor = ContextCompat.getColor(this, id)
+}
+
+fun Fragment.setStatusBarColor(@ColorRes id: Int) {
+    activity?.setStatusBarColor(id)
+}
+
+fun Activity.removeStatusBar(){
+    window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+}
+
+fun Fragment.removeStatusBar(){
+    activity?.removeStatusBar()
 }

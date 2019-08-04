@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="color_disable_date">#b4b4b4</color>
+    <color name="colorWhite">#ffffff</color>
 
     <color name="material_amber_700">#FFA000</color>
     <color name="material_blue_700">#1976D2</color>

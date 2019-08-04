@@ -8,4 +8,31 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextCategoryHeaderHome">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/padding_14dp</item>
+
+        <item name="android:textSize">@dimen/ts_19_sp</item>
+    </style>
+
+    <style name="LinearSeeAll">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:layout_marginRight">@dimen/padding_16dp</item>
+    </style>
+
+    <style name="TextViewSeeAllHeader">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginRight">@dimen/padding_4dp</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textSize">@dimen/ts_13_sp</item>
+    </style>
+
 </resources>

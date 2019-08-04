@@ -22,7 +22,6 @@ class MyApplication : DaggerApplication() {
         super.onCreate()
         instance = this
 
-
         val displayMetrics = DisplayMetrics()
         val windowManager = applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.defaultDisplay?.getMetrics(displayMetrics)

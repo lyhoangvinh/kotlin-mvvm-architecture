@@ -31,7 +31,7 @@
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".ui.features.avg.splash.SplashActivity" android:screenOrientation="portrait">
+        <activity android:name=".ui.features.splash.SplashActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.features.avg.home.HomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.features.avg.AgvActivity" android:screenOrientation="portrait"/>
 
         <receiver android:name=".receiver.NetworkReceiver"/>
 

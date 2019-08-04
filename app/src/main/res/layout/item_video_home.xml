@@ -12,6 +12,7 @@
             android:id="@+id/lnlMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="0.75dp"
             android:background="@drawable/bg_corner_gray_thin"
             android:orientation="vertical">
 
@@ -20,9 +21,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
-                android:padding="@dimen/padding_2dp"
-                app:sriv_left_top_corner_radius="3dp"
-                app:sriv_right_top_corner_radius="3dp"
+                app:sriv_left_top_corner_radius="10dp"
+                app:sriv_right_top_corner_radius="10dp"
                 app:loadImageURL="@{video.previewUrl}"
                 tools:src="@drawable/ic_placeholder_rectangle_200px"/>
 

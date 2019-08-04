@@ -12,13 +12,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
             <LinearLayout
                     android:id="@+id/lnlSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/padding_14dp"
                     android:background="@drawable/bg_corner_search"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -27,9 +25,7 @@
                 <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp"
-                        android:padding="12dp"
+                        android:padding="@dimen/padding_10dp"
                         android:src="@drawable/ic_search_black_24dp"/>
 
                 <TextView
@@ -41,9 +37,6 @@
 
             </LinearLayout>
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>

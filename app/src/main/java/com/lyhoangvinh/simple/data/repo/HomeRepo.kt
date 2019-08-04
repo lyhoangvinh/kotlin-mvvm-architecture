@@ -106,23 +106,33 @@ class HomeRepo @Inject constructor(
             }
 
             if (searchItem.idViewModel != null) {
+                newList.add(DividerItem("DividerItem-{0}"))
                 newList.add(searchItem)
+                newList.add(DividerItem("DividerItem-{0}"))
             }
 
             if (categoryItem.idViewModel != null) {
                 newList.add(categoryItem)
+                newList.add(DividerItem("DividerItem-{1}"))
             }
 
             if (collectionBannerItem.idViewModel != null) {
                 newList.add(collectionBannerItem)
+                newList.add(DividerItem("DividerItem-{2}"))
             }
 
             if (collectionBottomItem.idViewModel != null) {
+                newList.add(TitleSeeAllItem("Collections"))
+                newList.add(DividerItem("DividerItem-{3}"))
                 newList.add(collectionBottomItem)
+                newList.add(DividerItem("DividerItem-{4}"))
             }
 
             if (videoItem.idViewModel != null) {
+                newList.add(TitleSeeAllItem("Videos"))
+                newList.add(DividerItem("DividerItem-{5}"))
                 newList.add(videoItem)
+                newList.add(DividerItem("DividerItem-{6}"))
             }
             return@map newList
         }

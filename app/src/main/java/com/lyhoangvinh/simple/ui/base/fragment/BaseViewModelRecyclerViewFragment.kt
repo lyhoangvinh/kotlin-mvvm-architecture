@@ -174,7 +174,7 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
     }
 
     private fun updateScrollTop() {
-        if (layoutManager != null) {
+        if (layoutManager != null && shouldShowScrollTop()) {
             val visibleItemCount = layoutManager!!.childCount
             updateScrollTop(visibleItemCount, getPastVisibleItems())
         }
@@ -185,11 +185,17 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
      * if user scroll down more than [.DEFAULT_SCROLL_TOP_POSITION]
      */
     private fun updateScrollTop(visibleItemCount: Int, pastVisibleItems: Int) {
-        if (visibleItemCount + pastVisibleItems >= scrollTopPosition) {
-            scrollTop.visibility = View.VISIBLE
-        } else {
-            scrollTop.visibility = View.GONE
+        if (shouldShowScrollTop()){
+            if (visibleItemCount + pastVisibleItems >= scrollTopPosition) {
+                scrollTop.visibility = View.VISIBLE
+            } else {
+                scrollTop.visibility = View.GONE
+            }
         }
+    }
+
+    open fun shouldShowScrollTop(): Boolean {
+        return true
     }
 
     companion object {

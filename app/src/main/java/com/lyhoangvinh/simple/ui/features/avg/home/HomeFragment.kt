@@ -7,11 +7,14 @@ import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.FragmentHomeBinding
 import com.lyhoangvinh.simple.ui.base.fragment.BaseViewModelRecyclerViewFragment
 import com.lyhoangvinh.simple.ui.features.avg.home.adapter.simple.HomeSimpleAdapter
+import com.lyhoangvinh.simple.utils.removeStatusBar
 
 class HomeFragment : BaseViewModelRecyclerViewFragment<FragmentHomeBinding, HomeViewModel, HomeSimpleAdapter>() {
     override fun getLayoutResource() = R.layout.fragment_home
     override fun createViewModelClass() = HomeViewModel::class.java
+    override fun shouldShowScrollTop(): Boolean = false
     override fun initialize(view: View, ctx: Context?) {
+        removeStatusBar()
         super.initialize(view, ctx)
         binding.vm = viewModel
         val mWidth =
