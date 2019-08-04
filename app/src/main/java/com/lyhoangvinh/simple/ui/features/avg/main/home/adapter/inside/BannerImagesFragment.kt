@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.home.adapter.inside
+package com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside
 
 import android.os.Bundle
 import android.view.View

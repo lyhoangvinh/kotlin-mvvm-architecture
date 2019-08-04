@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.home.adapter.simple
+package com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple
 
 import android.content.Context
 import android.util.TypedValue
@@ -16,10 +16,10 @@ import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseItemSimpleAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseItemSimpleViewHolder
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
-import com.lyhoangvinh.simple.ui.features.avg.home.adapter.inside.CategoriesAdapter
-import com.lyhoangvinh.simple.ui.features.avg.home.adapter.inside.CollectionHomeAdapter
-import com.lyhoangvinh.simple.ui.features.avg.home.adapter.inside.ImageBannerAdapter
-import com.lyhoangvinh.simple.ui.features.avg.home.adapter.inside.VideosHomeAdapter
+import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.CategoriesAdapter
+import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.CollectionHomeAdapter
+import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.ImageBannerAdapter
+import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.VideosHomeAdapter
 import com.lyhoangvinh.simple.ui.widget.recycleview.GravitySnapHelper
 import com.lyhoangvinh.simple.ui.widget.recycleview.HorizontalSpaceItemDecoration
 import com.lyhoangvinh.simple.utils.genericCastOrNull

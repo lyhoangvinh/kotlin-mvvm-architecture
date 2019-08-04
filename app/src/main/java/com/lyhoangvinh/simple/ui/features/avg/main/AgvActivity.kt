@@ -1,7 +1,7 @@
-package com.lyhoangvinh.simple.ui.features.avg
+package com.lyhoangvinh.simple.ui.features.avg.main
 
 import com.lyhoangvinh.simple.ui.base.activity.BaseSingleFragmentActivity
-import com.lyhoangvinh.simple.ui.features.avg.home.HomeFragment
+import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeFragment
 
 class AgvActivity : BaseSingleFragmentActivity<HomeFragment>() {
     override fun createFragment() = HomeFragment()

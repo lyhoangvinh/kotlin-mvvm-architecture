@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.home.adapter.paging
+package com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.paging
 
 import android.content.Context
 import android.view.LayoutInflater

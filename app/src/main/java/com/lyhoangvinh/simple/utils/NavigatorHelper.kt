@@ -1,6 +1,6 @@
 package com.lyhoangvinh.simple.utils
 
-import com.lyhoangvinh.simple.ui.features.avg.AgvActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.AgvActivity
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
 import lyhoangvinh.com.myutil.navigation.FragmentNavigator
 import lyhoangvinh.com.myutil.navigation.Navigator

@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.home
+package com.lyhoangvinh.simple.ui.features.avg.main.home
 
 import android.content.Context
 import android.view.View
@@ -6,7 +6,7 @@ import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.FragmentHomeBinding
 import com.lyhoangvinh.simple.ui.base.fragment.BaseViewModelRecyclerViewFragment
-import com.lyhoangvinh.simple.ui.features.avg.home.adapter.simple.HomeSimpleAdapter
+import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple.HomeSimpleAdapter
 import com.lyhoangvinh.simple.utils.removeStatusBar
 
 class HomeFragment : BaseViewModelRecyclerViewFragment<FragmentHomeBinding, HomeViewModel, HomeSimpleAdapter>() {

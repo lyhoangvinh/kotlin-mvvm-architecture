@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.home
+package com.lyhoangvinh.simple.ui.features.avg.main.home
 
 import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner
@@ -7,7 +7,7 @@ import com.lyhoangvinh.simple.data.repo.HomeRepo
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
-import com.lyhoangvinh.simple.ui.features.avg.home.adapter.simple.HomeSimpleAdapter
+import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple.HomeSimpleAdapter
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : BaseListDataViewModel<HomeSimpleAdapter>() {

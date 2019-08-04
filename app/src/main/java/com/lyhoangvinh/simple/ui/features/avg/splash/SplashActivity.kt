@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.splash
+package com.lyhoangvinh.simple.ui.features.avg.splash
 
 import android.os.Bundle
 import com.lyhoangvinh.simple.R
