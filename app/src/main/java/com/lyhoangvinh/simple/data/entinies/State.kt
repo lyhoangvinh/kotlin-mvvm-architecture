@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.source
+package com.lyhoangvinh.simple.data.entinies
 
 class State(var status: Status, var message: String?) {
 
@@ -31,15 +31,24 @@ class State(var status: Status, var message: String?) {
     companion object {
 
         fun loading(message: String?): State {
-            return State(Status.LOADING, message)
+            return State(
+                Status.LOADING,
+                message
+            )
         }
 
         fun error(message: String?): State {
-            return State(Status.ERROR, message)
+            return State(
+                Status.ERROR,
+                message
+            )
         }
 
         fun success(message: String?): State {
-            return State(Status.SUCCESS, message)
+            return State(
+                Status.SUCCESS,
+                message
+            )
         }
     }
 }

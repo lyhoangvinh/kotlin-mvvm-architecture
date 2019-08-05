@@ -1,13 +1,13 @@
-package com.lyhoangvinh.simple.data.source.service
+package com.lyhoangvinh.simple.data.source.base.service
 
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import androidx.paging.DataSource
-import androidx.paging.ItemKeyedDataSource
+import androidx.paging.PageKeyedDataSource
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
-import com.lyhoangvinh.simple.data.source.State
+import com.lyhoangvinh.simple.data.entinies.State
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
@@ -22,28 +22,26 @@ import javax.inject.Provider
  * https://medium.com/@SaurabhSandav/using-android-paging-library-with-retrofit-fa032cac15f8
  */
 
-abstract class BaseItemKeyedDataComicSource<T> :
-    ItemKeyedDataSource<Int, T>() {
+abstract class BasePageKeyedDataSource<T> : PageKeyedDataSource<Int, T>() {
 
-    private var TAG_X = "LOG_BASE_ItemKeyedDataComicSource"
-
-    var pageNumber = 0
+    private var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
     lateinit var stateLiveData: SafeMutableLiveData<State>
 
     lateinit var compositeDisposable: CompositeDisposable
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<T>) {
-        Log.d(TAG_X,"1-loadInitial: requestedInitialKey ${params.requestedInitialKey},requestedLoadSize ${params.requestedLoadSize}")
-        callApi(loadInitialCallback = callback)
+
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, T>) {
+        Log.d(TAG_X, "1-loadInitial: requestedLoadSize ${params.requestedLoadSize}")
+        callApi(page = 0, loadInitialCallback = callback)
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<T>) {
-        Log.d(TAG_X,"2-loadAfter: key ${params.key}, requestedLoadSize ${params.requestedLoadSize}")
-        callApi(loadCallback = callback)
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, T>) {
+        Log.d(TAG_X, "2-loadAfter: key ${params.key}, requestedLoadSize ${params.requestedLoadSize}")
+        callApi(page = params.key, loadCallback = callback)
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<T>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, T>) {
         // Do nothing, since data is loaded from our initial load itself
     }
 
@@ -51,14 +49,18 @@ abstract class BaseItemKeyedDataComicSource<T> :
         compositeDisposable.clear()
     }
 
-    private fun callApi(loadInitialCallback: LoadInitialCallback<T>? = null, loadCallback: LoadCallback<T>? = null) {
+    private fun callApi(
+        page: Int,
+        loadInitialCallback: LoadInitialCallback<Int, T>? = null,
+        loadCallback: LoadCallback<Int, T>? = null
+    ) {
         publishState(State.loading(null))
-        compositeDisposable.add(makeRequest(this.getRequest(), object : PlainPagingConsumer<T> {
+        compositeDisposable.add(makeRequest(this.getRequest(page), object : PlainPagingConsumer<T> {
             override fun accept(t: List<T>) {
-                loadInitialCallback?.onResult(t)
-                loadCallback?.onResult(t)
+                val nextPage = page + 1
+                loadInitialCallback?.onResult(t, 0, t.size, null, nextPage)
+                loadCallback?.onResult(t, nextPage)
                 publishState(State.success(null))
-                pageNumber++
             }
         }, object : PlainConsumer<ErrorEntity> {
             override fun accept(t: ErrorEntity) {
@@ -67,24 +69,25 @@ abstract class BaseItemKeyedDataComicSource<T> :
         }))
     }
 
-    override fun getKey(item: T) = pageNumber
 
-    abstract fun getRequest(): Single<BaseResponseComic<T>>
+    abstract fun getRequest(page: Int): Single<BaseResponseComic<T>>
 
     fun publishState(state: State) {
         stateLiveData.setValue(state)
         if (!TextUtils.isEmpty(state.message)) {
             // if state has a message, after show it, we should reset to prevent
             //            // message will still be shown if fragment / activity is rotated (re-observe state live data)
-            Handler().postDelayed({ stateLiveData.setValue(
-                State.success(
-                    null
+            Handler().postDelayed({
+                stateLiveData.setValue(
+                    State.success(
+                        null
+                    )
                 )
-            ) }, 100)
+            }, 100)
         }
     }
 
-    abstract class Factory<T>(private val provider: Provider<BaseItemKeyedDataComicSource<T>>) :
+    abstract class Factory<T>(private val provider: Provider<BasePageKeyedDataSource<T>>) :
         DataSource.Factory<Int, T>() {
 
         fun setUpProvider(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable) {
@@ -99,6 +102,7 @@ abstract class BaseItemKeyedDataComicSource<T> :
         fun invalidate() {
             provider.get().invalidate()
         }
+
         override fun create(): DataSource<Int, T> {
             return provider.get()
         }

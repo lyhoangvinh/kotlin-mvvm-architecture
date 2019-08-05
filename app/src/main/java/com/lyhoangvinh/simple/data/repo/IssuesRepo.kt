@@ -9,8 +9,10 @@ import com.lyhoangvinh.simple.data.dao.IssuesDao
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.services.ComicVineService
-import com.lyhoangvinh.simple.data.source.Resource
-import com.lyhoangvinh.simple.data.source.State
+import com.lyhoangvinh.simple.data.source.base.Resource
+import com.lyhoangvinh.simple.data.entinies.State
+import com.lyhoangvinh.simple.data.source.comic.ComicLocalPagingDataSource
+import com.lyhoangvinh.simple.data.source.comic.ComicPagingDataSource
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable

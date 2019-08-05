@@ -1,10 +1,10 @@
 package com.lyhoangvinh.simple.data.repo
 
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
-import com.lyhoangvinh.simple.data.source.PlainResponseZipFourConsumer
-import com.lyhoangvinh.simple.data.source.Resource
-import com.lyhoangvinh.simple.data.source.SimpleNetworkBoundSource
-import com.lyhoangvinh.simple.data.source.SimpleNetworkBoundSourceFourRemote
+import com.lyhoangvinh.simple.data.source.base.PlainResponseZipFourConsumer
+import com.lyhoangvinh.simple.data.source.base.Resource
+import com.lyhoangvinh.simple.data.source.base.SimpleNetworkBoundSource
+import com.lyhoangvinh.simple.data.source.base.SimpleNetworkBoundSourceFourRemote
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable

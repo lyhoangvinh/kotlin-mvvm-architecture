@@ -1,6 +1,8 @@
-package com.lyhoangvinh.simple.data.source
+package com.lyhoangvinh.simple.data.source.base
 
-import com.lyhoangvinh.simple.data.source.Status.*
+import com.lyhoangvinh.simple.data.entinies.State
+import com.lyhoangvinh.simple.data.entinies.Status
+import com.lyhoangvinh.simple.data.entinies.Status.*
 
 /**
  * A generic class that holds a value with its loading status.
@@ -9,7 +11,8 @@ import com.lyhoangvinh.simple.data.source.Status.*
 
 class Resource<T>(status: Status, val data: T?, message: String?) {
 
-      val state: State = State(status, message)
+      val state: State =
+          State(status, message)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

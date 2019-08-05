@@ -6,11 +6,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.data.repo.HomeRepo
 import com.lyhoangvinh.simple.data.response.*
-import com.lyhoangvinh.simple.data.source.State
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.lyhoangvinh.simple.utils.ConnectionLiveData
-import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(

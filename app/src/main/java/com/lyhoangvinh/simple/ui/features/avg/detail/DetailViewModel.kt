@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.webkit.*
 import androidx.lifecycle.LifecycleOwner
 import com.lyhoangvinh.simple.Constants
-import com.lyhoangvinh.simple.data.source.Resource
-import com.lyhoangvinh.simple.data.source.State
+import com.lyhoangvinh.simple.data.entinies.State
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import javax.inject.Inject
 

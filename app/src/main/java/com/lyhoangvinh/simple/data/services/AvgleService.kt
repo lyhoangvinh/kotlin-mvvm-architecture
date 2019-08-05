@@ -20,17 +20,17 @@ interface AvgleService {
     fun getCollections(@Path("page") page: Int, @Query("limit") limit: Int): Single<BaseResponseAvgle<CollectionsResponseAvgle>>
 
     @GET("collections/{keyword}")
-    fun getVideoCollections(@Path("keyword") keyword: String): Single<Response<BaseResponseAvgle<CollectionsResponseAvgle>>>
+    fun getVideoCollections(@Path("keyword") keyword: String): Single<BaseResponseAvgle<CollectionsResponseAvgle>>
 
     @GET("videos/{page}")
-    fun getVideosFromKeyword(@Path("page") page: Int, @Query("c") chId: String): Single<Response<BaseResponseAvgle<VideosResponseAvgle>>>
+    fun getVideosFromKeyword(@Path("page") page: Int, @Query("c") chId: String): Single<BaseResponseAvgle<VideosResponseAvgle>>
 
     @GET("videos/{page}")
     fun getAllVideos(@Path("page") page: Int): Single<BaseResponseAvgle<VideosResponseAvgle>>
 
     @GET("search/{query}/{page}")
-    fun searchVideos(@Path("query") query: String, @Path("page") page: Int): Single<Response<BaseResponseAvgle<VideosResponseAvgle>>>
+    fun searchVideos(@Path("query") query: String, @Path("page") page: Int): Single<BaseResponseAvgle<VideosResponseAvgle>>
 
     @GET("jav/{query}/{page}")
-    fun searchJav(@Path("query") query: String, @Path("page") page: Int): Single<Response<BaseResponseAvgle<VideosResponseAvgle>>>
+    fun searchJav(@Path("query") query: String, @Path("page") page: Int): Single<BaseResponseAvgle<VideosResponseAvgle>>
 }

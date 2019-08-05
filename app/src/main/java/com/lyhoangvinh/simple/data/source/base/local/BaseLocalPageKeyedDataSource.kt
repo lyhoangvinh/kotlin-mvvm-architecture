@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.source.local
+package com.lyhoangvinh.simple.data.source.base.local
 
 import android.os.Handler
 import android.text.TextUtils
@@ -7,7 +7,7 @@ import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.lyhoangvinh.simple.data.entinies.ErrorEntity
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
-import com.lyhoangvinh.simple.data.source.State
+import com.lyhoangvinh.simple.data.entinies.State
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
 import com.lyhoangvinh.simple.utils.ConnectionLiveData

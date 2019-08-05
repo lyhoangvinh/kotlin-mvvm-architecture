@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.source
+package com.lyhoangvinh.simple.data.source.base
 
 import androidx.annotation.NonNull
 import com.lyhoangvinh.simple.data.response.ResponseFourZip

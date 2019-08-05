@@ -1,10 +1,10 @@
-package com.lyhoangvinh.simple.data.repo
+package com.lyhoangvinh.simple.data.source.comic
 
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.entinies.comic.Issues
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.services.ComicVineService
-import com.lyhoangvinh.simple.data.source.service.BasePageKeyedDataSource
+import com.lyhoangvinh.simple.data.source.base.service.BasePageKeyedDataSource
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Provider
