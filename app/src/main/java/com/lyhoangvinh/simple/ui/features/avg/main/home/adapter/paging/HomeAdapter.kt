@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.data.entinies.avgle.Category
+import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.databinding.ItemCategoriesBinding
 import com.lyhoangvinh.simple.databinding.ItemSearchBinding

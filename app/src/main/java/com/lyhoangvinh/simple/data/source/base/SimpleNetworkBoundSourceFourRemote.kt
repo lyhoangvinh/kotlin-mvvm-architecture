@@ -2,7 +2,7 @@ package com.lyhoangvinh.simple.data.source.base
 
 
 import android.util.Log
-import com.lyhoangvinh.simple.data.entinies.ErrorEntity
+import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.utils.makeRequest

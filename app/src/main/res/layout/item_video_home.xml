@@ -5,7 +5,7 @@
 
     <data>
         <variable name="video"
-                  type="com.lyhoangvinh.simple.data.entinies.avgle.Video"/>
+                  type="com.lyhoangvinh.simple.data.entities.avgle.Video"/>
     </data>
 
     <LinearLayout

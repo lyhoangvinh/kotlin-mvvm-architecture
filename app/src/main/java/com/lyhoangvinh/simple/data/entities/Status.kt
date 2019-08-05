@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.entinies
+package com.lyhoangvinh.simple.data.entities
 
 
 /**

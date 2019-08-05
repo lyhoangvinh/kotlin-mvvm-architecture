@@ -8,11 +8,14 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.google.gson.*
 import com.lyhoangvinh.simple.BuildConfig
-import com.lyhoangvinh.simple.data.entinies.ErrorEntity
+import com.lyhoangvinh.simple.data.entities.Entities
+import com.lyhoangvinh.simple.data.entities.ErrorEntity
+import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
 import com.lyhoangvinh.simple.data.source.base.PlainResponseZipFourConsumer
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
+import com.lyhoangvinh.simple.ui.base.interfaces.PlainEntitiesPagingConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -53,6 +56,24 @@ fun <T> makeRequest(
     }
 
     return single.subscribe(responseConsumer, Consumer {
+        // handle error
+        it.printStackTrace()
+        errorConsumer?.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))
+    })
+}
+
+fun <E, T : Entities<E>> makeRequestAvg(
+    request: Single<BaseResponseAvgle<T>>,
+    @NonNull responseConsumer: PlainEntitiesPagingConsumer<E, T>,
+    @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
+): Disposable {
+
+    var single = request.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+    single = single.observeOn(AndroidSchedulers.mainThread())
+    return single.subscribe({
+        if (it != null && it.success)
+            responseConsumer.accept(it.response.list)
+    }, {
         // handle error
         it.printStackTrace()
         errorConsumer?.accept(ErrorEntity(getPrettifiedErrorMessage(it), getErrorCode(it)))

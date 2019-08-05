@@ -1,8 +1,9 @@
 package com.lyhoangvinh.simple.data.response
 
- import com.google.gson.annotations.Expose
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
- import com.lyhoangvinh.simple.data.entinies.avgle.Video
+import com.lyhoangvinh.simple.data.entities.Entities
+import com.lyhoangvinh.simple.data.entities.avgle.Video
 
 data class VideosResponseAvgle(
 
@@ -24,5 +25,8 @@ data class VideosResponseAvgle(
 
     @SerializedName("videos")
     @Expose
-    var videos: List<Video>
-)
+    var videos: List<Video>,
+
+    override var list: List<Video> = videos
+
+) : Entities<Video>

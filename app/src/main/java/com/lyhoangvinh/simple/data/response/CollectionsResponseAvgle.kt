@@ -2,7 +2,7 @@ package com.lyhoangvinh.simple.data.response
 
  import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
- import com.lyhoangvinh.simple.data.entinies.avgle.Collection
+ import com.lyhoangvinh.simple.data.entities.avgle.Collection
 
 data class CollectionsResponseAvgle(
 

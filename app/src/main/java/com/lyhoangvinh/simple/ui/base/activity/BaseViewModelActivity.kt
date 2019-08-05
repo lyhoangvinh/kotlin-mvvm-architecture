@@ -7,8 +7,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.lyhoangvinh.simple.data.entinies.State
-import com.lyhoangvinh.simple.data.entinies.Status
+import com.lyhoangvinh.simple.data.entities.State
+import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import java.lang.reflect.ParameterizedType

@@ -3,7 +3,7 @@ package com.lyhoangvinh.simple.data.dao
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
-import com.lyhoangvinh.simple.data.entinies.comic.Issues
+import com.lyhoangvinh.simple.data.entities.comic.Issues
 
 
 @Dao

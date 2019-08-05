@@ -1,8 +1,8 @@
 package com.lyhoangvinh.simple.data.source.base
 
-import com.lyhoangvinh.simple.data.entinies.State
-import com.lyhoangvinh.simple.data.entinies.Status
-import com.lyhoangvinh.simple.data.entinies.Status.*
+import com.lyhoangvinh.simple.data.entities.State
+import com.lyhoangvinh.simple.data.entities.Status
+import com.lyhoangvinh.simple.data.entities.Status.*
 
 /**
  * A generic class that holds a value with its loading status.

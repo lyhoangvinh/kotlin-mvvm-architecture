@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.data.entinies.avgle.Category
+import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.databinding.ItemCategoriesBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter

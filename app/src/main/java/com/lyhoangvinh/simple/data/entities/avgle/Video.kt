@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.entinies.avgle
+package com.lyhoangvinh.simple.data.entities.avgle
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

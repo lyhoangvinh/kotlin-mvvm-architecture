@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.data.entinies.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.databinding.ItemCollectionHomeBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter

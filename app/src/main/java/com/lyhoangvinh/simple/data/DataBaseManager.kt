@@ -7,11 +7,11 @@ import com.lyhoangvinh.simple.data.dao.CategoriesDao
 import com.lyhoangvinh.simple.data.dao.CollectionDao
 import com.lyhoangvinh.simple.data.dao.IssuesDao
 import com.lyhoangvinh.simple.data.dao.VideosDao
-import com.lyhoangvinh.simple.data.entinies.avgle.Category
-import com.lyhoangvinh.simple.data.entinies.avgle.Collection
-import com.lyhoangvinh.simple.data.entinies.avgle.Video
-import com.lyhoangvinh.simple.data.entinies.comic.Comics
-import com.lyhoangvinh.simple.data.entinies.comic.Issues
+import com.lyhoangvinh.simple.data.entities.avgle.Category
+import com.lyhoangvinh.simple.data.entities.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.avgle.Video
+import com.lyhoangvinh.simple.data.entities.comic.Comics
+import com.lyhoangvinh.simple.data.entities.comic.Issues
 import com.lyhoangvinh.simple.data.typecoverter.ImageTypeConverter
 import com.lyhoangvinh.simple.data.typecoverter.VolumeTypeConverter
 

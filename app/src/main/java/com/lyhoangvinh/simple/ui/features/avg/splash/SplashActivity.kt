@@ -2,7 +2,7 @@ package com.lyhoangvinh.simple.ui.features.avg.splash
 
 import android.os.Bundle
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.data.entinies.State
+import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.databinding.ActivitySplashBinding
 import com.lyhoangvinh.simple.ui.base.activity.BaseViewModelActivity
 import com.lyhoangvinh.simple.utils.setStatusBarGradients

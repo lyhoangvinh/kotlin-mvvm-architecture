@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.data.entinies.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.databinding.FragmentBannerImagesBinding
 import com.lyhoangvinh.simple.ui.base.fragment.BaseFragment
 import com.lyhoangvinh.simple.utils.NavigatorHelper

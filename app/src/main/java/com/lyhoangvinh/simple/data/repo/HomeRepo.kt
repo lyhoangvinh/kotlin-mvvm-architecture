@@ -9,7 +9,7 @@ import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.CategoriesDao
 import com.lyhoangvinh.simple.data.dao.CollectionDao
 import com.lyhoangvinh.simple.data.dao.VideosDao
-import com.lyhoangvinh.simple.data.entinies.avgle.*
+import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.data.services.AvgleService

@@ -6,7 +6,7 @@ import androidx.annotation.CallSuper
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
-import com.lyhoangvinh.simple.data.entinies.DataEmpty
+import com.lyhoangvinh.simple.data.entities.DataEmpty
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.Refreshable
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData

@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.entinies.comic
+package com.lyhoangvinh.simple.data.entities.comic
 
 import androidx.room.Entity
 import com.google.gson.annotations.SerializedName

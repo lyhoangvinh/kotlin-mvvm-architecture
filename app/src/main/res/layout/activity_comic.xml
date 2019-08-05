@@ -6,7 +6,7 @@
                   type="com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel"/>
 
         <variable name="dataEmpty"
-                  type="com.lyhoangvinh.simple.data.entinies.DataEmpty"/>
+                  type="com.lyhoangvinh.simple.data.entities.DataEmpty"/>
 
     </data>
     <LinearLayout android:layout_width="match_parent"

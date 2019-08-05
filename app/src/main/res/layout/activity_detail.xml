@@ -5,11 +5,11 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.lyhoangvinh.simple.data.entinies.Status"/>
-        <import type="com.lyhoangvinh.simple.data.entinies.State"/>
+        <import type="com.lyhoangvinh.simple.data.entities.Status"/>
+        <import type="com.lyhoangvinh.simple.data.entities.State"/>
 
         <variable name="state"
-                  type="com.lyhoangvinh.simple.data.entinies.State"/>
+                  type="com.lyhoangvinh.simple.data.entities.State"/>
 
         <variable name="vm"
                   type="com.lyhoangvinh.simple.ui.features.avg.detail.DetailViewModel"/>

@@ -8,10 +8,10 @@ import androidx.annotation.CallSuper
 import androidx.annotation.NonNull
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import com.lyhoangvinh.simple.data.entinies.ErrorEntity
+import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.source.base.Resource
-import com.lyhoangvinh.simple.data.entinies.State
-import com.lyhoangvinh.simple.data.entinies.Status
+import com.lyhoangvinh.simple.data.entities.State
+import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData

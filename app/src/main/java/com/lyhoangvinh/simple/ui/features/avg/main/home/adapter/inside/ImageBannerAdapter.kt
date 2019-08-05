@@ -3,7 +3,7 @@ package com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.lyhoangvinh.simple.data.entinies.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.avgle.Collection
 
 class ImageBannerAdapter(fm: FragmentManager, private var mBannerList: List<Collection>) :
     FragmentStatePagerAdapter(fm) {

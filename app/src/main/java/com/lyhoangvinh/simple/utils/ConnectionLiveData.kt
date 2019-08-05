@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import com.lyhoangvinh.simple.data.entinies.Connection
+import com.lyhoangvinh.simple.data.entities.Connection
 import com.lyhoangvinh.simple.receiver.NetworkReceiver
 
 

@@ -5,9 +5,9 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.paging.DataSource
 import androidx.paging.ItemKeyedDataSource
-import com.lyhoangvinh.simple.data.entinies.ErrorEntity
+import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
-import com.lyhoangvinh.simple.data.entinies.State
+import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData

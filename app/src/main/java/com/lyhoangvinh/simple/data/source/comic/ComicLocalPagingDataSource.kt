@@ -2,7 +2,7 @@ package com.lyhoangvinh.simple.data.source.comic
 
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.IssuesDao
-import com.lyhoangvinh.simple.data.entinies.comic.Issues
+import com.lyhoangvinh.simple.data.entities.comic.Issues
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.services.ComicVineService
 import com.lyhoangvinh.simple.data.source.base.local.BaseLocalPageKeyedDataSource

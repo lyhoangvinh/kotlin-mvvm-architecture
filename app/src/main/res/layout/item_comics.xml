@@ -7,7 +7,7 @@
     <data>
         <import type="android.view.View"/>
         <variable name="dto"
-                  type="com.lyhoangvinh.simple.data.entinies.comic.Issues"/>
+                  type="com.lyhoangvinh.simple.data.entities.comic.Issues"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

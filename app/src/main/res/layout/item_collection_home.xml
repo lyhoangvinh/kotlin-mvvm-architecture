@@ -5,7 +5,7 @@
 
     <data>
         <variable name="collection"
-                  type="com.lyhoangvinh.simple.data.entinies.avgle.Collection"/>
+                  type="com.lyhoangvinh.simple.data.entities.avgle.Collection"/>
 
     </data>
 

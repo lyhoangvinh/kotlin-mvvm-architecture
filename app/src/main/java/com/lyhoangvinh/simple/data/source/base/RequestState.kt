@@ -1,6 +1,6 @@
 package com.lyhoangvinh.simple.data.source.base
 
-import com.lyhoangvinh.simple.data.entinies.Status
+import com.lyhoangvinh.simple.data.entities.Status
 
 data class RequestState<out T>(val status: Status, val data: T?, val message: String? = null) {
     companion object {

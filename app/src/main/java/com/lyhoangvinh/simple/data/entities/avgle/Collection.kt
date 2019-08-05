@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.data.entinies.avgle
+package com.lyhoangvinh.simple.data.entities.avgle
 
 import android.os.Parcel
 import android.os.Parcelable

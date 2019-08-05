@@ -3,7 +3,7 @@ package com.lyhoangvinh.simple.data.dao
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
-import com.lyhoangvinh.simple.data.entinies.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.avgle.Collection
 
 @Dao
 interface CollectionDao : BaseDao<Collection> {

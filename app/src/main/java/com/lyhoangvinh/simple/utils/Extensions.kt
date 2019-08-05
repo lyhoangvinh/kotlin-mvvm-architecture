@@ -25,6 +25,7 @@ import androidx.annotation.ColorRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.gson.annotations.SerializedName
 import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
 import java.text.ParseException
@@ -166,7 +167,7 @@ fun Activity.startActivityTransition(cls: Class<*>, finishAct: Boolean) {
     }
 }
 
-inline fun <reified T> genericCastOrNull(anything: Any):T {
+inline fun <reified T> genericCastOrNull(anything: Any): T {
     return anything as T
 }
 
@@ -229,11 +230,14 @@ fun Fragment.setStatusBarColor(@ColorRes id: Int) {
     activity?.setStatusBarColor(id)
 }
 
-fun Activity.removeStatusBar(){
+fun Activity.removeStatusBar() {
     window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 }
 
-fun Fragment.removeStatusBar(){
+fun Fragment.removeStatusBar() {
     activity?.removeStatusBar()
 }
 
+fun <T> EnumTypeAdapter(classOfT: Class<T>) {
+
+}
