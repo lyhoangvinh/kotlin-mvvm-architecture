@@ -3,7 +3,7 @@
 
     <data>
         <variable name="vm"
-                  type="com.lyhoangvinh.simple.ui.features.avg.home.HomeViewModel"/>
+                  type="com.lyhoangvinh.simple.ui.features.avg.main.home.HomeViewModel"/>
     </data>
 
     <LinearLayout android:layout_width="match_parent"
