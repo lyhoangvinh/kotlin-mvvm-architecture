@@ -1,5 +1,6 @@
 package com.lyhoangvinh.simple.utils
 
+import android.animation.ValueAnimator
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Dialog
@@ -18,6 +19,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.app.ActivityOptionsCompat
@@ -180,6 +182,41 @@ fun Activity.setStatusBarGradients() {
     }
 }
 
+fun TextView.startCollapsingAnimation(finalText: String, duration: Long) {
+    this.startCustomAnimation(true, finalText, duration)
+}
+
+fun TextView.cancelAnimation() {
+    val o = this.tag
+    if (o != null && o is ValueAnimator) {
+        o.cancel()
+    }
+}
+
+fun TextView.startCustomAnimation(isCollapsing: Boolean, finalText: String, duration: Long) {
+    cancelAnimation()
+    val mStartText = this.text
+    val animator =
+        if (isCollapsing) ValueAnimator.ofFloat(1.0f, 0.0f)
+        else ValueAnimator.ofFloat(0.0f, 1.0f)
+    animator.addUpdateListener {
+        val currentValue = it.animatedValue as Float
+        val ended = (isCollapsing && currentValue == 0.0f) || (!isCollapsing && currentValue == 1.0f)
+        if (ended) {
+            this.text = finalText
+        } else {
+            val n = (mStartText.length * currentValue).toInt()
+            val text = mStartText.substring(0, n)
+            if (text != this.text) {
+                this.text = text
+            }
+        }
+    }
+    this.tag = animator
+    animator.duration = duration
+    animator.start()
+}
+
 fun Fragment.setStatusBarGradient() {
     activity?.setStatusBarGradients()
 }
@@ -199,3 +236,4 @@ fun Activity.removeStatusBar(){
 fun Fragment.removeStatusBar(){
     activity?.removeStatusBar()
 }
+

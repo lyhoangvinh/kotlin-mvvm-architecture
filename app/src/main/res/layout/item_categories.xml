@@ -8,6 +8,7 @@
     </data>
 
     <RelativeLayout
+            android:id="@+id/rlRoot"
             android:layout_width="@dimen/size_image_references"
             android:layout_height="@dimen/size_image_references"
             android:background="@drawable/bg_empty_corner">

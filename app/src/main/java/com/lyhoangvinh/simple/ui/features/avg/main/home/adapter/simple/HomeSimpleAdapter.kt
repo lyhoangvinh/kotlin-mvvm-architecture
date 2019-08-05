@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
@@ -22,11 +23,12 @@ import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.ImageBann
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.VideosHomeAdapter
 import com.lyhoangvinh.simple.ui.widget.recycleview.GravitySnapHelper
 import com.lyhoangvinh.simple.ui.widget.recycleview.HorizontalSpaceItemDecoration
+import com.lyhoangvinh.simple.utils.NavigatorHelper
 import com.lyhoangvinh.simple.utils.genericCastOrNull
 import com.tmall.ultraviewpager.UltraViewPager
 import javax.inject.Inject
 
-class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
+class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, private val navigatorHelper: NavigatorHelper) :
     BaseItemSimpleAdapter(context, ItemCallback) {
 
     private var mWidth = 0
@@ -83,7 +85,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
             ITEM_CATEGORY -> genericCastOrNull(CategoriesItemSimpleViewHolder(context, view))
             ITEM_BANNER -> genericCastOrNull(BannerItemSimpleViewHolder(context, view))
             ITEM_COLLECTION_BOTTOM -> genericCastOrNull(CollectionItemSimpleViewHolder(context, view, mWidth, mHeight))
-            ITEM_VIDEO -> genericCastOrNull(VideoItemSimpleViewHolder(context, view, mWidth, mHeight))
+            ITEM_VIDEO -> genericCastOrNull(VideoItemSimpleViewHolder(context, view, mWidth, mHeight, navigatorHelper))
             ITEM_DIVIDER -> genericCastOrNull(DividerItemSimpleViewHolder(view))
             ITEM_TITLE_SEE_ALL -> genericCastOrNull(TitleSeeAllItemViewHolder(view))
             else -> throw RuntimeException("Not support type=$viewType")
@@ -181,13 +183,15 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context) :
         private val context: Context,
         view: View,
         private val mWidth: Int,
-        private val mHeight: Int
+        private val mHeight: Int,
+        private val navigatorHelper: NavigatorHelper
     ) :
         BaseItemSimpleViewHolder<VideoItem, ViewRcyHorizontalBinding>(view) {
         private var isItemDecoration = false
         override fun setItem(data: VideoItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
             val adapter = VideosHomeAdapter(context)
+            adapter.setOnItemClickListener { navigatorHelper.navigateDetailActivity(it)}
             binding.rcv.adapter = adapter.setLayoutParams(mWidth, mHeight)
             if (!isItemDecoration){
                 isItemDecoration = true

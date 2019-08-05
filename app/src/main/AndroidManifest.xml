@@ -25,13 +25,14 @@
         <activity android:name=".ui.features.comic.testpaging.ComicPagingActivity"
                   android:screenOrientation="portrait">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name="com.lyhoangvinh.simple.ui.features.avg.splash.SplashActivity" android:screenOrientation="portrait">
+        <activity android:name="com.lyhoangvinh.simple.ui.features.avg.splash.SplashActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -40,6 +41,16 @@
         </activity>
 
         <activity android:name=".ui.features.avg.main.AgvActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name="com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity" android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".ui.features.comic.testactivity.ComicActivity"/>
 
         <receiver android:name=".receiver.NetworkReceiver"/>
 

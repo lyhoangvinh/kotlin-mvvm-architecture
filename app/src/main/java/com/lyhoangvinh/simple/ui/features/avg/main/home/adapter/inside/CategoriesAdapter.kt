@@ -29,6 +29,7 @@ class CategoriesAdapter(@ActivityContext context: Context) :
 
     override fun onBindViewHolder(binding: ItemCategoriesBinding, dto: Category, position: Int) {
         binding.dto = dto
+        binding.rlRoot.setOnClickListener { onClickItemListener?.invoke(dto) }
     }
 
     class CategoriesViewHolder(itemView: View) : BaseViewHolder<ItemCategoriesBinding>(itemView)

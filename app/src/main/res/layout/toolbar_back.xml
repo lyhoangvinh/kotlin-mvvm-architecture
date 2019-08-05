@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <variable name="titleToolBar" type="String"/>
+    </data>
+
+    <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_toolbar"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            android:background="@drawable/bg_gradient_evening_sunshine"
+            android:contentInsetStartWithNavigation="0dp"
+            android:elevation="@dimen/dimen_toolbar_elevation"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="1dp"
+            app:elevation="@dimen/dimen_toolbar_elevation"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+        <!--app:layout_scrollFlags="scroll|enterAlways|snap"-->
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/imvBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/padding_8dp"
+                    android:src="@drawable/ic_arrow_back_black_24dp"/>
+
+            <TextView
+                    android:id="@+id/tvTitleToolBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:layout_toEndOf="@+id/imvBack"
+                    android:layout_toStartOf="@id/imvCopy"
+                    android:layout_centerInParent="true"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:setStartCollapsingAnimation="@{titleToolBar}"
+                    android:textSize="@dimen/ts_16_sp"
+                    tools:text="TITLE"/>
+
+            <ImageView
+                    android:id="@+id/imvCopy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/padding_8dp"
+                    android:tint="@android:color/white"
+                    android:src="@drawable/ic_content_copy_24dp"/>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+</layout>

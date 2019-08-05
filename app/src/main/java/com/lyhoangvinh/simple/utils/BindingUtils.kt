@@ -1,12 +1,17 @@
 package com.lyhoangvinh.simple.utils
 
+import android.view.View
+import android.webkit.WebChromeClient
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.webkit.WebSettings
+import com.lyhoangvinh.simple.R
 
-object BindingUtil {
+object BindingUtils {
 
     @JvmStatic
     @BindingAdapter("loadImageURL")
@@ -56,4 +61,44 @@ object BindingUtil {
         textView.text = String.format("Video count: %s", videoCount)
     }
 
+    @JvmStatic
+    @BindingAdapter("setWebViewClient")
+    fun setWebViewClient(view: WebView, client: WebViewClient) {
+        view.webViewClient = client
+    }
+
+    @JvmStatic
+    @BindingAdapter("setWebChromeClient")
+    fun setWebChromeClient(view: WebView, chromeClient: WebChromeClient) {
+        view.webChromeClient = chromeClient
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadWebViewUrl")
+    fun loadWebViewUrl(view: WebView, url: String) {
+        view.settings.apply {
+            javaScriptEnabled = true
+            allowFileAccess = true
+            loadWithOverviewMode = true
+            useWideViewPort = true
+            setSupportZoom(true)
+            displayZoomControls = true
+            builtInZoomControls = true
+            domStorageEnabled = true
+            cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+        }
+        view.loadUrl(url)
+    }
+
+    @JvmStatic
+    @BindingAdapter("setStartCollapsingAnimation")
+    fun setStartCollapsingAnimation(view: TextView, text: String) {
+        view.startCollapsingAnimation(text, 500L)
+    }
+
+    @JvmStatic
+    @BindingAdapter("android:animatedVisibility")
+    fun setAnimatedVisibility(target: View, isVisible: Boolean) {
+        target.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 }

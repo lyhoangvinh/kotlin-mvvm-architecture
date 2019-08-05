@@ -43,6 +43,9 @@ class VideosHomeAdapter(@ActivityContext context: Context) :
         binding.lnlMain.layoutParams = RelativeLayout.LayoutParams(mWidth, RelativeLayout.LayoutParams.WRAP_CONTENT)
         binding.imv.requestLayout()
         binding.video = dto
+
+        binding.tvPreview.setOnClickListener { onItemClickListener?.invoke(dto.previewVideoUrl.toString()) }
+        binding.lnlMain.setOnClickListener { onItemClickListener?.invoke(dto.videoUrl.toString()) }
     }
 
     class VideoViewHolder(itemView: View) : BaseViewHolder<ItemVideoHomeBinding>(itemView)

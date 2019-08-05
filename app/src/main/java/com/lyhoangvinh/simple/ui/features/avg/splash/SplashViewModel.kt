@@ -6,9 +6,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.data.repo.HomeRepo
 import com.lyhoangvinh.simple.data.response.*
+import com.lyhoangvinh.simple.data.source.State
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.lyhoangvinh.simple.utils.ConnectionLiveData
+import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
@@ -19,7 +21,7 @@ class SplashViewModel @Inject constructor(
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         connectionLiveData.observe(lifecycleOwner, Observer {
             if (it!!.isConnected) {
-                execute(false,
+                execute(true,
                     homeRepo.getRepoHome(), object :
                         PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
                         override fun accept(t: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
@@ -27,12 +29,12 @@ class SplashViewModel @Inject constructor(
                         }
                     })
             } else {
-                Handler().postDelayed({ openHome() }, 500L)
+                openHome()
             }
         })
     }
 
     private fun openHome() {
-        navigatorHelper.navigateAvgleActivity()
+        Handler().postDelayed({ navigatorHelper.navigateAvgleActivity() }, 300L)
     }
 }
