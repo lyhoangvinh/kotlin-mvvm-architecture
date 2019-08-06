@@ -155,6 +155,10 @@ fun Activity.showKeyboard(yourEditText: EditText) {
     }
 }
 
+fun View.setVisibility(isVisible: Boolean) {
+    this.visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+
 fun Fragment.addAnimations(): Fragment {
     return this.apply {
         val slideTransition = Slide(Gravity.END)
@@ -181,18 +185,6 @@ fun Activity.startActivityTransition(cls: Class<*>, finishAct: Boolean) {
 
 inline fun <reified T> genericCastOrNull(anything: Any): T {
     return anything as T
-}
-
-@Suppress("DEPRECATION")
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-fun Activity.setStatusBarGradients() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        val background = resources.getDrawable(R.drawable.bg_gradient_evening_sunshine)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = resources.getColor(android.R.color.transparent)
-        window.navigationBarColor = resources.getColor(android.R.color.transparent)
-        window.setBackgroundDrawable(background)
-    }
 }
 
 fun TextView.startCollapsingAnimation(finalText: String, duration: Long) {
@@ -230,6 +222,18 @@ fun TextView.startCustomAnimation(isCollapsing: Boolean, finalText: String, dura
     animator.start()
 }
 
+@Suppress("DEPRECATION")
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+fun Activity.setStatusBarGradients() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val background = resources.getDrawable(R.drawable.bg_gradient_evening_sunshine)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = resources.getColor(android.R.color.transparent)
+        window.navigationBarColor = resources.getColor(android.R.color.transparent)
+        window.setBackgroundDrawable(background)
+    }
+}
+
 fun Fragment.setStatusBarGradient() {
     activity?.setStatusBarGradients()
 }
@@ -250,6 +254,3 @@ fun Fragment.removeStatusBar() {
     activity?.removeStatusBar()
 }
 
-fun <T> EnumTypeAdapter(classOfT: Class<T>) {
-
-}

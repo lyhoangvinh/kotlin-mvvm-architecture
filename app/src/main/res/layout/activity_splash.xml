@@ -11,7 +11,6 @@
         <variable name="state"
                   type="com.lyhoangvinh.simple.data.entities.State"/>
 
-
     </data>
     <RelativeLayout
             android:background="@drawable/bg_gradient_evening_sunshine"
@@ -26,24 +25,12 @@
                 android:layout_centerInParent="true"
                 android:layout_height="200dp"/>
 
-        <TextView
-                android:id="@+id/tvLoading"
-                android:layout_height="wrap_content"
-                android:layout_width="200dp"
-                android:layout_below="@+id/logo"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_18_sp"
-                android:padding="@dimen/padding_16dp"
-                android:gravity="center"
+        <com.lyhoangvinh.simple.ui.widget.newton.NewtonCradleLoading
+                android:id="@+id/newtonCradleLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/padding_35dp"
+                android:layout_below="@id/logo"
+                app:startNewtonCradleLoading="@{state}"
                 android:layout_centerInParent="true"/>
-
-        <ProgressBar
-                android:id="@+id/viewLoading"
-                style="@style/Widget.AppCompat.ProgressBar"
-                android:layout_width="@dimen/padding_40dp"
-                android:layout_height="@dimen/padding_40dp"
-                android:layout_centerInParent="true"
-                android:animatedVisibility="@{state.status == Status.LOADING}"
-                tools:visibility="visible"/>
     </RelativeLayout>
 </layout>

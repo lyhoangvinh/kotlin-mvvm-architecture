@@ -10,6 +10,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.data.entities.State
+import com.lyhoangvinh.simple.data.entities.Status
+import com.lyhoangvinh.simple.ui.widget.RotateLoading
+import com.lyhoangvinh.simple.ui.widget.newton.NewtonCradleLoading
 
 object BindingUtils {
 
@@ -106,5 +110,27 @@ object BindingUtils {
     @BindingAdapter("android:animatedVisibility")
     fun setAnimatedVisibility(target: View, isVisible: Boolean) {
         target.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    @JvmStatic
+    @BindingAdapter("startRotateLoading")
+    fun startRotateLoading(rotateLoading: RotateLoading, isStart: Boolean) {
+        if (rotateLoading.isStart) {
+            rotateLoading.stop()
+        } else {
+            rotateLoading.start()
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("startNewtonCradleLoading")
+    fun startNewtonCradleLoading(newtonCradleLoading: NewtonCradleLoading, state: State?) {
+        if (state?.status == Status.LOADING) {
+            if (!newtonCradleLoading.isStart)
+                newtonCradleLoading.start()
+        } else {
+            if (newtonCradleLoading.isStart)
+                newtonCradleLoading.stop()
+        }
     }
 }

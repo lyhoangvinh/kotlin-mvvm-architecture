@@ -16,8 +16,17 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        videoRepo.liveVideo("", stateLiveData, mCompositeDisposable).observe(lifecycleOwner, Observer {
+        videoRepo.liveVideo("").observe(lifecycleOwner, Observer {
             adapter.submitList(it)
         })
+
+        videoRepo.stateVideoSource().observe(lifecycleOwner, Observer {
+            adapter.submitState(it)
+        })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        videoRepo.clear()
     }
 }

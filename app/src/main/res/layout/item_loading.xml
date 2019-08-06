@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <ProgressBar
-                 android:layout_width="40dp"
-                 android:layout_height="40dp"
-                 android:layout_gravity="center"
-                 android:background="@null"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="isShow"
+                  type="Boolean"/>
+    </data>
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+        <com.lyhoangvinh.simple.ui.widget.RotateLoading
+                android:id="@+id/progress"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:loading_speed="11"
+                app:loading_width="5dp"
+                android:layout_gravity="center"
+                app:loading_color="@android:color/holo_blue_bright"
+                app:startRotateLoading="@{isShow}"
+                android:background="@null"/>
+    </FrameLayout>
+
 </layout>

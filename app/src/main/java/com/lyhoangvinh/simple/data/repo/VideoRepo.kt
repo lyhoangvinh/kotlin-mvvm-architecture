@@ -13,8 +13,7 @@ import javax.inject.Inject
 class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) {
 
     fun liveVideo(
-        chId: String, stateLiveData: SafeMutableLiveData<State>,
-        compositeDisposable: CompositeDisposable
+        chId: String
     ): LiveData<PagedList<Video>> {
         val config = PagedList.Config.Builder()
             .setPageSize(50)
@@ -23,15 +22,16 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
             .setPrefetchDistance(40)
             .build()
         videoFactory.setChId(chId)
-        videoFactory.setUpProvider(stateLiveData, compositeDisposable)
         return LivePagedListBuilder(videoFactory, config).build()
     }
+
+    fun stateVideoSource() = videoFactory.stateLiveSource()
 
     fun clear() {
         videoFactory.clear()
     }
 
-    fun invalidate(){
+    fun invalidate() {
         videoFactory.invalidate()
     }
 }

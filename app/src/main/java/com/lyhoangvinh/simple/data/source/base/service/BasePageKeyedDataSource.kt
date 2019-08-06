@@ -17,8 +17,9 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Provider
 
-//http://huoshan2.com/recordGrowth-90377318.html
 /**
+ * I learned a lot from this article:
+ * http://huoshan2.com/recordGrowth-90377318.html
  * https://developer.android.com/topic/libraries/architecture/paging/data
  * https://medium.com/@SaurabhSandav/using-android-paging-library-with-retrofit-fa032cac15f8
  */
@@ -27,9 +28,9 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
 
     private var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
-    lateinit var stateLiveData: SafeMutableLiveData<State>
+    var stateLiveData = SafeMutableLiveData<State>()
 
-    lateinit var compositeDisposable: CompositeDisposable
+    var compositeDisposable = CompositeDisposable()
 
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, E>) {
@@ -90,10 +91,7 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
     abstract class Factory<E, T : Entities<E>>(private val provider: Provider<BasePageKeyedDataSource<E, T>>) :
         DataSource.Factory<Int, E>() {
 
-        fun setUpProvider(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable) {
-            this.provider.get().stateLiveData = stateLiveData
-            this.provider.get().compositeDisposable = compositeDisposable
-        }
+        fun stateLiveSource() = provider.get().stateLiveData
 
         fun clear() {
             provider.get().clear()

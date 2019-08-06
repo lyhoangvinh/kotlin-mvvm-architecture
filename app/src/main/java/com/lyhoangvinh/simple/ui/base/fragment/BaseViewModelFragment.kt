@@ -59,7 +59,7 @@ abstract class BaseViewModelFragment<B : ViewDataBinding, VM : BaseViewModel> : 
      * Default state handling, can be override
      * @param state viewModel's state
      */
-    private fun handleState(state: State?) {
+    open fun handleState(state: State?) {
         setLoading(state != null && state.status == Status.LOADING, state?.message!!)
     }
 
