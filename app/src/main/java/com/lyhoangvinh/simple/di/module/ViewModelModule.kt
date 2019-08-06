@@ -6,6 +6,7 @@ import com.lyhoangvinh.simple.di.ViewModelFactory
 import com.lyhoangvinh.simple.di.qualifier.ViewModelKey
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeViewModel
+import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoViewModel
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleViewModel
@@ -49,4 +50,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(DetailViewModel::class)
     internal abstract fun detailViewModel(viewModel: DetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(VideoViewModel::class)
+    internal abstract fun videoViewModel(viewModel: VideoViewModel): ViewModel
 }

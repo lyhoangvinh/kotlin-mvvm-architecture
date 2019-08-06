@@ -26,6 +26,12 @@ object BindingUtils {
     }
 
     @JvmStatic
+    @BindingAdapter("formatDate")
+    fun formatDate(textView: TextView, date: Long?) {
+        textView.formatDate(date!!)
+    }
+
+    @JvmStatic
     @BindingAdapter("setAddedDate")
     fun setAddedDate(textView: TextView, date: String?) {
         textView.text = String.format("Added: %s", getAppDateFormatter(date!!))

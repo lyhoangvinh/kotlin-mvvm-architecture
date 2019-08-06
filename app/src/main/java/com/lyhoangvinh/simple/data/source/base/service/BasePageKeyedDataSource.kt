@@ -11,12 +11,8 @@ import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainEntitiesPagingConsumer
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
-import com.lyhoangvinh.simple.utils.genericCastOrNull
-import com.lyhoangvinh.simple.utils.makeRequest
 import com.lyhoangvinh.simple.utils.makeRequestAvg
-import io.reactivex.Emitter
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Provider

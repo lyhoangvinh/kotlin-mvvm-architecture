@@ -77,9 +77,6 @@ abstract class BaseViewModelPagingFragment<B : ViewDataBinding,
         } else {
             refreshUi()
         }
-        if (message.isNotEmpty()) {
-            showToastMessage(message)
-        }
     }
 
     override fun onRefresh() {

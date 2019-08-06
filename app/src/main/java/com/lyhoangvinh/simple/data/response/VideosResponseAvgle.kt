@@ -25,8 +25,8 @@ data class VideosResponseAvgle(
 
     @SerializedName("videos")
     @Expose
-    var videos: List<Video>,
+    var videos: List<Video>
 
-    override var list: List<Video> = videos
-
-) : Entities<Video>
+) : Entities<Video> {
+    override fun listData(): List<Video> = videos
+}

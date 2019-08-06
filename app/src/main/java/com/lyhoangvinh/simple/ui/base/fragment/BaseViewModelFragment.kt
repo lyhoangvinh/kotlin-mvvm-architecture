@@ -60,7 +60,7 @@ abstract class BaseViewModelFragment<B : ViewDataBinding, VM : BaseViewModel> : 
      * @param state viewModel's state
      */
     private fun handleState(state: State?) {
-        setLoading(state != null && state.status == Status.LOADING, state?.message.toString())
+        setLoading(state != null && state.status == Status.LOADING, state?.message!!)
     }
 
     protected open fun setLoading(loading: Boolean, message: String) {

@@ -1,5 +1,5 @@
 package com.lyhoangvinh.simple.data.entities
 
 interface Entities<T> {
-    var list: List<T>
+    fun listData() : List<T>
 }

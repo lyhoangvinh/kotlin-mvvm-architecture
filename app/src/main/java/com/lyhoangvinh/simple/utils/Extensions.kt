@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.utils
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Dialog
@@ -60,6 +61,17 @@ fun Activity.createDialog(): Dialog? {
         it.setCancelable(false)
         it.setCanceledOnTouchOutside(false)
         return it
+    }
+}
+
+@SuppressLint("SimpleDateFormat")
+fun TextView.formatDate(time: Long) {
+    try {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val netDate = Date(time)
+        this.text = sdf.format(netDate)
+    } catch (e: Exception) {
+        this.text = e.toString()
     }
 }
 

@@ -3,8 +3,10 @@ package com.lyhoangvinh.simple.utils
 import android.content.Intent
 import android.net.Uri
 import com.lyhoangvinh.simple.Constants
+import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.features.avg.main.AgvActivity
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
 import lyhoangvinh.com.myutil.navigation.FragmentNavigator
@@ -42,5 +44,9 @@ class NavigatorHelper(private var mNavigator: Navigator) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.parse(url), type)
         mNavigator.startActivity(intent)
+    }
+
+    fun navigateVideosFragment() {
+        mNavigator.replaceFragmentAndAddToBackStack(R.id.container, VideoFragment().addAnimations(), null, null)
     }
 }

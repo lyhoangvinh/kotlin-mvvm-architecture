@@ -8,6 +8,8 @@ import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeFragmentModule
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.BannerImagesFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.BannerImagesModule
+import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
+import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragmentModule
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivityModule
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicFragment
@@ -50,4 +52,7 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [DetailModule::class])
     abstract fun detailActivity(): DetailActivity
+
+    @ContributesAndroidInjector(modules = [VideoFragmentModule::class])
+    abstract fun videoFragment(): VideoFragment
 }

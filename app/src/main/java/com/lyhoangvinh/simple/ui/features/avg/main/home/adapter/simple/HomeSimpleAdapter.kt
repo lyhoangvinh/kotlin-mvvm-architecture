@@ -87,7 +87,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             ITEM_COLLECTION_BOTTOM -> genericCastOrNull(CollectionItemSimpleViewHolder(context, view, mWidth, mHeight))
             ITEM_VIDEO -> genericCastOrNull(VideoItemSimpleViewHolder(context, view, mWidth, mHeight, navigatorHelper))
             ITEM_DIVIDER -> genericCastOrNull(DividerItemSimpleViewHolder(view))
-            ITEM_TITLE_SEE_ALL -> genericCastOrNull(TitleSeeAllItemViewHolder(view))
+            ITEM_TITLE_SEE_ALL -> genericCastOrNull(TitleSeeAllItemViewHolder(view, navigatorHelper))
             else -> throw RuntimeException("Not support type=$viewType")
         }
     }
@@ -97,11 +97,16 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
     private class DividerItemSimpleViewHolder(view: View) :
         BaseItemSimpleViewHolder<DividerItem, ViewDividerBinding>(view)
 
-    private class TitleSeeAllItemViewHolder(view: View) :
+    private class TitleSeeAllItemViewHolder(view: View, private val navigatorHelper: NavigatorHelper) :
         BaseItemSimpleViewHolder<TitleSeeAllItem, ItemTitleSeeAllBinding>(view) {
         override fun setItem(data: TitleSeeAllItem, binding: ItemTitleSeeAllBinding) {
             super.setItem(data, binding)
             binding.title = data
+            binding.lnSeeAllVideo.setOnClickListener {
+                if (data.idViewModel == "Videos") {
+                    navigatorHelper.navigateVideosFragment()
+                }
+            }
         }
     }
 
@@ -112,7 +117,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             super.setItem(data, binding)
             val adapter = CategoriesAdapter(context)
             binding.rcv.adapter = adapter
-            if (!isItemDecoration){
+            if (!isItemDecoration) {
                 isItemDecoration = true
                 binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             }
@@ -167,7 +172,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             super.setItem(data, binding)
             val adapter = CollectionHomeAdapter(context).setLayoutParams(mWidth, mHeight)
             binding.rcv.adapter = adapter
-            if (!isItemDecoration){
+            if (!isItemDecoration) {
                 isItemDecoration = true
                 binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             }
@@ -191,9 +196,9 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         override fun setItem(data: VideoItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
             val adapter = VideosHomeAdapter(context)
-            adapter.setOnItemClickListener { navigatorHelper.navigateDetailActivity(it)}
+            adapter.setOnItemClickListener { navigatorHelper.navigateDetailActivity(it) }
             binding.rcv.adapter = adapter.setLayoutParams(mWidth, mHeight)
-            if (!isItemDecoration){
+            if (!isItemDecoration) {
                 isItemDecoration = true
                 binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             }

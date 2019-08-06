@@ -11,10 +11,12 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
-class VideoDataSource @Inject constructor(private val avgleService: AvgleService) : BasePageKeyedDataSource<Video, VideosResponseAvgle>(),
+class VideoDataSource @Inject constructor(private val avgleService: AvgleService) :
+    BasePageKeyedDataSource<Video, VideosResponseAvgle>(),
     Provider<BasePageKeyedDataSource<Video, VideosResponseAvgle>> {
 
     var chId = ""
+
     override fun getRequest(page: Int): Single<BaseResponseAvgle<VideosResponseAvgle>> =
         avgleService.getVideosFromKeyword(page, chId)
 
@@ -23,6 +25,12 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
     }
 
     @Singleton
-    class VideoFactory @Inject constructor(provider: VideoDataSource) : Factory<Video, VideosResponseAvgle>(provider)
+    class VideoFactory @Inject constructor(private val provider: VideoDataSource) :
+        Factory<Video, VideosResponseAvgle>(provider) {
+
+        fun setChId(chId: String) {
+            provider.chId = chId
+        }
+    }
 
 }
