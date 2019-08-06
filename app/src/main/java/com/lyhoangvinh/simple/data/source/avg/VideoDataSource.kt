@@ -27,7 +27,6 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
     @Singleton
     class VideoFactory @Inject constructor(private val provider: VideoDataSource) :
         Factory<Video, VideosResponseAvgle>(provider) {
-
         fun setChId(chId: String) {
             provider.chId = chId
         }

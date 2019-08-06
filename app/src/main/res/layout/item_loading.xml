@@ -10,8 +10,8 @@
 
         <com.lyhoangvinh.simple.ui.widget.RotateLoading
                 android:id="@+id/progress"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:loading_speed="11"
                 app:loading_width="5dp"
                 android:layout_gravity="center"

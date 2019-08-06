@@ -18,8 +18,8 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
         val config = PagedList.Config.Builder()
             .setPageSize(50)
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(50)
-            .setPrefetchDistance(40)
+            .setInitialLoadSizeHint(100)
+            .setPrefetchDistance(50)
             .build()
         videoFactory.setChId(chId)
         return LivePagedListBuilder(videoFactory, config).build()
@@ -31,7 +31,7 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
         videoFactory.clear()
     }
 
-    fun invalidate() {
+    fun reSet(){
         videoFactory.invalidate()
     }
 }
