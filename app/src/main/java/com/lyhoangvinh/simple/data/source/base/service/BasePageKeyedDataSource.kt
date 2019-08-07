@@ -1,5 +1,6 @@
 package com.lyhoangvinh.simple.data.source.base.service
 
+import android.inputmethodservice.Keyboard
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
@@ -29,10 +30,9 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
 
     private var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
-    var stateLiveData = SafeMutableLiveData<State>()
+    lateinit var stateLiveData: SafeMutableLiveData<State>
 
-    var compositeDisposable = CompositeDisposable()
-
+    lateinit var compositeDisposable : CompositeDisposable
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, E>) {
         Log.d(TAG_X, "1-loadInitial: requestedLoadSize ${params.requestedLoadSize}")
@@ -92,7 +92,14 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
     abstract class Factory<E, T : Entities<E>>(private val provider: Provider<BasePageKeyedDataSource<E, T>>) :
         DataSource.Factory<Int, E>() {
 
+        val liveDataSource = MutableLiveData<BasePageKeyedDataSource<E, T>>()
+
         fun stateLiveSource() = provider.get().stateLiveData
+
+        fun setSateLiveSource(stateLiveData: SafeMutableLiveData<State>, mCompositeDisposable: CompositeDisposable) {
+            provider.get().stateLiveData = stateLiveData
+            provider.get().compositeDisposable = mCompositeDisposable
+        }
 
         fun clear() {
             provider.get().clear()
@@ -103,6 +110,7 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
         }
 
         override fun create(): DataSource<Int, E> {
+            liveDataSource.postValue(provider.get())
             return provider.get()
         }
     }

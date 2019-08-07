@@ -13,6 +13,8 @@ abstract class BasePagingViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(
     @Nullable
     lateinit var adapter: A
 
+    var isFistUiFetchData = false
+
     var dataEmptySafeMutableLiveData = SafeMutableLiveData<DataEmpty>()
 
     @CallSuper
@@ -26,6 +28,7 @@ abstract class BasePagingViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(
     @CallSuper
     fun refresh() {
         fetchData()
+        isFistUiFetchData = true
     }
 
     protected abstract fun fetchData()

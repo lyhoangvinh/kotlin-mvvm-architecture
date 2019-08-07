@@ -1,9 +1,11 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.home
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.databinding.FragmentHomeBinding
 import com.lyhoangvinh.simple.ui.base.fragment.BaseViewModelRecyclerViewFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple.HomeSimpleAdapter

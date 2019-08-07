@@ -113,16 +113,19 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
     private class CategoriesItemSimpleViewHolder(private val context: Context, view: View) :
         BaseItemSimpleViewHolder<CategoryItem, ViewRcyHorizontalBinding>(view) {
         private var isItemDecoration = false
+        private var adapter: CategoriesAdapter? = null
         override fun setItem(data: CategoryItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
-            val adapter = CategoriesAdapter(context)
-            binding.rcv.adapter = adapter
+            if (adapter == null) {
+                adapter = CategoriesAdapter(context)
+                binding.rcv.adapter = adapter
+            }
             if (!isItemDecoration) {
                 isItemDecoration = true
                 binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             }
-            binding.rcv.isNestedScrollingEnabled = false
-            adapter.submitList(data.categories)
+//            binding.rcv.isNestedScrollingEnabled = false
+            adapter?.submitList(data.categories)
             if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }
@@ -168,16 +171,19 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
     ) :
         BaseItemSimpleViewHolder<CollectionBottomItem, ViewRcyHorizontalBinding>(view) {
         private var isItemDecoration = false
+        private var adapter: CollectionHomeAdapter? = null
         override fun setItem(data: CollectionBottomItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
-            val adapter = CollectionHomeAdapter(context).setLayoutParams(mWidth, mHeight)
-            binding.rcv.adapter = adapter
+            if (adapter == null) {
+                adapter = CollectionHomeAdapter(context).setLayoutParams(mWidth, mHeight)
+                binding.rcv.adapter = adapter
+            }
             if (!isItemDecoration) {
                 isItemDecoration = true
                 binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             }
             binding.rcv.isNestedScrollingEnabled = false
-            adapter.submitList(data.collections)
+            adapter?.submitList(data.collections)
             if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }
@@ -193,17 +199,20 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
     ) :
         BaseItemSimpleViewHolder<VideoItem, ViewRcyHorizontalBinding>(view) {
         private var isItemDecoration = false
+        private var adapter: VideosHomeAdapter? = null
         override fun setItem(data: VideoItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
-            val adapter = VideosHomeAdapter(context)
-            adapter.setOnItemClickListener { navigatorHelper.navigateDetailActivity(it) }
-            binding.rcv.adapter = adapter.setLayoutParams(mWidth, mHeight)
+            if (adapter == null){
+                adapter = VideosHomeAdapter(context)
+                binding.rcv.adapter = adapter?.setLayoutParams(mWidth, mHeight)
+            }
+            adapter?.setOnItemClickListener { navigatorHelper.navigateDetailActivity(it) }
             if (!isItemDecoration) {
                 isItemDecoration = true
                 binding.rcv.addItemDecoration(HorizontalSpaceItemDecoration(context.resources.getDimensionPixelSize(R.dimen.padding_10dp)))
             }
             binding.rcv.isNestedScrollingEnabled = false
-            adapter.submitList(data.videos)
+            adapter?.submitList(data.videos)
             if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }

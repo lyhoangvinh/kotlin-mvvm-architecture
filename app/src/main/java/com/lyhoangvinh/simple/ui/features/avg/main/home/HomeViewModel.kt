@@ -3,6 +3,7 @@ package com.lyhoangvinh.simple.ui.features.avg.main.home
 import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.repo.HomeRepo
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
@@ -14,15 +15,8 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : BaseLi
 
     private val TAG = "HomeViewModel_TAG"
 
-    override fun fetchData(page: Int) {}
-
-    override fun refresh() {
-        super.refresh()
-        execute(
-            false,
-            homeRepo.getRepoHome(),
-            object :
-                PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
+    override fun fetchData(page: Int) {
+        execute(true, homeRepo.getRepoHome(), object : PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
                 override fun accept(t: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
                 }
             })
@@ -37,7 +31,6 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : BaseLi
     }
 
     private fun updateData(lifecycleOwner: LifecycleOwner) {
-        homeRepo.liveDataHome().removeObservers(lifecycleOwner)
         homeRepo.liveDataHome().observe(lifecycleOwner, Observer {
             adapter.submitList(it)
         })

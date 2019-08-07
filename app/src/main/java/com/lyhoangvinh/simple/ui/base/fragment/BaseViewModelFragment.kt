@@ -60,14 +60,11 @@ abstract class BaseViewModelFragment<B : ViewDataBinding, VM : BaseViewModel> : 
      * @param state viewModel's state
      */
     open fun handleState(state: State?) {
-        setLoading(state != null && state.status == Status.LOADING, state?.message!!)
+        setLoading(state != null && state.status == Status.LOADING)
     }
 
-    protected open fun setLoading(loading: Boolean, message: String) {
+    open fun setLoading(loading: Boolean) {
         (activity as BaseActivity).setLoading(loading)
-        if (message.isNotEmpty()) {
-            showToastMessage(message)
-        }
     }
 
     override fun onDestroyView() {

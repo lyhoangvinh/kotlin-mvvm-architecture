@@ -103,7 +103,7 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
 
     open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)
 
-    override fun setLoading(loading: Boolean, message: String) {
+    override fun setLoading(loading: Boolean) {
         if (!loading) {
             doneRefresh()
         } else {

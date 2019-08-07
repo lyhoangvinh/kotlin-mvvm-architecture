@@ -20,10 +20,6 @@ class VideoFragment : BaseViewModelPagingFragment<FragmentVideoBinding, VideoVie
         binding.toolbar.imvBack.setOnClickListener { onBackPressed() }
     }
 
-    override fun handleState(state: State?) {
-        doneRefresh()
-    }
-
     override fun onBackPressed(): Boolean {
         fragmentManager?.popBackStack()
         return true

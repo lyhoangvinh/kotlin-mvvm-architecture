@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
-
     <data>
+
         <variable name="dto"
                   type="com.lyhoangvinh.simple.data.entities.avgle.Video"/>
     </data>
