@@ -75,7 +75,7 @@ class HomeAdapter @Inject constructor(@ActivityContext val context: Context) : B
 
 
     private class CategoryAdapter(context: Context) :
-        BaseAdapter<Category, ItemCategoriesBinding, CategoryAdapter.CategoryItemViewHolder>(
+        BaseAdapter<Category, ItemCategoriesBinding>(
             context,
             CategoryDiffCallBack
         ) {

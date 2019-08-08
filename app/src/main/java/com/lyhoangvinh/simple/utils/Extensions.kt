@@ -253,4 +253,3 @@ fun Activity.removeStatusBar() {
 fun Fragment.removeStatusBar() {
     activity?.removeStatusBar()
 }
-

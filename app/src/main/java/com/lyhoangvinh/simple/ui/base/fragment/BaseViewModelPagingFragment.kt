@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.ui.base.fragment
 
 import android.content.Context
+import android.view.Gravity
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -10,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
-import com.lyhoangvinh.simple.utils.showToastMessage
+import com.lyhoangvinh.simple.ui.widget.recycleview.GravitySnapHelper
+import com.lyhoangvinh.simple.ui.widget.recycleview.VerticalSpaceItemDecoration
 import kotlinx.android.synthetic.main.view_no_data.*
 import kotlinx.android.synthetic.main.view_recyclerview.*
 import kotlinx.android.synthetic.main.view_scroll_top.*
@@ -67,6 +69,10 @@ abstract class BaseViewModelPagingFragment<B : ViewDataBinding,
         viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
             noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
         })
+        if (recyclerView.onFlingListener == null) {
+            GravitySnapHelper(Gravity.BOTTOM).attachToRecyclerView(recyclerView)
+        }
+        recyclerView.addItemDecoration(VerticalSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.padding_10dp)))
     }
 
     open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)

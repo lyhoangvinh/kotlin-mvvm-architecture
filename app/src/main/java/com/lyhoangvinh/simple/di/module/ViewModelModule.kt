@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.lyhoangvinh.simple.di.ViewModelFactory
 import com.lyhoangvinh.simple.di.qualifier.ViewModelKey
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailViewModel
+import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoViewModel
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
@@ -55,4 +56,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(VideoViewModel::class)
     internal abstract fun videoViewModel(viewModel: VideoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CollectionViewModel::class)
+    internal abstract fun collectionViewModel(viewModel: CollectionViewModel): ViewModel
 }

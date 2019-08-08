@@ -22,6 +22,8 @@ class NetworkModule {
     @OkHttpNoAuth
     @Singleton
     internal fun provideOkHttpClientNoAuth(@ApplicationContext context: MyApplication): OkHttpClient = makeOkHttpClientBuilder(context).build()
+//        .addInterceptor().build()
+//todo: https://stackoverflow.com/questions/45284974/how-to-specify-get-request-encoding-retrofit-okhttp
 
     @Singleton
     @Provides

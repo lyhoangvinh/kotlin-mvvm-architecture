@@ -13,7 +13,7 @@ import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 
 
 class VideosHomeAdapter(@ActivityContext context: Context) :
-    BaseAdapter<Video, ItemVideoHomeBinding, VideosHomeAdapter.VideoViewHolder>(context, DiffCallBack) {
+    BaseAdapter<Video, ItemVideoHomeBinding>(context, DiffCallBack) {
 
 
     private var onItemClickListener: ((String) -> Unit)? = null

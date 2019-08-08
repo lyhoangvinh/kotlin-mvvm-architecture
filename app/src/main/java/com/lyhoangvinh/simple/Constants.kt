@@ -15,5 +15,6 @@ class Constants {
         //collection
         const val TYPE_HOME_BANNER = 1
         const val TYPE_HOME_BOTTOM = 2
-    }
+
+     }
 }

@@ -92,8 +92,6 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
     abstract class Factory<E, T : Entities<E>>(private val provider: Provider<BasePageKeyedDataSource<E, T>>) :
         DataSource.Factory<Int, E>() {
 
-        val liveDataSource = MutableLiveData<BasePageKeyedDataSource<E, T>>()
-
         fun stateLiveSource() = provider.get().stateLiveData
 
         fun setSateLiveSource(stateLiveData: SafeMutableLiveData<State>, mCompositeDisposable: CompositeDisposable) {
@@ -110,7 +108,6 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
         }
 
         override fun create(): DataSource<Int, E> {
-            liveDataSource.postValue(provider.get())
             return provider.get()
         }
     }

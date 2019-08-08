@@ -1,8 +1,9 @@
 package com.lyhoangvinh.simple.data.response
 
- import com.google.gson.annotations.Expose
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
- import com.lyhoangvinh.simple.data.entities.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.Entities
+import com.lyhoangvinh.simple.data.entities.avgle.Collection
 
 data class CollectionsResponseAvgle(
 
@@ -25,4 +26,6 @@ data class CollectionsResponseAvgle(
     @SerializedName("collections")
     @Expose
     var collections: List<Collection>
-)
+ ) : Entities<Collection> {
+    override fun listData(): List<Collection> = collections
+}

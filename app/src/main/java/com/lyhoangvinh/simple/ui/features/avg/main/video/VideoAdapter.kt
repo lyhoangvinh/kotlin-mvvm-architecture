@@ -13,7 +13,7 @@ import com.lyhoangvinh.simple.utils.NavigatorHelper
 import javax.inject.Inject
 
 class VideoAdapter @Inject constructor(@ActivityContext context: Context, private val navigatorHelper: NavigatorHelper) :
-    BaseAdapter<Video, ItemVideoBinding, VideoAdapter.VideoViewHolder>(context, ItemCallBack) {
+    BaseAdapter<Video, ItemVideoBinding>(context, ItemCallBack) {
     override fun itemLayoutResource() = R.layout.item_video
     override fun createViewHolder(itemView: View) = VideoViewHolder(itemView)
     override fun onBindViewHolder(binding: ItemVideoBinding, dto: Video, position: Int) {

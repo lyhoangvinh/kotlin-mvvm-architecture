@@ -13,7 +13,7 @@ import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 
 
 class CollectionHomeAdapter(@ActivityContext context: Context) :
-    BaseAdapter<Collection, ItemCollectionHomeBinding, CollectionHomeAdapter.CollectionViewHolder>(
+    BaseAdapter<Collection, ItemCollectionHomeBinding>(
         context,
         DiffCallBack
     ) {
@@ -28,6 +28,13 @@ class CollectionHomeAdapter(@ActivityContext context: Context) :
         return this
     }
 
+    private var onClickItemListener: ((Collection) -> Unit?)? = null
+
+    fun setOnClickItemListener(onClickItemListener: (Collection) -> Unit): CollectionHomeAdapter {
+        this.onClickItemListener = onClickItemListener
+        return this
+    }
+
 
     override fun itemLayoutResource() = R.layout.item_collection_home
 
@@ -39,6 +46,8 @@ class CollectionHomeAdapter(@ActivityContext context: Context) :
         binding.lnlMain.layoutParams = RelativeLayout.LayoutParams(mWidth, RelativeLayout.LayoutParams.WRAP_CONTENT)
         binding.imv.requestLayout()
         binding.collection = dto
+
+        binding.lnlMain.setOnClickListener { onClickItemListener?.invoke(dto) }
     }
 
     class CollectionViewHolder(itemView: View) : BaseViewHolder<ItemCollectionHomeBinding>(itemView)

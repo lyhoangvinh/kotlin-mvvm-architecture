@@ -12,7 +12,7 @@ import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 import javax.inject.Inject
 
 class ComicAdapter @Inject constructor(@ActivityContext context: Context) :
-    BaseAdapter<Issues, ItemComicsBinding, ComicAdapter.ComicViewHolder>(context, IssuesDiffCallBack) {
+    BaseAdapter<Issues, ItemComicsBinding>(context, IssuesDiffCallBack) {
 
     override fun itemLayoutResource() = R.layout.item_comics
 

@@ -82,9 +82,9 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
     ): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
         return when (viewType) {
             ITEM_SEARCH -> genericCastOrNull(SearchItemSimpleViewHolder(view))
-            ITEM_CATEGORY -> genericCastOrNull(CategoriesItemSimpleViewHolder(context, view))
+            ITEM_CATEGORY -> genericCastOrNull(CategoriesItemSimpleViewHolder(context, view, navigatorHelper))
             ITEM_BANNER -> genericCastOrNull(BannerItemSimpleViewHolder(context, view))
-            ITEM_COLLECTION_BOTTOM -> genericCastOrNull(CollectionItemSimpleViewHolder(context, view, mWidth, mHeight))
+            ITEM_COLLECTION_BOTTOM -> genericCastOrNull(CollectionItemSimpleViewHolder(context, view, mWidth, mHeight, navigatorHelper))
             ITEM_VIDEO -> genericCastOrNull(VideoItemSimpleViewHolder(context, view, mWidth, mHeight, navigatorHelper))
             ITEM_DIVIDER -> genericCastOrNull(DividerItemSimpleViewHolder(view))
             ITEM_TITLE_SEE_ALL -> genericCastOrNull(TitleSeeAllItemViewHolder(view, navigatorHelper))
@@ -103,14 +103,15 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             super.setItem(data, binding)
             binding.title = data
             binding.lnSeeAllVideo.setOnClickListener {
-                if (data.idViewModel == "Videos") {
-                    navigatorHelper.navigateVideosFragment()
+                when (data.idViewModel) {
+                    "Videos" -> navigatorHelper.navigateVideosFragment()
+                    "Collections" -> navigatorHelper.navigateCollectionFragment()
                 }
             }
         }
     }
 
-    private class CategoriesItemSimpleViewHolder(private val context: Context, view: View) :
+    private class CategoriesItemSimpleViewHolder(private val context: Context, view: View, private val navigatorHelper: NavigatorHelper) :
         BaseItemSimpleViewHolder<CategoryItem, ViewRcyHorizontalBinding>(view) {
         private var isItemDecoration = false
         private var adapter: CategoriesAdapter? = null
@@ -126,6 +127,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             }
 //            binding.rcv.isNestedScrollingEnabled = false
             adapter?.submitList(data.categories)
+            adapter?.setOnClickItemListener {navigatorHelper.navigateVideosFragment(it)}
             if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }
@@ -167,7 +169,8 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         private val context: Context,
         view: View,
         private val mWidth: Int,
-        private val mHeight: Int
+        private val mHeight: Int,
+        private val navigatorHelper: NavigatorHelper
     ) :
         BaseItemSimpleViewHolder<CollectionBottomItem, ViewRcyHorizontalBinding>(view) {
         private var isItemDecoration = false
@@ -184,6 +187,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             }
             binding.rcv.isNestedScrollingEnabled = false
             adapter?.submitList(data.collections)
+            adapter?.setOnClickItemListener {navigatorHelper.navigateVideosFragment(it)}
             if (binding.rcv.onFlingListener == null) {
                 GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
             }
@@ -202,7 +206,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         private var adapter: VideosHomeAdapter? = null
         override fun setItem(data: VideoItem, binding: ViewRcyHorizontalBinding) {
             super.setItem(data, binding)
-            if (adapter == null){
+            if (adapter == null) {
                 adapter = VideosHomeAdapter(context)
                 binding.rcv.adapter = adapter?.setLayoutParams(mWidth, mHeight)
             }

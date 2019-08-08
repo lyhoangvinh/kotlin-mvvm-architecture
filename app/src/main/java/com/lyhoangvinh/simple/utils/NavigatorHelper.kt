@@ -2,10 +2,14 @@ package com.lyhoangvinh.simple.utils
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.data.entities.avgle.Category
+import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.ui.features.avg.main.AgvActivity
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
@@ -48,5 +52,33 @@ class NavigatorHelper(private var mNavigator: Navigator) {
 
     fun navigateVideosFragment() {
         mNavigator.replaceFragmentAndAddToBackStack(R.id.container, VideoFragment().addAnimations(), null, null)
+    }
+
+    fun navigateVideosFragment(category: Category?) {
+        val collectionFragment = VideoFragment().addAnimations()
+        if (category != null) {
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.EXTRA_DATA, category)
+            collectionFragment.arguments = bundle
+            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, bundle, null)
+        } else {
+            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, null, null)
+        }
+    }
+
+    fun navigateVideosFragment(collection: Collection?) {
+        val collectionFragment = VideoFragment().addAnimations()
+        if (collection != null) {
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.EXTRA_DATA, collection)
+            collectionFragment.arguments = bundle
+            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, bundle, null)
+        } else {
+            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, null, null)
+        }
+    }
+
+    fun navigateCollectionFragment() {
+        mNavigator.replaceFragmentAndAddToBackStack(R.id.container, CollectionFragment().addAnimations(), null, null)
     }
 }

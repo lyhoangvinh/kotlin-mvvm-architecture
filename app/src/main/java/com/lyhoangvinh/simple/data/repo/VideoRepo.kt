@@ -9,10 +9,14 @@ import com.lyhoangvinh.simple.data.source.avg.VideoDataSource
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.genericCastOrNull
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import lyhoangvinh.com.myutil.thread.BackgroundThreadExecutor
 import javax.inject.Inject
 
-class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) {
+class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) : BaseRepo() {
 
     private lateinit var live: LiveData<PagedList<Video>>
 
@@ -36,8 +40,11 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
     fun stateVideoSource() = videoFactory.stateLiveSource()
 
     fun reSet() {
-        BackgroundThreadExecutor.getInstance().runOnBackground{
-            videoFactory.liveDataSource.value?.invalidate()
+//        CoroutineScope(Dispatchers.Default + Job()).launch {
+//            videoFactory.liveDataSource.value?.invalidate()
+//        }
+        execute {
+            videoFactory.invalidate()
         }
     }
 }

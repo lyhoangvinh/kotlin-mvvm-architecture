@@ -11,7 +11,7 @@ import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 
 class CategoriesAdapter(@ActivityContext context: Context) :
-    BaseAdapter<Category, ItemCategoriesBinding, CategoriesAdapter.CategoriesViewHolder>(
+    BaseAdapter<Category, ItemCategoriesBinding>(
         context,
         CategoryDiffCallBack
     ) {

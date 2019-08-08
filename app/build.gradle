@@ -52,6 +52,9 @@ android {
         experimental = true
     }
 
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
@@ -71,6 +74,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.lifecycleExtensionsVersion"
     implementation "androidx.core:core:$rootProject.ext.coreVersion"
     implementation "androidx.core:core-ktx:$rootProject.ext.coreKtxVersion"
+
+    //kotlin coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.ext.kotlinxVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.kotlinxVersion"
 
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.ext.runnerVersion"
@@ -112,12 +119,16 @@ dependencies {
     //paging
     implementation "androidx.paging:paging-runtime:$rootProject.ext.pagingVersion"
     // alternatively - without Android dependencies for testing
-    testImplementation "androidx.paging:paging-common:$rootProject.ext.pagingVersion" // For Kotlin use paging-common-ktx
+    testImplementation "androidx.paging:paging-common:$rootProject.ext.pagingVersion"
+    // For Kotlin use paging-common-ktx
     // optional - RxJava support
     implementation "androidx.paging:paging-rxjava2:$rootProject.ext.pagingVersion" // For Kotlin use paging-rxjava2-ktx
+    implementation "com.airbnb.android:epoxy:$rootProject.ext.epoxyVerion"
+    implementation "com.airbnb.android:epoxy-paging:$rootProject.ext.epoxyVerion"
+    kapt "com.airbnb.android:epoxy-processor:$rootProject.ext.epoxyVerion"
 
     //ultraviewpager
-    implementation ('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
+    implementation('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
         transitive = true
     }
 }

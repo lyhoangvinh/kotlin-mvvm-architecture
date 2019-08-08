@@ -37,7 +37,7 @@ class BannerImagesFragment : BaseFragment<FragmentBannerImagesBinding>() {
 //            val url :String = collection.collectionUrl.toString()
             binding.imv.loadImage(coverUrl)
             binding.imv.setOnClickListener {
-//                navigatorHelper.navigateVideosFragment(collection)
+                navigatorHelper.navigateVideosFragment(collection)
             }
         }
     }
