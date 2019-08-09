@@ -24,10 +24,7 @@ import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
 import lyhoangvinh.com.myutil.network.Tls12SocketFactory
-import okhttp3.Cache
-import okhttp3.ConnectionSpec
-import okhttp3.OkHttpClient
-import okhttp3.TlsVersion
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -186,6 +183,7 @@ fun makeOkHttpClientBuilder(context: Context): OkHttpClient.Builder {
     // : 4/26/2017 add the UnauthorisedInterceptor to this retrofit, or 401
     val builder = OkHttpClient.Builder()
 //        .addInterceptor(UnauthorisedInterceptor(context))
+        .addInterceptor(ResponseInterceptor())
         .addInterceptor(logging)
         .followRedirects(true)
         .followSslRedirects(true)
@@ -203,6 +201,15 @@ fun makeOkHttpClientBuilder(context: Context): OkHttpClient.Builder {
     }
 
     return enableTls12OnPreLollipop(builder)
+}
+
+class ResponseInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val response = chain.proceed(chain.request())
+        return response.newBuilder()
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .build()
+    }
 }
 
 /**
@@ -223,7 +230,6 @@ fun enableTls12OnPreLollipop(client: OkHttpClient.Builder): OkHttpClient.Builder
             sc.init(null, null, null)
             // TODO: 9/7/17 set SSL socket factory with X509TrustManager
             client.sslSocketFactory(Tls12SocketFactory(sc.socketFactory))
-
             val cs = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
                 .tlsVersions(TlsVersion.TLS_1_2)
                 .build()

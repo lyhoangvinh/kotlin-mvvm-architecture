@@ -19,13 +19,11 @@ class CollectionsRepo @Inject constructor(private val factory: CollectionDataSou
 
     private lateinit var liveData: LiveData<PagedList<Collection>>
 
-    private lateinit var stateLiveData: SafeMutableLiveData<State>
     private lateinit var mCompositeDisposable: CompositeDisposable
 
-    fun setUpRepo(stateLiveData: SafeMutableLiveData<State>, mCompositeDisposable: CompositeDisposable) {
-        this.stateLiveData = stateLiveData
+    fun setUpRepo(mCompositeDisposable: CompositeDisposable) {
         this.mCompositeDisposable = mCompositeDisposable
-        factory.setSateLiveSource(stateLiveData, mCompositeDisposable)
+        factory.setSateLiveSource(mCompositeDisposable)
     }
 
     private fun liveData(): LiveData<PagedList<Collection>> {
@@ -39,7 +37,7 @@ class CollectionsRepo @Inject constructor(private val factory: CollectionDataSou
         return liveData
     }
 
-    fun feachData(): MediatorLiveData<MergedData> {
+    fun fetchData(): MediatorLiveData<MergedData> {
         val liveDataMerger = MediatorLiveData<MergedData>()
         liveDataMerger.addSource(liveData()) {
             liveDataMerger.value = CollectionData(it)

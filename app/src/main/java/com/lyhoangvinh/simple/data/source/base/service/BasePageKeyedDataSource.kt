@@ -30,7 +30,7 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
 
     private var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
-    lateinit var stateLiveData: SafeMutableLiveData<State>
+    val stateLiveData = SafeMutableLiveData<State>()
 
     lateinit var compositeDisposable : CompositeDisposable
 
@@ -94,8 +94,7 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
 
         fun stateLiveSource() = provider.get().stateLiveData
 
-        fun setSateLiveSource(stateLiveData: SafeMutableLiveData<State>, mCompositeDisposable: CompositeDisposable) {
-            provider.get().stateLiveData = stateLiveData
+        fun setSateLiveSource(mCompositeDisposable: CompositeDisposable) {
             provider.get().compositeDisposable = mCompositeDisposable
         }
 

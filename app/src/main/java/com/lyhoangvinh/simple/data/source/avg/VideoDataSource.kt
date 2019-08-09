@@ -33,8 +33,7 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
 
         fun stateLiveSource() = provider.get().stateLiveData
 
-        fun setSateLiveSource(stateLiveData: SafeMutableLiveData<State>, mCompositeDisposable: CompositeDisposable) {
-            provider.get().stateLiveData = stateLiveData
+        fun setSateLiveSource(mCompositeDisposable: CompositeDisposable) {
             provider.get().compositeDisposable = mCompositeDisposable
         }
 
