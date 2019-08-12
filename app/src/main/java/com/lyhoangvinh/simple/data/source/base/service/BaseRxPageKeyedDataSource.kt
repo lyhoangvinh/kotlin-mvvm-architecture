@@ -67,7 +67,6 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
         loadCallback: LoadCallback<Int, E>? = null
     ) {
         publishState(State.loading(null))
-
         compositeDisposable.add(getResourceFollowable(page).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
             .subscribe { resource ->
@@ -86,8 +85,6 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
                 }
             })
     }
-
-
 
     abstract fun getResourceFollowable(page: Int): Flowable<Resource<BaseResponseAvgle<T>>>
 
