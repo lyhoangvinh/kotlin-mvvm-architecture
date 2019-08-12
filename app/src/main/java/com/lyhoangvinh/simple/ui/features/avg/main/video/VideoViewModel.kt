@@ -28,12 +28,12 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         if (bundle != null) {
             if (bundle.getParcelable<Category>(Constants.EXTRA_DATA) is Category) {
-                val category: Category = bundle.getParcelable(Constants.EXTRA_DATA)
+                val category: Category = bundle.getParcelable(Constants.EXTRA_DATA)!!
                 title = category.name.toString()
 //                query = URLEncoder.encode(category.CHID.toString(), "utf-8")
                 query = category.CHID.toString()
             } else if (bundle.getParcelable<Collection>(Constants.EXTRA_DATA) is Collection) {
-                val collection: Collection = bundle.getParcelable(Constants.EXTRA_DATA)
+                val collection: Collection = bundle.getParcelable(Constants.EXTRA_DATA)!!
                 title = collection.title.toString()
 //                query = URLEncoder.encode(collection.keyword.toString(), "utf-8")
                 query = collection.keyword.toString()

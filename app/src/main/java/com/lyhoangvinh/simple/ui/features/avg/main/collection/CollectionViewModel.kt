@@ -18,12 +18,20 @@ class CollectionViewModel @Inject constructor(private val collectionsRepo: Colle
 
     override fun fetchData() {
         publishState(State.success(null))
-        collectionsRepo.setUpRepo(mCompositeDisposable)
+//        collectionsRepo.setUpRepo(mCompositeDisposable)
+        collectionsRepo.setRxUpRepo(mCompositeDisposable)
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        collectionsRepo.setUpRepo(mCompositeDisposable)
-        collectionsRepo.fetchData().observe(lifecycleOwner, Observer {
+//        collectionsRepo.setUpRepo(mCompositeDisposable)
+//        collectionsRepo.fetchData().observe(lifecycleOwner, Observer {
+//            when (it) {
+//                is StateData -> adapter.submitState(it.state)
+//                is CollectionData -> adapter.submitList(it.collections)
+//            }
+//        })
+        collectionsRepo.setRxUpRepo(mCompositeDisposable)
+        collectionsRepo.rxFetchData().observe(lifecycleOwner, Observer {
             when (it) {
                 is StateData -> adapter.submitState(it.state)
                 is CollectionData -> adapter.submitList(it.collections)
