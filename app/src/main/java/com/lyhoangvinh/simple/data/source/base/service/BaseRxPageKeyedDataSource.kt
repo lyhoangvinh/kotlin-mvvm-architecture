@@ -68,8 +68,6 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
     ) {
         publishState(State.loading(null))
 
-
-
         compositeDisposable.add(getResourceFollowable(page).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
             .subscribe { resource ->
@@ -128,6 +126,27 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
         override fun create(): DataSource<Int, E> {
             return provider.get()
         }
+    }
+
+    /**
+     * For single data
+     * @param remote
+     * @param onSave
+     * @param <T>
+     * @return
+    </T> */
+    fun <T> createResource(
+        remote: Single<T>,
+        onSave: PlainConsumer<T>
+    ): Flowable<Resource<T>> {
+        return Flowable.create({
+            object : SimpleNetworkBoundSource<T>(it, true) {
+                override fun getRemote() = remote
+                override fun saveCallResult(data: T, isRefresh: Boolean) {
+                    onSave.accept(data)
+                }
+            }
+        }, BackpressureStrategy.BUFFER)
     }
 
     /**
