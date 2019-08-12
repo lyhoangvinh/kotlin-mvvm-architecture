@@ -14,6 +14,9 @@ import kotlinx.android.synthetic.main.view_no_data.*
 import kotlinx.android.synthetic.main.view_recyclerview.*
 import kotlinx.android.synthetic.main.view_scroll_top.*
 import javax.inject.Inject
+import android.view.animation.AnimationUtils.loadLayoutAnimation
+import androidx.recyclerview.widget.RecyclerView
+
 
 abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
         VM : BaseListDataViewModel<A>,
@@ -40,6 +43,7 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
         layoutManager = createLayoutManager()
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
+        runLayoutAnimation(recyclerView)
         recyclerView.adapter = adapter
         refreshLayout.setOnRefreshListener(this)
         refreshLayout.setColorSchemeResources(
@@ -87,6 +91,13 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
         viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
             noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
         })
+    }
+
+    private fun runLayoutAnimation(recyclerView: RecyclerView) {
+        val context = recyclerView.context
+        val controller = loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+        recyclerView.layoutAnimation = controller
+        recyclerView.scheduleLayoutAnimation()
     }
 
     /**
@@ -185,7 +196,7 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
      * if user scroll down more than [.DEFAULT_SCROLL_TOP_POSITION]
      */
     private fun updateScrollTop(visibleItemCount: Int, pastVisibleItems: Int) {
-        if (shouldShowScrollTop()){
+        if (shouldShowScrollTop()) {
             if (visibleItemCount + pastVisibleItems >= scrollTopPosition) {
                 scrollTop.visibility = View.VISIBLE
             } else {

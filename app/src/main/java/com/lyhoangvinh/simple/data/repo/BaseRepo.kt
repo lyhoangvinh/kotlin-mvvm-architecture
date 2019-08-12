@@ -1,10 +1,8 @@
 package com.lyhoangvinh.simple.data.repo
 
+import com.lyhoangvinh.simple.data.response.ResponseBiZip
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
-import com.lyhoangvinh.simple.data.source.base.PlainResponseZipFourConsumer
-import com.lyhoangvinh.simple.data.source.base.Resource
-import com.lyhoangvinh.simple.data.source.base.SimpleNetworkBoundSource
-import com.lyhoangvinh.simple.data.source.base.SimpleNetworkBoundSourceFourRemote
+import com.lyhoangvinh.simple.data.source.base.*
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
@@ -12,6 +10,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
 
 
 abstract class BaseRepo {
@@ -58,6 +57,51 @@ abstract class BaseRepo {
                 }
             }
         }, BackpressureStrategy.BUFFER)
+    }
+
+    /**
+     * For 2 single data
+     * @param remote1
+     * @param remote2
+     * @param onSave
+     * @param <T>
+     * @return
+    </T> */
+    fun <T1, T2> createResource(
+        remote1: Single<T1>,
+        remote2: Single<T2>,
+        onSave: PlainResponseZipBiConsumer<T1, T2>
+    ): Flowable<Resource<ResponseBiZip<T1, T2>>> {
+        return Flowable.create({
+            object : SimpleNetworkBoundSourceBiRemote<T1, T2>(it, true) {
+                override fun getRemote1() = remote1
+                override fun getRemote2() = remote2
+                override fun saveCallResult(data: ResponseBiZip<T1, T2>, isRefresh: Boolean) {
+                    onSave.accept(data)
+                }
+            }
+        }, BackpressureStrategy.BUFFER)
+    }
+
+    fun <T1, T2> createResource(
+        isRefresh: Boolean,
+        remote1: Single<T1>,
+        remote2: Single<T2>,
+        onSave: OnSaveBiResultListener<T1, T2>
+    ): Flowable<Resource<ResponseBiZip<T1, T2>>> {
+        return Flowable.create({
+            object : SimpleNetworkBoundSourceBiRemote<T1, T2>(it, isRefresh) {
+                override fun getRemote1() = remote1
+                override fun getRemote2() = remote2
+                override fun saveCallResult(data: ResponseBiZip<T1, T2>, isRefresh: Boolean) {
+                    onSave.onSave(data, isRefresh)
+                }
+            }
+        }, BackpressureStrategy.BUFFER)
+    }
+
+    interface OnSaveBiResultListener<T1, T2> {
+        fun onSave(data: ResponseBiZip<T1, T2>, isRefresh: Boolean)
     }
 
     /**

@@ -11,6 +11,7 @@ import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.lyhoangvinh.simple.utils.NavigatorHelper
+import com.lyhoangvinh.simple.utils.genericCastOrNull
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
@@ -27,13 +28,12 @@ abstract class BaseViewModelActivity<B : ViewDataBinding, VM : BaseViewModel> : 
 
     lateinit var viewModel: VM
 
-    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, getLayoutResource())
         // noinspection unchecked
         val viewModelClass =
-            (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM> // 1 is BaseViewModel
+            genericCastOrNull<Class<VM>>((javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1]) // 1 is BaseViewModel
         viewModel = ViewModelProviders.of(this, viewModelFactory)[viewModelClass]
 
         viewModel.onCreate(this, intent.extras, navigatorHelper)

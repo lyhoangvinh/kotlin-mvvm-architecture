@@ -13,13 +13,17 @@ import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
 import com.lyhoangvinh.simple.data.source.base.PlainResponseZipFourConsumer
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
+import com.lyhoangvinh.simple.data.response.ResponseBiZip
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
+import com.lyhoangvinh.simple.data.source.base.PlainResponseZipBiConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainEntitiesPagingConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Action
+import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
@@ -127,6 +131,51 @@ fun <T> makeService(serviceClass: Class<T>, gson: Gson, okHttpClient: OkHttpClie
         .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .build()
     return retrofit.create(serviceClass)
+}
+
+/**
+ * Make 2 Request
+ *
+ */
+
+
+fun <T1, T2> makeRequest(
+    request1: Single<T1>,
+    request2: Single<T2>, shouldUpdateUi: Boolean,
+    @NonNull responseConsumer: PlainResponseZipBiConsumer<T1, T2>,
+    @Nullable errorConsumer: PlainConsumer<ErrorEntity>?,
+    @Nullable onComplete: Action?
+): Disposable {
+    var single1 = request1.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+    var single2 = request2.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
+
+    if (shouldUpdateUi) {
+        single1 = single1.observeOn(AndroidSchedulers.mainThread())
+        single2 = single2.observeOn(AndroidSchedulers.mainThread())
+    }
+    return Single.zip(single1, single2,
+        BiFunction<T1, T2, ResponseBiZip<T1, T2>> { t1, t2 -> ResponseBiZip(t1, t2) })
+        .subscribeOn(Schedulers.io())
+        .unsubscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({ o ->
+            responseConsumer.accept(o)
+            onComplete?.run()
+        }, { throwable ->
+            // handle error
+//                throwable.printStackTrace()
+            errorConsumer?.accept(ErrorEntity.getError(throwable))
+            onComplete?.run()
+        })
+}
+
+fun <T1, T2> makeRequest(
+    request1: Single<T1>,
+    request2: Single<T2>, shouldUpdateUi: Boolean,
+    @NonNull responseConsumer: PlainResponseZipBiConsumer<T1, T2>,
+    @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
+): Disposable {
+    return makeRequest(request1, request2, shouldUpdateUi, responseConsumer, errorConsumer, null)
 }
 
 /**

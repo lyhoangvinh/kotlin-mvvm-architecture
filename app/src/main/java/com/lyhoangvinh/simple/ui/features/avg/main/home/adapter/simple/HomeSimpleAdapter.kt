@@ -226,26 +226,26 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
     private object ItemCallback : DiffUtil.ItemCallback<ItemViewModel>() {
         override fun areItemsTheSame(oldItem: ItemViewModel, newItem: ItemViewModel): Boolean {
             return when {
-                oldItem is TitleSeeAllItem && newItem is TitleSeeAllItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is DividerItem && newItem is DividerItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is SearchItem && newItem is SearchItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is CategoryItem && newItem is CategoryItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is CollectionBannerItem && newItem is CollectionBannerItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is CollectionBottomItem && newItem is CollectionBottomItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is VideoItem && newItem is VideoItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is TitleSeeAllItem        && newItem is TitleSeeAllItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is DividerItem            && newItem is DividerItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is SearchItem             && newItem is SearchItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is CategoryItem           && newItem is CategoryItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is CollectionBannerItem   && newItem is CollectionBannerItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is CollectionBottomItem   && newItem is CollectionBottomItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is VideoItem              && newItem is VideoItem -> oldItem.idViewModel == newItem.idViewModel
                 else -> false
             }
         }
 
         override fun areContentsTheSame(oldItem: ItemViewModel, newItem: ItemViewModel): Boolean {
             return when {
-                oldItem is TitleSeeAllItem && newItem is TitleSeeAllItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is DividerItem && newItem is DividerItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is SearchItem && newItem is SearchItem -> oldItem.idViewModel == newItem.idViewModel
-                oldItem is CategoryItem && newItem is CategoryItem -> oldItem.categories == newItem.categories
-                oldItem is CollectionBannerItem && newItem is CollectionBannerItem -> oldItem.collections == newItem.collections
-                oldItem is CollectionBottomItem && newItem is CollectionBottomItem -> oldItem.collections == newItem.collections
-                oldItem is VideoItem && newItem is VideoItem -> oldItem.videos == newItem.videos
+                oldItem is TitleSeeAllItem        && newItem is TitleSeeAllItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is DividerItem            && newItem is DividerItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is SearchItem             && newItem is SearchItem -> oldItem.idViewModel == newItem.idViewModel
+                oldItem is CategoryItem           && newItem is CategoryItem -> oldItem.categories == newItem.categories
+                oldItem is CollectionBannerItem   && newItem is CollectionBannerItem -> oldItem.collections == newItem.collections
+                oldItem is CollectionBottomItem   && newItem is CollectionBottomItem -> oldItem.collections == newItem.collections
+                oldItem is VideoItem              && newItem is VideoItem -> oldItem.videos == newItem.videos
                 else -> false
             }
         }
