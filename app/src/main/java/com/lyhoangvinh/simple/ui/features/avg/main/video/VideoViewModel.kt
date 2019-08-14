@@ -21,7 +21,7 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
 
     override fun fetchData() {
         videoRepo.reSet()
-        videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"), mCompositeDisposable)
+        videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"))
         publishState(State.success(null))
     }
 
@@ -29,26 +29,31 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
         if (bundle != null) {
             if (bundle.getParcelable<Category>(Constants.EXTRA_DATA) is Category) {
                 val category: Category = bundle.getParcelable(Constants.EXTRA_DATA)!!
-                title = category.name.toString()
+                title = category.name!!
 //                query = URLEncoder.encode(category.CHID.toString(), "utf-8")
-                query = category.CHID.toString()
+                query = category.CHID!!
             } else if (bundle.getParcelable<Collection>(Constants.EXTRA_DATA) is Collection) {
                 val collection: Collection = bundle.getParcelable(Constants.EXTRA_DATA)!!
-                title = collection.title.toString()
+                title = collection.title!!
 //                query = URLEncoder.encode(collection.keyword.toString(), "utf-8")
-                query = collection.keyword.toString()
+                query = collection.keyword!!
             }
         } else {
             title = "All"
             query = ""
         }
 
-        videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"), mCompositeDisposable)
+        videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"))
         videoRepo.fetchData().observe(lifecycleOwner, Observer {
             when (it) {
                 is StateData -> adapter.submitState(it.state)
                 is VideoData -> adapter.submitList(it.videoItems)
             }
         })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        videoRepo.dispose()
     }
 }

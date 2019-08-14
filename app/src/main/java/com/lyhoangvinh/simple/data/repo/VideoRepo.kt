@@ -17,32 +17,28 @@ import kotlinx.coroutines.launch
 import lyhoangvinh.com.myutil.thread.BackgroundThreadExecutor
 import javax.inject.Inject
 
-class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) : BaseRepo() {
+class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) :
+    BaseRepo() {
 
     private lateinit var live: LiveData<PagedList<Video>>
 
     private var chId: String = ""
-    private lateinit var mCompositeDisposable: CompositeDisposable
 
-    fun setUpRepo(chId: String, mCompositeDisposable: CompositeDisposable) {
+    fun setUpRepo(chId: String) {
         this.chId = chId
-        this.mCompositeDisposable = mCompositeDisposable
         videoFactory.setChId(chId)
-        videoFactory.setSateLiveSource(mCompositeDisposable)
     }
 
     private fun liveVideo(): LiveData<PagedList<Video>> {
         val config = PagedList.Config.Builder()
             .setPageSize(50)
             .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(70)
+            .setInitialLoadSizeHint(100)
             .setPrefetchDistance(50)
             .build()
         live = LivePagedListBuilder(videoFactory, config).build()
         return live
     }
-
-    fun stateVideoSource() = videoFactory.stateLiveSource()
 
     fun fetchData(): MediatorLiveData<MergedData> {
         val liveDataMerger = MediatorLiveData<MergedData>()
@@ -55,12 +51,13 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
         return liveDataMerger
     }
 
+    fun stateLiveSource() = videoFactory.stateLiveSource()
+
     fun reSet() {
-//        CoroutineScope(Dispatchers.Default + Job()).launch {
-//            videoFactory.liveDataSource.value?.invalidate()
-//        }
         execute {
             videoFactory.invalidate()
         }
     }
+
+    fun dispose() = videoFactory.dispose()
 }

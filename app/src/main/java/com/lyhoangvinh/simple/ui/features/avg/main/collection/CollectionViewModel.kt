@@ -7,7 +7,6 @@ import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.avgle.CollectionData
 import com.lyhoangvinh.simple.data.entities.avgle.StateData
 import com.lyhoangvinh.simple.data.repo.CollectionsRepo
-import com.lyhoangvinh.simple.data.source.base.BaseRxPagedListDataSource
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import javax.inject.Inject
 
@@ -17,9 +16,8 @@ class CollectionViewModel @Inject constructor(private val collectionsRepo: Colle
     var title = "Collections all"
 
     override fun fetchData() {
+        collectionsRepo.invalidateDataSource()
         publishState(State.success(null))
-//        collectionsRepo.setUpRepo(mCompositeDisposable)
-        collectionsRepo.setRxUpRepo(mCompositeDisposable)
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
@@ -30,12 +28,16 @@ class CollectionViewModel @Inject constructor(private val collectionsRepo: Colle
 //                is CollectionData -> adapter.submitList(it.collections)
 //            }
 //        })
-        collectionsRepo.setRxUpRepo(mCompositeDisposable)
         collectionsRepo.rxFetchData().observe(lifecycleOwner, Observer {
             when (it) {
                 is StateData -> adapter.submitState(it.state)
                 is CollectionData -> adapter.submitList(it.collections)
             }
         })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        collectionsRepo.dispose()
     }
 }
