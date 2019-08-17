@@ -5,12 +5,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.entities.State
-import com.lyhoangvinh.simple.data.entities.avgle.*
+import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.data.entities.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.avgle.StateData
+import com.lyhoangvinh.simple.data.entities.avgle.VideoData
 import com.lyhoangvinh.simple.data.repo.VideoRepo
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import java.net.URLDecoder
-import java.net.URLEncoder
 import javax.inject.Inject
 
 class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : BasePagingViewModel<VideoAdapter>() {
@@ -43,7 +44,7 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
             query = ""
         }
 
-        videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"))
+        videoRepo.setUpRepo(query)
         videoRepo.fetchData().observe(lifecycleOwner, Observer {
             when (it) {
                 is StateData -> adapter.submitState(it.state)
