@@ -30,6 +30,7 @@ import io.reactivex.schedulers.Schedulers
 import lyhoangvinh.com.myutil.network.Tls12SocketFactory
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -127,17 +128,47 @@ fun <T> makeService(serviceClass: Class<T>, gson: Gson, okHttpClient: OkHttpClie
     val retrofit = Retrofit.Builder()
         .baseUrl(url)
         .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addConverterFactory(ServiceResponseConverter(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .build()
     return retrofit.create(serviceClass)
 }
 
 /**
+* call that supports String & Gson and always uses json as its request body
+*/
+
+class ServiceResponseConverter(
+    private val gSon: Gson
+) : Converter.Factory() {
+
+    override fun responseBodyConverter(type: Type?, annotations: Array<Annotation>, retrofit: Retrofit): Converter<ResponseBody, *>? {
+        return try {
+            if (type === String::class.java) {
+                StringResponseConverter()
+            } else GsonConverterFactory.create(gSon).responseBodyConverter(type!!, annotations, retrofit)
+        } catch (ignored: OutOfMemoryError) {
+            null
+        }
+    }
+
+    override fun requestBodyConverter(type: Type?, parameterAnnotations: Array<Annotation>,
+                                      methodAnnotations: Array<Annotation>, retrofit: Retrofit): Converter<*, RequestBody>? {
+        return GsonConverterFactory.create(gSon).requestBodyConverter(type!!, parameterAnnotations, methodAnnotations, retrofit)
+    }
+
+    private class StringResponseConverter : Converter<ResponseBody, String> {
+        @Throws(IOException::class)
+        override fun convert(value: ResponseBody): String {
+            return value.string()
+        }
+    }
+}
+
+/**
  * Make 2 Request
  *
  */
-
 
 fun <T1, T2> makeRequest(
     request1: Single<T1>,
