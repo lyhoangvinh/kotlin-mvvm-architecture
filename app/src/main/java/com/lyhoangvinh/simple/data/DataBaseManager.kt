@@ -3,12 +3,10 @@ package com.lyhoangvinh.simple.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.lyhoangvinh.simple.data.dao.CategoriesDao
-import com.lyhoangvinh.simple.data.dao.CollectionDao
-import com.lyhoangvinh.simple.data.dao.IssuesDao
-import com.lyhoangvinh.simple.data.dao.VideosDao
+import com.lyhoangvinh.simple.data.dao.*
 import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.data.entities.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
 import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.data.entities.comic.Comics
 import com.lyhoangvinh.simple.data.entities.comic.Issues
@@ -16,7 +14,7 @@ import com.lyhoangvinh.simple.data.typecoverter.ImageTypeConverter
 import com.lyhoangvinh.simple.data.typecoverter.VolumeTypeConverter
 
 @Database(
-    entities = [Comics::class, Issues::class, Category::class, Collection::class, Video::class],
+    entities = [Comics::class, Issues::class, Category::class, Collection::class, Video::class, SearchHistory::class],
     version = 1,
     exportSchema = false
 )
@@ -31,4 +29,5 @@ abstract class DatabaseManager : RoomDatabase() {
 
     abstract fun videosDao(): VideosDao
 
+    abstract fun searchHistoryDao(): SearchHistoryDao
 }

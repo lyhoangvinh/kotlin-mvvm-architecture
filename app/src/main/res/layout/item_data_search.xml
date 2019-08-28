@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="navigate"
+            type="com.lyhoangvinh.simple.utils.NavigatorHelper" />
+
+        <variable
+            name="dto"
+            type="com.lyhoangvinh.simple.data.entities.avgle.Video" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvKeyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ts_10_sp"
+            android:layout_marginTop="@dimen/ts_10_sp"
+            android:textColor="@android:color/holo_red_dark"
+            tools:text="Keyword" />
+
+        <TextView
+            android:id="@+id/tvLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvKeyword"
+            android:layout_marginStart="@dimen/ts_10_sp"
+            android:textSize="@dimen/ts_10_sp"
+            tools:text="like" />
+
+        <TextView
+            android:id="@+id/tvPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/padding_10dp"
+            android:layout_marginEnd="@dimen/padding_10dp"
+            android:background="@drawable/bg_red_status"
+            android:text="@string/preview"
+            android:padding="@dimen/padding_4dp"
+            android:onClick="@{()-> navigate.navigateDetailActivity(dto.previewVideoUrl)}"
+            android:textColor="@android:color/white" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/tvLike"
+            android:layout_marginTop="@dimen/padding_4dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line1"
+            android:layout_marginStart="@dimen/ts_10_sp"
+            android:layout_marginTop="@dimen/ts_10_sp"
+            tools:text="Title" />
+
+        <com.lyhoangvinh.simple.ui.widget.AspectConerImageView
+            android:id="@+id/imv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:loadImageURL="@{dto.previewUrl}"
+            app:sriv_left_bottom_corner_radius="2dp"
+            app:sriv_left_top_corner_radius="2dp"
+            app:sriv_right_bottom_corner_radius="2dp"
+            app:sriv_right_top_corner_radius="2dp"
+            android:onClick="@{()-> navigate.navigateDetailActivity(dto.embeddedUrl)}"
+            tools:src="@drawable/ic_placeholder_rectangle_200px" />
+    </RelativeLayout>
+
+</layout>

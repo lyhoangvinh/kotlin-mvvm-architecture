@@ -189,7 +189,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             adapter?.submitList(data.collections)
             adapter?.setOnClickItemListener {navigatorHelper.navigateVideosFragment(it)}
             if (binding.rcv.onFlingListener == null) {
-                GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+                GravitySnapHelper(Gravity.CENTER).attachToRecyclerView(binding.rcv)
             }
         }
     }
@@ -218,7 +218,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
             binding.rcv.isNestedScrollingEnabled = false
             adapter?.submitList(data.videos)
             if (binding.rcv.onFlingListener == null) {
-                GravitySnapHelper(Gravity.START).attachToRecyclerView(binding.rcv)
+                GravitySnapHelper(Gravity.CENTER).attachToRecyclerView(binding.rcv)
             }
         }
     }

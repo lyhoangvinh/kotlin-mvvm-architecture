@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="navigate"
+            type="com.lyhoangvinh.simple.utils.NavigatorHelper" />
+
+        <variable
+            name="dto"
+            type="com.lyhoangvinh.simple.data.entities.avgle.SearchHistory" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> navigate.navigateDetailActivity(dto.url)}"
+        android:padding="4dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_oval"
+            app:loadImageURL="@{dto.url}"
+            tools:src="@android:drawable/star_big_on" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_marginStart="@dimen/padding_20dp"
+            android:layout_toEndOf="@+id/imv"
+            android:lines="1"
+            android:maxLength="20"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/ts_10_sp"
+            android:text="@{dto.keyword}"
+            tools:ignore="NotSibling,RtlHardcoded"
+            tools:text="ミニミニ◆つるぺたいもうと 近親中出し 矢澤美々 身長145cm KTDS-958" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/padding_30dp"
+            android:layout_height="@dimen/padding_30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/padding_10dp"
+            android:src="@android:drawable/ic_delete"
+            android:tint="@color/material_blue_700" />
+
+    </RelativeLayout>
+
+</layout>

@@ -1,13 +1,10 @@
 package com.lyhoangvinh.simple.di.module
 
 import androidx.room.Room
-import com.lyhoangvinh.simple.data.dao.VideosDao
 import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.data.DatabaseManager
 import com.lyhoangvinh.simple.data.SharedPrefs
-import com.lyhoangvinh.simple.data.dao.CategoriesDao
-import com.lyhoangvinh.simple.data.dao.CollectionDao
-import com.lyhoangvinh.simple.data.dao.IssuesDao
+import com.lyhoangvinh.simple.data.dao.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -26,7 +23,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    internal fun providesSharePeres(context: MyApplication): SharedPrefs = SharedPrefs.getInstance(context)
+    internal fun providesSharedPrefs(context: MyApplication): SharedPrefs = SharedPrefs.getInstance(context)
 
     @Provides
     @Singleton
@@ -43,4 +40,8 @@ class DataModule {
     @Provides
     @Singleton
     fun provideVideosDao(databaseManager: DatabaseManager): VideosDao = databaseManager.videosDao()
+
+    @Provides
+    @Singleton
+    fun provideSearchHistoryDao(databaseManager: DatabaseManager): SearchHistoryDao = databaseManager.searchHistoryDao()
 }
