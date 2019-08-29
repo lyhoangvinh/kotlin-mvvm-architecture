@@ -95,7 +95,7 @@ class HomeRepo @Inject constructor(
             var collectionBannerItem = CollectionBannerItem(null, null)
             var collectionBottomItem = CollectionBottomItem(null, null)
             var videoItem = VideoItem(null, null)
-            for (i in 0 until it.size) {
+            for (i in it.indices) {
                 when (it[i]) {
                     is SearchItem -> searchItem = genericCastOrNull(it[i])
                     is CategoryItem -> categoryItem = genericCastOrNull(it[i])

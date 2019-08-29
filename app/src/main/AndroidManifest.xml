@@ -50,6 +50,9 @@
             <!--</intent-filter>-->
         </activity>
 
+        <activity android:name=".ui.features.avg.main.search.SearchActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.features.comic.testactivity.ComicActivity"/>
 
         <receiver android:name=".receiver.NetworkReceiver"/>

@@ -1,16 +1,48 @@
 package com.lyhoangvinh.simple.data.repo
 
+import androidx.lifecycle.MediatorLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.lyhoangvinh.simple.Constants
-import com.lyhoangvinh.simple.data.entities.avgle.Video
+import com.lyhoangvinh.simple.data.dao.SearchHistoryDao
+import com.lyhoangvinh.simple.data.dao.VideosDao
+import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
 import com.lyhoangvinh.simple.data.response.ResponseBiZip
 import com.lyhoangvinh.simple.data.response.VideosResponseAvgle
 import com.lyhoangvinh.simple.data.services.AvgleService
 import com.lyhoangvinh.simple.data.source.base.Resource
 import io.reactivex.Flowable
+import java.sql.Timestamp
 import javax.inject.Inject
 
-class SearchRepo @Inject constructor(private val avgleService: AvgleService) : BaseRepo(){
+class SearchRepo @Inject constructor(private val avgleService: AvgleService, private val videosDao: VideosDao,private val searchHistoryDao: SearchHistoryDao) : BaseRepo(){
+
+    fun insertHistory(keyword: String, url: String, timestamp: String){
+        execute { searchHistoryDao.insert(SearchHistory(keyword = keyword, url = url, timestamp = timestamp)) }
+    }
+
+    fun deleteHistory(searchHistory: SearchHistory){
+        execute { searchHistoryDao.delete(searchHistory) }
+    }
+
+    fun mergedData() {
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setInitialLoadSizeHint(40)
+            .setEnablePlaceholders(true)
+            .build()
+        val liveDataMerger = MediatorLiveData<MergedData>()
+        liveDataMerger.addSource(LivePagedListBuilder(searchHistoryDao.liveDataFactory(), 10).build()) {
+            liveDataMerger.value = SearchHistoryData(it!!)
+        }
+
+        liveDataMerger.addSource(LivePagedListBuilder(videosDao.liveDataFactoryFromType(Constants.TYPE_SEARCH), config).build()){
+            liveDataMerger.value = VideoData(it!!)
+        }
+
+
+    }
 
     fun search(
         isRefresh: Boolean,
@@ -38,19 +70,18 @@ class SearchRepo @Inject constructor(private val avgleService: AvgleService) : B
                     for (x in 0 until newList.size) {
                         newList[x].type = Constants.TYPE_SEARCH
                     }
-//                    if (isRefresh) {
-//                        backgroundThreadExecutor.runOnBackground {
-//                            videosDao.deleteType(Constants.TYPE_SEARCH)
-//                            videosDao.insertIgnore(newList)
-//                            videosDao.updateIgnore(newList)
-//                        }
-//                    } else {
-//                        backgroundThreadExecutor.runOnBackground {
-//                            videosDao.insertIgnore(newList)
-//                            videosDao.updateIgnore(newList)
-//                        }
-//                    }
-
+                    if (isRefresh) {
+                        execute {
+                            videosDao.deleteType(Constants.TYPE_SEARCH)
+                            videosDao.insertIgnore(newList)
+                            videosDao.updateIgnore(newList)
+                        }
+                    } else {
+                        execute {
+                            videosDao.insertIgnore(newList)
+                            videosDao.updateIgnore(newList)
+                        }
+                    }
                 }
             })
     }

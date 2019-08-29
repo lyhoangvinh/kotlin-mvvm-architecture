@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 data class SearchHistory(
 
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
+    var id: Long? = null,
 
-    var keyword: String,
+    var keyword: String? = null,
 
-    var url: String,
+    var url: String? = null,
 
-    var timestamp: String
+    var timestamp: String? = null
 )
