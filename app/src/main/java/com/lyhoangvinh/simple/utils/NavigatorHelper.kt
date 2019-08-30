@@ -1,5 +1,6 @@
 package com.lyhoangvinh.simple.utils
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +11,7 @@ import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.ui.features.avg.main.AgvActivity
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionFragment
+import com.lyhoangvinh.simple.ui.features.avg.main.search.SearchActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
@@ -80,5 +82,9 @@ class NavigatorHelper(private var mNavigator: Navigator) {
 
     fun navigateCollectionFragment() {
         mNavigator.replaceFragmentAndAddToBackStack(R.id.container, CollectionFragment().addAnimations(), null, null)
+    }
+
+    fun navigateSearchActivity(activity: Activity) {
+        activity.startActivityTransition(SearchActivity::class.java, false)
     }
 }

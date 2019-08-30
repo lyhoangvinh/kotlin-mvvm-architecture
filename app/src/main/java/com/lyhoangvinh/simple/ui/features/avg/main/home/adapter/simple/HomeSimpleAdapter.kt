@@ -1,5 +1,6 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple
 
+import android.app.Activity
 import android.content.Context
 import android.util.TypedValue
 import android.view.Gravity
@@ -35,9 +36,12 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
 
     private var mHeight = 0
 
-    fun setLayoutParams(mWidth: Int, mHeight: Int) {
+    private var activity: Activity? = null
+
+    fun setLayoutParams(mWidth: Int, mHeight: Int, activity: Activity) {
         this.mWidth = mWidth
         this.mHeight = mHeight
+        this.activity = activity
     }
 
     companion object {
@@ -81,7 +85,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         viewType: Int
     ): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
         return when (viewType) {
-            ITEM_SEARCH -> genericCastOrNull(SearchItemSimpleViewHolder(view))
+            ITEM_SEARCH -> genericCastOrNull(SearchItemSimpleViewHolder(view, genericCastOrNull(context), navigatorHelper))
             ITEM_CATEGORY -> genericCastOrNull(CategoriesItemSimpleViewHolder(context, view, navigatorHelper))
             ITEM_BANNER -> genericCastOrNull(BannerItemSimpleViewHolder(context, view))
             ITEM_COLLECTION_BOTTOM -> genericCastOrNull(CollectionItemSimpleViewHolder(context, view, mWidth, mHeight, navigatorHelper))
@@ -92,7 +96,13 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         }
     }
 
-    private class SearchItemSimpleViewHolder(view: View) : BaseItemSimpleViewHolder<SearchItem, ItemSearchBinding>(view)
+    private class SearchItemSimpleViewHolder(view: View, val activity: Activity,val navigatorHelper: NavigatorHelper) : BaseItemSimpleViewHolder<SearchItem, ItemSearchBinding>(view){
+        override fun setItem(data: SearchItem, binding: ItemSearchBinding) {
+            super.setItem(data, binding)
+            binding.activity = activity
+            binding.navigate = navigatorHelper
+        }
+    }
 
     private class DividerItemSimpleViewHolder(view: View) :
         BaseItemSimpleViewHolder<DividerItem, ViewDividerBinding>(view)

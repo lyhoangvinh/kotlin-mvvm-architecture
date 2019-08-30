@@ -25,6 +25,6 @@ class HomeFragment : BaseViewModelRecyclerViewFragment<FragmentHomeBinding, Home
                 R.dimen.padding_16dp
             ) / 2
         val mHeight = mWidth * 5 / 7
-        viewModel.setLayoutParams(mWidth, mHeight)
+        viewModel.setLayoutParams(mWidth, mHeight, activity!!)
     }
 }

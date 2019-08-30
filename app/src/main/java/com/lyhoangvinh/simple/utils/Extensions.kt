@@ -27,11 +27,15 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.gson.annotations.SerializedName
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 fun ImageView.loadImageIssues(url: String) {
     Picasso.get()
@@ -108,7 +112,7 @@ fun parseToDate(date: String?): Date? {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         //sdf.setTimeZone(...);
         try {
-            d = sdf.parse(date)
+            d = sdf.parse(date!!)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -221,6 +225,16 @@ fun TextView.startCustomAnimation(isCollapsing: Boolean, finalText: String, dura
     animator.duration = duration
     animator.start()
 }
+
+@SuppressLint("CheckResult")
+fun EditText.textChanges(onTextChangeListener: (String) -> Unit) {
+    RxTextView.textChanges(this).debounce(1000, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .skip(1)
+        .subscribe { charSequence -> onTextChangeListener.invoke(charSequence.toString()) }
+}
+
 
 @Suppress("DEPRECATION")
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)

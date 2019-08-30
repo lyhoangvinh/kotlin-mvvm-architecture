@@ -11,4 +11,4 @@ data class CollectionBottomData(val collectionBottomItems: PagedList<Collection>
 data class VideoData(val videoItems: PagedList<Video>) : MergedData()
 data class StateData(val state: State) : MergedData()
 data class CollectionData(val collections: PagedList<Collection>) : MergedData()
-data class SearchHistoryData(val searchHistory: PagedList<SearchHistory>) : MergedData()
+data class SearchHistoryData(val searchHistory: List<SearchHistory>) : MergedData()

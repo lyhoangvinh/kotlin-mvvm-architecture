@@ -10,6 +10,8 @@ import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeFragmentModule
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.BannerImagesFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.BannerImagesModule
+import com.lyhoangvinh.simple.ui.features.avg.main.search.SearchActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.search.SearchModule
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragmentModule
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
@@ -60,4 +62,7 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [CollectionModule::class])
     abstract fun collectionFragment(): CollectionFragment
+
+    @ContributesAndroidInjector(modules = [SearchModule::class])
+    abstract fun searchActivity(): SearchActivity
 }
