@@ -44,42 +44,53 @@ class SearchRepo @Inject constructor(
         execute { searchHistoryDao.delete(searchHistory) }
     }
 
+    fun deleteAllSearchData(){
+        execute {
+            videosDao.deleteType(Constants.TYPE_SEARCH)
+         }
+    }
+
     fun mergedData(): LiveData<List<ItemViewModel>> {
         val config = PagedList.Config.Builder()
-            .setPageSize(20)
-            .setInitialLoadSizeHint(40)
+            .setPageSize(10)
+            .setInitialLoadSizeHint(20)
             .setEnablePlaceholders(true)
             .build()
         val liveDataMerger = MediatorLiveData<MergedData>()
-        liveDataMerger.addSource(
-            LivePagedListBuilder(
-                searchHistoryDao.liveDataFactory(),
-                10
-            ).build()
-        ) {
+        liveDataMerger.addSource(LivePagedListBuilder(searchHistoryDao.liveDataFactory(), config).build()) {
             liveDataMerger.value = SearchHistoryData(it!!)
         }
 
-        liveDataMerger.addSource(
-            LivePagedListBuilder(
-                videosDao.liveDataFactoryFromType(Constants.TYPE_SEARCH),
-                config
-            ).build()
-        ) {
-            liveDataMerger.value = VideoData(it!!)
+//        liveDataMerger.addSource(LivePagedListBuilder(videosDao.liveDataFactoryFromType(Constants.TYPE_SEARCH), config).build()) {
+//            liveDataMerger.value = VideoData(it!!)
+//        }
+
+        liveDataMerger.addSource(videosDao.liveDataFromType(Constants.TYPE_SEARCH)) {
+            liveDataMerger.value = SearchData(it!!)
         }
+
         val pagedList = ArrayList<ItemViewModel>()
         return Transformations.switchMap(liveDataMerger) {
             val liveData = SafeMutableLiveData<List<ItemViewModel>>()
             when (it) {
                 is SearchHistoryData -> {
-                    for (i in it.searchHistory.indices){
-                        pagedList.add(SearchHistoryItem(it.searchHistory[i], it.searchHistory[i].toString()))
+                    for (i in it.searchHistory.indices) {
+                        pagedList.add(
+                            SearchHistoryItem(
+                                it.searchHistory[i],
+                                it.searchHistory[i].toString()
+                            )
+                        )
                     }
                 }
-                is VideoData ->{
-                    for (i in it.videoItems.indices){
-                        pagedList.add(SearchDataItem(it.videoItems[i]!!, it.videoItems[i].toString()))
+                is SearchData -> {
+                    for (i in it.videoItems.indices) {
+                        pagedList.add(
+                            SearchDataItem(
+                                it.videoItems[i],
+                                it.videoItems[i].toString()
+                            )
+                        )
                     }
                 }
             }
@@ -102,7 +113,6 @@ class SearchRepo @Inject constructor(
                     data: ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>,
                     isRefresh: Boolean
                 ) {
-
                     val data1 = data.t1
                     val data2 = data.t1
                     val newList: ArrayList<Video> = ArrayList()

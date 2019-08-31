@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.search
 
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.data.repo.SearchRepo
@@ -19,11 +20,13 @@ class SearchViewModel @Inject constructor(private val searchRepo: SearchRepo) :
 
     fun setKeyWord(keyword: String) {
         this.keyword = keyword
+        fetchData(0)
     }
 
     override fun fetchData(page: Int) {
         execute(true, searchRepo.search(isRefreshed, keyword, page),
-            object : PlainConsumer<ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
+            object :
+                PlainConsumer<ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
                 override fun accept(t: ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
                     isRefreshed = false
                     canLoadMore = t.t1?.response?.hasMore!!

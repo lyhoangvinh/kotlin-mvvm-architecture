@@ -17,4 +17,6 @@
     <dimen name="size_shadow">6dp</dimen>
     <dimen name="size_image_for_all_screen">270dp</dimen>
     <dimen name="size_image_promotion">260dp</dimen>
+
+    <dimen name="size_image_500dp">300dp</dimen>
 </resources>

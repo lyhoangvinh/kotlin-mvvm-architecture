@@ -5,6 +5,7 @@ import androidx.databinding.ViewDataBinding
 import android.os.Bundle
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.*
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
@@ -40,7 +41,8 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         viewModel.initAdapter(adapter)
         layoutManager = createLayoutManager()
         recyclerView.layoutManager = layoutManager
-        recyclerView.itemAnimator = DefaultItemAnimator()
+//        recyclerView.itemAnimator = DefaultItemAnimator()
+        runLayoutAnimation(recyclerView)
         recyclerView.adapter = adapter
         refreshLayout.setOnRefreshListener(this)
         refreshLayout.setColorSchemeResources(
@@ -89,6 +91,14 @@ abstract class BaseViewModelRecyclerViewActivity<B : ViewDataBinding,
         viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
             noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
         })
+    }
+
+    private fun runLayoutAnimation(recyclerView: RecyclerView) {
+        val context = recyclerView.context
+        val controller =
+            AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+        recyclerView.layoutAnimation = controller
+        recyclerView.scheduleLayoutAnimation()
     }
 
     /**

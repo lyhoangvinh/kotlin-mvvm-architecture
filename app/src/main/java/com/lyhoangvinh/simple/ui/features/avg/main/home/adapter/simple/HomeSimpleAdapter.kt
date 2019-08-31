@@ -6,7 +6,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
@@ -85,7 +84,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         viewType: Int
     ): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
         return when (viewType) {
-            ITEM_SEARCH -> genericCastOrNull(SearchItemSimpleViewHolder(view, genericCastOrNull(context), navigatorHelper))
+            ITEM_SEARCH -> genericCastOrNull(SearchItemSimpleViewHolder(view, activity!!, navigatorHelper))
             ITEM_CATEGORY -> genericCastOrNull(CategoriesItemSimpleViewHolder(context, view, navigatorHelper))
             ITEM_BANNER -> genericCastOrNull(BannerItemSimpleViewHolder(context, view))
             ITEM_COLLECTION_BOTTOM -> genericCastOrNull(CollectionItemSimpleViewHolder(context, view, mWidth, mHeight, navigatorHelper))

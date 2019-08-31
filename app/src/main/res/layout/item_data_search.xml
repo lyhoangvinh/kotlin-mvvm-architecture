@@ -18,13 +18,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <com.lyhoangvinh.simple.ui.widget.AspectConerImageView
+            android:id="@+id/imv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:loadImageURL="@{dto.previewUrl}"
+            app:sriv_left_bottom_corner_radius="2dp"
+            app:sriv_left_top_corner_radius="2dp"
+            app:sriv_right_bottom_corner_radius="2dp"
+            app:sriv_right_top_corner_radius="2dp"
+            tools:src="@android:drawable/stat_sys_warning" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_header_images"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/linear_gradient"
+            android:rotation="180" />
+
+        <View
+            android:id="@+id/view_selected"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_image_references"
+            android:background="@drawable/bg_corner" />
+
         <TextView
             android:id="@+id/tvKeyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ts_10_sp"
             android:layout_marginTop="@dimen/ts_10_sp"
-            android:textColor="@android:color/holo_red_dark"
+            android:text="@{dto.keyword}"
+            android:textColor="@android:color/white"
             tools:text="Keyword" />
 
         <TextView
@@ -33,7 +59,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvKeyword"
             android:layout_marginStart="@dimen/ts_10_sp"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/ts_10_sp"
+            app:setTotalLike="@{dto.likes}"
             tools:text="like" />
 
         <TextView
@@ -44,42 +72,22 @@
             android:layout_marginTop="@dimen/padding_10dp"
             android:layout_marginEnd="@dimen/padding_10dp"
             android:background="@drawable/bg_red_status"
-            android:text="@string/preview"
-            android:padding="@dimen/padding_4dp"
             android:onClick="@{()-> navigate.navigateDetailActivity(dto.previewVideoUrl)}"
+            android:padding="@dimen/padding_4dp"
+            android:text="@string/preview"
             android:textColor="@android:color/white" />
-
-        <View
-            android:id="@+id/line1"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/tvLike"
-            android:layout_marginTop="@dimen/padding_4dp"
-            android:background="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/line1"
+            android:layout_below="@+id/tvLike"
             android:layout_marginStart="@dimen/ts_10_sp"
             android:layout_marginTop="@dimen/ts_10_sp"
+            android:text="@{dto.title}"
+            android:textColor="@android:color/white"
             tools:text="Title" />
 
-        <com.lyhoangvinh.simple.ui.widget.AspectConerImageView
-            android:id="@+id/imv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTitle"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            app:loadImageURL="@{dto.previewUrl}"
-            app:sriv_left_bottom_corner_radius="2dp"
-            app:sriv_left_top_corner_radius="2dp"
-            app:sriv_right_bottom_corner_radius="2dp"
-            app:sriv_right_top_corner_radius="2dp"
-            android:onClick="@{()-> navigate.navigateDetailActivity(dto.embeddedUrl)}"
-            tools:src="@drawable/ic_placeholder_rectangle_200px" />
     </RelativeLayout>
 
 </layout>

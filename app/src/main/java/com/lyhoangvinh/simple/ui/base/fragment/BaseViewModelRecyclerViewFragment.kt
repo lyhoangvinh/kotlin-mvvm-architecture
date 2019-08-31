@@ -42,7 +42,7 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
         viewModel.initAdapter(adapter)
         layoutManager = createLayoutManager()
         recyclerView.layoutManager = layoutManager
-        recyclerView.itemAnimator = DefaultItemAnimator()
+//        recyclerView.itemAnimator = DefaultItemAnimator()
         runLayoutAnimation(recyclerView)
         recyclerView.adapter = adapter
         refreshLayout.setOnRefreshListener(this)

@@ -19,8 +19,7 @@ class SearchActivity :
                 .inflateTransition(R.transition.changebounds_with_arcmotion)
         super.onCreate(savedInstanceState)
         binding.edtSearch.textChanges {
-            if (!TextUtils.isEmpty(it))
-                viewModel.setKeyWord(it)
+            viewModel.setKeyWord(it)
         }
         binding.imvBack.setOnClickListener { onBackPressed() }
     }

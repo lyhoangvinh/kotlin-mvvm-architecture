@@ -1,28 +1,30 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.search
 
 import android.content.Context
-import android.view.Gravity
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.data.dao.SearchHistoryDao
+import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
+import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.databinding.ItemDataSearchBinding
 import com.lyhoangvinh.simple.databinding.ItemHistoryBinding
-import com.lyhoangvinh.simple.databinding.ItemVideoBinding
-import com.lyhoangvinh.simple.databinding.ViewRcyHorizontalBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BaseItemSimpleAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseItemSimpleViewHolder
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
-import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.VideosHomeAdapter
-import com.lyhoangvinh.simple.ui.widget.recycleview.GravitySnapHelper
-import com.lyhoangvinh.simple.ui.widget.recycleview.HorizontalSpaceItemDecoration
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import com.lyhoangvinh.simple.utils.genericCastOrNull
+import lyhoangvinh.com.myutil.thread.BackgroundThreadExecutor
 import javax.inject.Inject
 
-class SearchAdapter @Inject constructor(@ActivityContext context: Context, val navigatorHelper: NavigatorHelper) :
+class SearchAdapter @Inject constructor(
+    @ActivityContext context: Context, val navigatorHelper: NavigatorHelper,
+    private val backgroundThreadExecutor: BackgroundThreadExecutor,
+    private val searchHistoryDao: SearchHistoryDao
+) :
     BaseItemSimpleAdapter(context, ItemCallback) {
 
     companion object {
@@ -46,25 +48,54 @@ class SearchAdapter @Inject constructor(@ActivityContext context: Context, val n
         }
     }
 
-    override fun createItemViewHolder(view: View, viewType: Int): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
-        return when(viewType){
+    override fun createItemViewHolder(
+        view: View,
+        viewType: Int
+    ): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
+        return when (viewType) {
             ITEM_HISTORY -> genericCastOrNull(SearchHistoryViewHolder(view, navigatorHelper))
-            ITEM_DATA -> genericCastOrNull(DataSearchViewHolder(view, navigatorHelper))
+            ITEM_DATA -> genericCastOrNull(
+                DataSearchViewHolder(
+                    view,
+                    searchHistoryDao,
+                    backgroundThreadExecutor,
+                    navigatorHelper
+                )
+            )
             else -> throw RuntimeException("Not support type=$viewType")
         }
     }
 
-    private class DataSearchViewHolder(view: View, private val navigatorHelper: NavigatorHelper) :
+    private class DataSearchViewHolder(
+        view: View,
+        val searchHistoryDao: SearchHistoryDao,
+        val backgroundThreadExecutor: BackgroundThreadExecutor,
+        private val navigatorHelper: NavigatorHelper
+    ) :
         BaseItemSimpleViewHolder<SearchDataItem, ItemDataSearchBinding>(view) {
         override fun setItem(data: SearchDataItem, binding: ItemDataSearchBinding) {
             super.setItem(data, binding)
             binding.dto = data.video
             binding.navigate = navigatorHelper
+            binding.imv.setOnClickListener {
+                backgroundThreadExecutor.runOnBackground {
+                    searchHistoryDao.insert(
+                        SearchHistory(
+                            keyword = data.video.keyword,
+                            url = data.video.embeddedUrl,
+                            timestamp = (System.currentTimeMillis() / 1000).toString()
+                        )
+                    )
+                }
+                navigatorHelper.navigateDetailActivity(data.video.embeddedUrl.toString())
+            }
         }
     }
 
-    private class SearchHistoryViewHolder(view: View, private val navigatorHelper: NavigatorHelper)
-        : BaseItemSimpleViewHolder<SearchHistoryItem, ItemHistoryBinding>(view){
+    private class SearchHistoryViewHolder(
+        view: View,
+        private val navigatorHelper: NavigatorHelper
+    ) : BaseItemSimpleViewHolder<SearchHistoryItem, ItemHistoryBinding>(view) {
         override fun setItem(data: SearchHistoryItem, binding: ItemHistoryBinding) {
             super.setItem(data, binding)
             binding.dto = data.data
