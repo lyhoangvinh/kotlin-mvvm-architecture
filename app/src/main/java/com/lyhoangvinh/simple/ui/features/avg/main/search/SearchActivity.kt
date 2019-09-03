@@ -18,6 +18,7 @@ class SearchActivity :
             TransitionInflater.from(this)
                 .inflateTransition(R.transition.changebounds_with_arcmotion)
         super.onCreate(savedInstanceState)
+        viewModel.setKeyWord("")
         binding.edtSearch.textChanges {
             viewModel.setKeyWord(it)
         }
