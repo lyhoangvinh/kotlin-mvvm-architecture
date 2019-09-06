@@ -9,6 +9,7 @@ import com.lyhoangvinh.simple.data.services.AvgleService
 import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.data.source.base.service.BaseRxPageKeyedDataSource
 import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,9 +32,14 @@ class SearchDataSource @Inject constructor(private val avgleService: AvgleServic
         private val sourceLiveData = MutableLiveData<SearchDataSource>()
         private var newSource: SearchDataSource? = SearchDataSource(avgleService)
         private var query: String? = ""
+        private var compositeDisposable : CompositeDisposable? = null
 
         fun setQuery(query: String) {
             this.query = query
+        }
+
+        fun setCompositeDisposable(compositeDisposable: CompositeDisposable) {
+            this.compositeDisposable = compositeDisposable
         }
 
         fun invalidate() {

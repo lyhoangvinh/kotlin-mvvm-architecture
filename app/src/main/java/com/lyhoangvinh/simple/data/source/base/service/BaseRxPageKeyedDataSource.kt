@@ -58,7 +58,11 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
         // Do nothing, since data is loaded from our initial load itself
     }
 
-    open fun dispose() {
+    fun setCompositeDisposable(compositeDisposable: CompositeDisposable) {
+        this.compositeDisposable = compositeDisposable
+    }
+
+    fun dispose() {
         if (compositeDisposable != null) {
             compositeDisposable?.dispose()
         }

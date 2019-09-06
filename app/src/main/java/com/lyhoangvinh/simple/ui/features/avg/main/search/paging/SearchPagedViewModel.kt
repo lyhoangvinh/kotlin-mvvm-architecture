@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
+import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.data.repo.SearchPagedRepo
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import javax.inject.Inject
@@ -17,7 +19,9 @@ class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: Sear
 
     private var isFirstState = false
 
-    fun setKeyWord(keyword : String){
+    private lateinit var observer: Observer<PagedList<Video>?>
+
+    fun setKeyWord(keyword: String) {
         adapter.submitState(State(Status.LOADING, null))
         Handler().postDelayed({
             this.keyword = keyword
@@ -30,17 +34,24 @@ class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: Sear
         adapter.submitState(State(Status.LOADING, null))
         Handler().postDelayed({
             searchPagedRepo.setQuery(keyword)
-        },500L)
+        }, 500L)
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        searchPagedRepo.liveVideo().observe(lifecycleOwner, Observer {
+        observer = Observer {
             adapter.submitList(it)
             publishState(State.success(null))
-            if(isFirstState){
+            if (isFirstState) {
                 isFirstState = false
                 adapter.submitState(State(Status.SUCCESS, null))
             }
-        })
+        }
+        searchPagedRepo.liveVideo().observe(lifecycleOwner, observer)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        searchPagedRepo.setQuery("")
+        searchPagedRepo.liveVideo().removeObserver(observer)
     }
 }

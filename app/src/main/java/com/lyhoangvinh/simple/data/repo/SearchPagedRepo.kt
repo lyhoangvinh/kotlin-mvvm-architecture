@@ -7,7 +7,7 @@ import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.data.source.avg.SearchDataSource
 import javax.inject.Inject
 
-class SearchPagedRepo @Inject constructor(private val searchFactory: SearchDataSource.SearchFactory) :
+class SearchPagedRepo @Inject constructor(val searchFactory: SearchDataSource.SearchFactory) :
     BaseRepo() {
 
     fun liveVideo(): LiveData<PagedList<Video>> {
