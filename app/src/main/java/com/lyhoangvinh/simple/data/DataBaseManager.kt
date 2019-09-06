@@ -15,7 +15,7 @@ import com.lyhoangvinh.simple.data.typecoverter.VolumeTypeConverter
 
 @Database(
     entities = [Comics::class, Issues::class, Category::class, Collection::class, Video::class, SearchHistory::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(ImageTypeConverter::class, VolumeTypeConverter::class)

@@ -9,8 +9,11 @@ import com.lyhoangvinh.simple.data.entities.Entities
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
+import com.lyhoangvinh.simple.data.response.ResponseBiZip
+import com.lyhoangvinh.simple.data.source.base.PlainResponseZipBiConsumer
 import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.data.source.base.SimpleNetworkBoundSource
+import com.lyhoangvinh.simple.data.source.base.SimpleNetworkBoundSourceBiRemote
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.BackpressureStrategy

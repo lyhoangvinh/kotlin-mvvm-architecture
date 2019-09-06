@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
+import android.widget.EditText
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status

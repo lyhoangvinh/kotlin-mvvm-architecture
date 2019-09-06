@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.main.search
+package com.lyhoangvinh.simple.ui.features.avg.main.search.local
 
 import android.content.Context
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.dao.SearchHistoryDao
 import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
-import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.databinding.ItemDataSearchBinding
 import com.lyhoangvinh.simple.databinding.ItemHistoryBinding
@@ -25,7 +24,9 @@ class SearchAdapter @Inject constructor(
     private val backgroundThreadExecutor: BackgroundThreadExecutor,
     private val searchHistoryDao: SearchHistoryDao
 ) :
-    BaseItemSimpleAdapter(context, ItemCallback) {
+    BaseItemSimpleAdapter(context,
+        ItemCallback
+    ) {
 
     companion object {
         private const val ITEM_HISTORY = 0
@@ -53,7 +54,12 @@ class SearchAdapter @Inject constructor(
         viewType: Int
     ): BaseItemSimpleViewHolder<ItemViewModel, ViewDataBinding> {
         return when (viewType) {
-            ITEM_HISTORY -> genericCastOrNull(SearchHistoryViewHolder(view, navigatorHelper))
+            ITEM_HISTORY -> genericCastOrNull(
+                SearchHistoryViewHolder(
+                    view,
+                    navigatorHelper
+                )
+            )
             ITEM_DATA -> genericCastOrNull(
                 DataSearchViewHolder(
                     view,

@@ -27,6 +27,7 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
     fun setUpRepo(chId: String) {
         this.chId = chId
         videoFactory.setChId(chId)
+        videoFactory.invalidate()
     }
 
     private fun liveVideo(): LiveData<PagedList<Video>> {

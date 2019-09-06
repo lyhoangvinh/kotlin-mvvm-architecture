@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import kotlinx.android.synthetic.main.view_no_data.*
 import kotlinx.android.synthetic.main.view_recyclerview.*
 import kotlinx.android.synthetic.main.view_scroll_top.*
 import javax.inject.Inject
+import com.lyhoangvinh.simple.utils.hideKeyboard
+
 
 abstract class BaseViewModelPagingActivity<B : ViewDataBinding,
         VM : BasePagingViewModel<A>,
@@ -31,7 +32,7 @@ abstract class BaseViewModelPagingActivity<B : ViewDataBinding,
 
     private var scrollTopPosition = DEFAULT_SCROLL_TOP_POSITION
 
-    override fun getLayoutResource() = R.layout.view_recyclerview
+    override fun getLayoutResource() = com.lyhoangvinh.simple.R.layout.view_recyclerview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +59,10 @@ abstract class BaseViewModelPagingActivity<B : ViewDataBinding,
         })
         refreshLayout.setOnRefreshListener(this)
         refreshLayout.setColorSchemeResources(
-            R.color.material_amber_700, R.color.material_blue_700,
-            R.color.material_purple_700, R.color.material_lime_700
+            com.lyhoangvinh.simple.R.color.material_amber_700,
+            com.lyhoangvinh.simple.R.color.material_blue_700,
+            com.lyhoangvinh.simple.R.color.material_purple_700,
+            com.lyhoangvinh.simple.R.color.material_lime_700
         )
         scrollTop.visibility = View.GONE
         scrollTop.setOnClickListener { recyclerView.scrollToPosition(0) }
@@ -67,6 +70,10 @@ abstract class BaseViewModelPagingActivity<B : ViewDataBinding,
         viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
             noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
         })
+        recyclerView.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
     }
 
     open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(this)

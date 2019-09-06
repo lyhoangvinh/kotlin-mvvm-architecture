@@ -44,13 +44,13 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
             query = ""
         }
 
-        videoRepo.setUpRepo(query)
         videoRepo.fetchData().observe(lifecycleOwner, Observer {
             when (it) {
                 is StateData -> adapter.submitState(it.state)
                 is VideoData -> adapter.submitList(it.videoItems)
             }
         })
+        videoRepo.setUpRepo(query)
     }
 
     override fun onCleared() {

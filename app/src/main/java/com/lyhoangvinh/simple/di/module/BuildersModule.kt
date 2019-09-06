@@ -10,8 +10,10 @@ import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeFragmentModule
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.BannerImagesFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.inside.BannerImagesModule
-import com.lyhoangvinh.simple.ui.features.avg.main.search.SearchActivity
-import com.lyhoangvinh.simple.ui.features.avg.main.search.SearchModule
+import com.lyhoangvinh.simple.ui.features.avg.main.search.local.SearchActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.search.local.SearchModule
+import com.lyhoangvinh.simple.ui.features.avg.main.search.paging.SearchPagedActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.search.paging.SearchPagedModule
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragmentModule
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
@@ -65,4 +67,7 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [SearchModule::class])
     abstract fun searchActivity(): SearchActivity
+
+    @ContributesAndroidInjector(modules = [SearchPagedModule::class])
+    abstract fun searchPagedActivity(): SearchPagedActivity
 }

@@ -1,7 +1,6 @@
-package com.lyhoangvinh.simple.ui.features.avg.main.search
+package com.lyhoangvinh.simple.ui.features.avg.main.search.local
 
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.data.repo.SearchRepo
@@ -10,7 +9,6 @@ import com.lyhoangvinh.simple.data.response.ResponseBiZip
 import com.lyhoangvinh.simple.data.response.VideosResponseAvgle
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
-import lyhoangvinh.com.myutil.androidutils.StringUtils.isNotEmpty
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(private val searchRepo: SearchRepo) :
