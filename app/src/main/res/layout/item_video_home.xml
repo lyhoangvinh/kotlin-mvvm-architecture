@@ -35,6 +35,13 @@
             android:rotation="180" />
 
         <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_header_images"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/linear_gradient"
+            android:rotation="180" />
+
+        <View
             android:id="@+id/view_selected"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_image_references"
