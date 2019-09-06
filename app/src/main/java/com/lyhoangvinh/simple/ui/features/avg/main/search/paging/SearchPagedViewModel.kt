@@ -19,13 +19,18 @@ class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: Sear
 
     fun setKeyWord(keyword : String){
         adapter.submitState(State(Status.LOADING, null))
-        this.keyword = keyword
-        searchPagedRepo.setQuery(keyword)
-        isFirstState = true
+        Handler().postDelayed({
+            this.keyword = keyword
+            searchPagedRepo.setQuery(keyword)
+            isFirstState = true
+        }, 500L)
     }
 
     override fun fetchData() {
-        searchPagedRepo.setQuery(keyword)
+        adapter.submitState(State(Status.LOADING, null))
+        Handler().postDelayed({
+            searchPagedRepo.setQuery(keyword)
+        },500L)
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {

@@ -1,10 +1,12 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.video
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.entities.State
+import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.data.entities.avgle.StateData
@@ -19,11 +21,15 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
     var title = "All"
 
     var query = ""
+    private var isFirstState = false
 
     override fun fetchData() {
-        videoRepo.reSet()
-        videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"))
-        publishState(State.success(null))
+        adapter.submitState(State(Status.LOADING, null))
+        Handler().postDelayed({
+            videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"))
+            publishState(State.success(null))
+        }, 500L)
+        isFirstState = true
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
@@ -46,8 +52,11 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
 
         videoRepo.fetchData().observe(lifecycleOwner, Observer {
             when (it) {
-                is StateData -> adapter.submitState(it.state)
                 is VideoData -> adapter.submitList(it.videoItems)
+            }
+            if(isFirstState){
+                isFirstState = false
+                adapter.submitState(State(Status.SUCCESS, null))
             }
         })
         videoRepo.setUpRepo(query)
