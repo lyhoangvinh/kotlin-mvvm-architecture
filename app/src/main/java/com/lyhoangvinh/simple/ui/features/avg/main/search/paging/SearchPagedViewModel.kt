@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.search.paging
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.data.entities.State
@@ -14,11 +15,13 @@ class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: Sear
 
     private var keyword = ""
 
+    private var isFirstState = false
+
     fun setKeyWord(keyword : String){
         adapter.submitState(State(Status.LOADING, null))
-        adapter.submitState(State(Status.SUCCESS, null))
         this.keyword = keyword
         searchPagedRepo.setQuery(keyword)
+        isFirstState = true
     }
 
     override fun fetchData() {
@@ -29,6 +32,10 @@ class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: Sear
         searchPagedRepo.liveVideo().observe(lifecycleOwner, Observer {
             adapter.submitList(it)
             publishState(State.success(null))
+            if(isFirstState){
+                isFirstState = false
+                adapter.submitState(State(Status.SUCCESS, null))
+            }
         })
     }
 }
