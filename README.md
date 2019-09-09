@@ -182,3 +182,13 @@ class SafeMutableLiveData<T> : MutableLiveData<T>() {
 ### Contributing to Android Kotlin MVVM Architecture
 All pull requests are welcome, make sure to follow the [contribution guidelines](CONTRIBUTING.md)
 when you submit pull request.
+
+License
+=======
+
+    Copyright 2018 LyHoangVinh.
+
+Licensed under the the [GPL-3.0](https://www.gnu.org/licenses/gpl.html) license.
+    
+See the [LICENSE](https://github.com/lyhoangvinh/kotlin-mvvm-architecture/blob/master/LICENSE.md) file for the whole license text.
+
