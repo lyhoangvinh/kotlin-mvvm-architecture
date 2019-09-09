@@ -26,6 +26,7 @@ android {
             buildConfigField "boolean", "ENABLE_LOGCAT", "true"
             buildConfigField "String", "API_KEY", (project.findProperty("API_KEY") ?: "")
             archivesBaseName = "mvvmarchitecture-app-$defaultConfig.versionName($defaultConfig.versionCode)"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true

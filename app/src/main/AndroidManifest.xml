@@ -60,11 +60,11 @@
         </activity>
 
         <activity
-            android:name=".ui.features.avg.main.search.local.SearchActivity"
+            android:name="com.lyhoangvinh.simple.ui.features.avg.search.local.SearchActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.features.avg.main.search.paging.SearchPagedActivity"
+            android:name="com.lyhoangvinh.simple.ui.features.avg.search.paging.SearchPagedActivity"
             android:screenOrientation="portrait" />
 
         <activity android:name=".ui.features.comic.testactivity.ComicActivity" />

@@ -7,8 +7,8 @@ import com.lyhoangvinh.simple.di.qualifier.ViewModelKey
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeViewModel
-import com.lyhoangvinh.simple.ui.features.avg.main.search.local.SearchViewModel
-import com.lyhoangvinh.simple.ui.features.avg.main.search.paging.SearchPagedViewModel
+import com.lyhoangvinh.simple.ui.features.avg.search.local.SearchViewModel
+import com.lyhoangvinh.simple.ui.features.avg.search.paging.SearchPagedViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoViewModel
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel

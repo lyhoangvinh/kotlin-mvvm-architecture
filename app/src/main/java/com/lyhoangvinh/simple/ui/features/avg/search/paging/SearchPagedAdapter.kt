@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.main.search.paging
+package com.lyhoangvinh.simple.ui.features.avg.search.paging
 
 import android.content.Context
 import android.view.View

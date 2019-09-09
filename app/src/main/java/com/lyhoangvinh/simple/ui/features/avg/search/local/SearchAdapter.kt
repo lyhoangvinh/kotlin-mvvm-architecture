@@ -1,4 +1,4 @@
-package com.lyhoangvinh.simple.ui.features.avg.main.search.local
+package com.lyhoangvinh.simple.ui.features.avg.search.local
 
 import android.content.Context
 import android.view.View
