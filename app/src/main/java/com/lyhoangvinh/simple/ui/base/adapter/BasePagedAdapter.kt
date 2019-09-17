@@ -15,7 +15,7 @@ import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.utils.genericCastOrNull
 import com.lyhoangvinh.simple.utils.setVisibility
 
-abstract class BaseAdapter<T, B : ViewDataBinding>(
+abstract class BasePagedAdapter<T, B : ViewDataBinding>(
     @ActivityContext val context: Context, diffUtil: DiffUtil.ItemCallback<T>
 ) : PagedListAdapter<T, BaseViewHolder<B>>(diffUtil) {
 

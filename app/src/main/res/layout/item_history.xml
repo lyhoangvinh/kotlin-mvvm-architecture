@@ -22,12 +22,12 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imv"
-            android:layout_width="@dimen/padding_40dp"
-            android:layout_height="@dimen/padding_40dp"
+            android:layout_width="@dimen/padding_30dp"
+            android:layout_height="@dimen/padding_30dp"
             android:layout_gravity="center"
             android:background="@drawable/bg_oval"
-            app:loadImageURL="@{dto.url}"
-            tools:src="@android:drawable/star_big_on" />
+            app:loadHistoryImageURL="@{dto.url}"
+            tools:src="@drawable/ic_access_time_black_24dp" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -46,13 +46,13 @@
             tools:text="ミニミニ◆つるぺたいもうと 近親中出し 矢澤美々 身長145cm KTDS-958" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/padding_30dp"
+            android:layout_height="@dimen/padding_30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/padding_10dp"
             android:src="@android:drawable/ic_delete"
-            android:tint="@color/material_blue_700" />
+            android:tint="@android:color/darker_gray" />
 
     </RelativeLayout>
 

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.ItemCollectionBinding
-import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
+import com.lyhoangvinh.simple.ui.base.adapter.BasePagedAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import javax.inject.Inject
@@ -13,7 +13,7 @@ import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 
 class CollectionsAdapter @Inject constructor(@ActivityContext context: Context, private var navigatorHelper: NavigatorHelper) :
-    BaseAdapter<Collection, ItemCollectionBinding>(context,ItemCallBack) {
+    BasePagedAdapter<Collection, ItemCollectionBinding>(context,ItemCallBack) {
     override fun itemLayoutResource() = R.layout.item_collection
     override fun createViewHolder(itemView: View) = CollectionViewHolder(itemView)
     override fun onBindViewHolder(binding: ItemCollectionBinding, dto: Collection, position: Int) {

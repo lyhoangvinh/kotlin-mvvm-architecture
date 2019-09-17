@@ -8,12 +8,12 @@ import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.databinding.ItemCollectionHomeBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
-import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
+import com.lyhoangvinh.simple.ui.base.adapter.BasePagedAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 
 
 class CollectionHomeAdapter(@ActivityContext context: Context) :
-    BaseAdapter<Collection, ItemCollectionHomeBinding>(
+    BasePagedAdapter<Collection, ItemCollectionHomeBinding>(
         context,
         DiffCallBack
     ) {

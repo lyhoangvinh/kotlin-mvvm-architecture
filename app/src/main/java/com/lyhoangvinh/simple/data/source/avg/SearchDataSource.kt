@@ -2,7 +2,7 @@ package com.lyhoangvinh.simple.data.source.avg
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
- import com.lyhoangvinh.simple.data.entities.avgle.Video
+import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
 import com.lyhoangvinh.simple.data.response.VideosResponseAvgle
 import com.lyhoangvinh.simple.data.services.AvgleService

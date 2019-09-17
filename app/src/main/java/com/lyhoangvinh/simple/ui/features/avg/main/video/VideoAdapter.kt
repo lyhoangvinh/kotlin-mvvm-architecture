@@ -7,13 +7,13 @@ import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.databinding.ItemVideoBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
-import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
+import com.lyhoangvinh.simple.ui.base.adapter.BasePagedAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import javax.inject.Inject
 
 class VideoAdapter @Inject constructor(@ActivityContext context: Context, private val navigatorHelper: NavigatorHelper) :
-    BaseAdapter<Video, ItemVideoBinding>(context, ItemCallBack) {
+    BasePagedAdapter<Video, ItemVideoBinding>(context, ItemCallBack) {
     override fun itemLayoutResource() = R.layout.item_video
     override fun createViewHolder(itemView: View) = VideoViewHolder(itemView)
     override fun onBindViewHolder(binding: ItemVideoBinding, dto: Video, position: Int) {

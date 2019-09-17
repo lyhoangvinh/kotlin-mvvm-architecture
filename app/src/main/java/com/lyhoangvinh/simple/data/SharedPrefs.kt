@@ -19,7 +19,7 @@ class SharedPrefs private constructor(application: Application) {
     }
 
     companion object {
-        private val PREFS_NAME = "share_prefs" + BuildConfig.APPLICATION_ID
+        private const val PREFS_NAME = "share_prefs" + BuildConfig.APPLICATION_ID
         private var mInstance: SharedPrefs? = null
 
         fun getInstance(application: Application): SharedPrefs {

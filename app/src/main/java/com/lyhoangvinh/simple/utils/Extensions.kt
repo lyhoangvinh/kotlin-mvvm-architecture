@@ -30,6 +30,7 @@ import com.google.gson.annotations.SerializedName
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lyhoangvinh.simple.R
 import com.squareup.picasso.Picasso
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.text.ParseException
@@ -267,3 +268,15 @@ fun Activity.removeStatusBar() {
 fun Fragment.removeStatusBar() {
     activity?.removeStatusBar()
 }
+
+/**
+ * Excute room
+</T> */
+
+//fun execute(action: () -> Unit) {
+//    Completable.fromAction {
+//        action.invoke()
+//    }.subscribeOn(Schedulers.io())
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribe()
+//}

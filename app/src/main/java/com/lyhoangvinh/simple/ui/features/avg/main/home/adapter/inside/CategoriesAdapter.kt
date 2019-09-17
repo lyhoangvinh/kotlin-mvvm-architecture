@@ -7,11 +7,11 @@ import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.databinding.ItemCategoriesBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
-import com.lyhoangvinh.simple.ui.base.adapter.BaseAdapter
+import com.lyhoangvinh.simple.ui.base.adapter.BasePagedAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 
 class CategoriesAdapter(@ActivityContext context: Context) :
-    BaseAdapter<Category, ItemCategoriesBinding>(
+    BasePagedAdapter<Category, ItemCategoriesBinding>(
         context,
         CategoryDiffCallBack
     ) {

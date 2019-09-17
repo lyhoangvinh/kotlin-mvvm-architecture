@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.utils
 
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.webkit.WebChromeClient
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,6 +14,7 @@ import android.widget.EditText
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
+import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
 import com.lyhoangvinh.simple.ui.widget.RotateLoading
 import com.lyhoangvinh.simple.ui.widget.newton.NewtonCradleLoading
 
@@ -28,6 +30,19 @@ object BindingUtils {
             .centerCrop()
             .fit()
             .into(imageView)
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadHistoryImageURL")
+    fun loadHistoryImageURL(imageView: ImageView, url: String?) {
+//        Picasso.get()
+//            .load(url)
+//            .placeholder(R.drawable.ic_access_time_black_24dp)
+//            .error(R.drawable.ic_access_time_black_24dp)
+//            .centerCrop()
+//            .resize(30,30)
+//            .fit()
+//            .into(imageView)
     }
 
     @JvmStatic
@@ -109,8 +124,13 @@ object BindingUtils {
 
     @JvmStatic
     @BindingAdapter("android:animatedVisibility")
-    fun setAnimatedVisibility(target: View, isVisible: Boolean) {
-        target.visibility = if (isVisible) View.VISIBLE else View.GONE
+    fun setAnimatedVisibility(target: View, isVisible: Boolean){
+        val animFadeIn = AnimationUtils.loadAnimation(target.context, R.anim.fade_in)
+        val animFadeOut = AnimationUtils.loadAnimation(target.context, R.anim.fade_out)
+        target.visibility =
+            if (isVisible) View.VISIBLE else View.GONE
+        target.animation =
+            if (isVisible) animFadeIn else animFadeOut
     }
 
     @JvmStatic
