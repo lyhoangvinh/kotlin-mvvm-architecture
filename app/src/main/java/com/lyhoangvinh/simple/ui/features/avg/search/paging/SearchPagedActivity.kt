@@ -2,14 +2,18 @@ package com.lyhoangvinh.simple.ui.features.avg.search.paging
 
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.paging.PagedList
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
 import com.lyhoangvinh.simple.databinding.ActivitySearchBinding
 import com.lyhoangvinh.simple.ui.base.activity.BaseViewModelPagingActivity
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.suggestion.SearchSuggestionsAdapter
+import com.lyhoangvinh.simple.utils.hideKeyboard
 import com.lyhoangvinh.simple.utils.setStatusBarColor
 import com.lyhoangvinh.simple.utils.textChanges
 import javax.inject.Inject
@@ -31,12 +35,27 @@ class SearchPagedActivity :
         binding.rcvHistorySearch.adapter = searchSuggestionsAdapter
         binding.vm = viewModel
         binding.edtSearch.textChanges {
-             viewModel.suggestions(it)
+            viewModel.suggestions(it)
         }
+        binding.edtSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search()
+                    return true
+                }
+                return false
+            }
+
+        })
         binding.imvSearch.setOnClickListener {
-            viewModel.setKeyWord(binding.edtSearch.text.toString())
-            viewModel.setVisible(false)
+            search()
         }
         binding.imvBack.setOnClickListener { onBackPressed() }
+    }
+
+    private fun search() {
+        viewModel.setKeyWord(binding.edtSearch.text.toString())
+        viewModel.setVisible(false)
+        hideKeyboard()
     }
 }

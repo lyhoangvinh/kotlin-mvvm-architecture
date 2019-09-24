@@ -87,7 +87,7 @@
                     android:background="@drawable/bg_corner_gray_thin"
                     android:gravity="center_vertical"
                     android:hint="@string/search"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:padding="@dimen/padding_8dp"
                     android:textSize="@dimen/search_bar_text_size" />
