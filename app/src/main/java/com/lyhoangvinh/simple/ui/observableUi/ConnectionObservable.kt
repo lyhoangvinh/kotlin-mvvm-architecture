@@ -1,6 +1,5 @@
 package com.lyhoangvinh.simple.ui.observableUi
 
-
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.lifecycle.LifecycleOwner
@@ -10,7 +9,7 @@ import com.lyhoangvinh.simple.data.entities.Connection
 import com.lyhoangvinh.simple.utils.ConnectionLiveData
 import javax.inject.Inject
 
-class StateObservable @Inject constructor(private val connectionLive: ConnectionLiveData) :
+class ConnectionObservable @Inject constructor(private val connectionLive: ConnectionLiveData) :
     BaseObservable() {
 
     @Bindable

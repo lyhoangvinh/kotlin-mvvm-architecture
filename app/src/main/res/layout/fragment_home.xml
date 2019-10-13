@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:visibility="gone"
             android:background="@android:color/white"
-            app:observableConnection="@{vm.stateObservable.currentConnection}"
+            app:observableConnection="@{vm.connectionObservable.currentConnection}"
             tools:visibility="visible">
 
             <RelativeLayout

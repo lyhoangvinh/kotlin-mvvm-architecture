@@ -4,16 +4,15 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.repo.HomeRepo
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple.HomeSimpleAdapter
-import com.lyhoangvinh.simple.ui.observableUi.StateObservable
+import com.lyhoangvinh.simple.ui.observableUi.ConnectionObservable
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo, val stateObservable: StateObservable) : BaseListDataViewModel<HomeSimpleAdapter>() {
+class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo, val connectionObservable: ConnectionObservable) : BaseListDataViewModel<HomeSimpleAdapter>() {
 
     private val TAG = "HomeViewModel_TAG"
 
@@ -29,7 +28,7 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo, val stat
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        stateObservable.observableConnection(lifecycleOwner)
+        connectionObservable.observableConnection(lifecycleOwner)
         updateData(lifecycleOwner)
     }
 
