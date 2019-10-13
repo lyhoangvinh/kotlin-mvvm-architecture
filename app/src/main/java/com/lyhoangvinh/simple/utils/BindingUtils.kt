@@ -12,6 +12,7 @@ import android.webkit.WebViewClient
 import android.webkit.WebSettings
 import android.widget.EditText
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.data.entities.Connection
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
@@ -124,7 +125,7 @@ object BindingUtils {
 
     @JvmStatic
     @BindingAdapter("android:animatedVisibility")
-    fun setAnimatedVisibility(target: View, isVisible: Boolean){
+    fun setAnimatedVisibility(target: View, isVisible: Boolean) {
         val animFadeIn = AnimationUtils.loadAnimation(target.context, R.anim.fade_in)
         val animFadeOut = AnimationUtils.loadAnimation(target.context, R.anim.fade_out)
         target.visibility =
@@ -153,5 +154,14 @@ object BindingUtils {
             if (newtonCradleLoading.isStart)
                 newtonCradleLoading.stop()
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("observableConnection")
+    fun observableConnection(view: View, connection: Connection?) {
+        if (connection == null) {
+            return
+        }
+        view.setVisibility(!connection.isConnected)
     }
 }

@@ -10,9 +10,10 @@ import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple.HomeSimpleAdapter
+import com.lyhoangvinh.simple.ui.observableUi.StateObservable
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : BaseListDataViewModel<HomeSimpleAdapter>() {
+class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo, val stateObservable: StateObservable) : BaseListDataViewModel<HomeSimpleAdapter>() {
 
     private val TAG = "HomeViewModel_TAG"
 
@@ -28,6 +29,7 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : BaseLi
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
+        stateObservable.observableConnection(lifecycleOwner)
         updateData(lifecycleOwner)
     }
 

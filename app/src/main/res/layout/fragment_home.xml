@@ -1,15 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="vm"
-                  type="com.lyhoangvinh.simple.ui.features.avg.main.home.HomeViewModel"/>
+
+        <import type="com.lyhoangvinh.simple.data.entities.Connection" />
+
+        <variable
+            name="vm"
+            type="com.lyhoangvinh.simple.ui.features.avg.main.home.HomeViewModel" />
     </data>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include layout="@layout/view_recyclerview"/>
-    </LinearLayout>
+        <include layout="@layout/view_recyclerview" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:observableConnection="@{vm.stateObservable.currentConnection}"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/stub_net"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/stub_net_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_state_network_offline" />
+
+                <TextView
+                    android:id="@+id/stub_net_text"
+                    style="@style/TextApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/stub_net_icon"
+                    android:gravity="center_horizontal"
+                    android:text="@string/msg_no_internet_connection"
+                    android:textColor="@color/colorTextHint" />
+
+            </RelativeLayout>
+        </FrameLayout>
+    </FrameLayout>
 </layout>
