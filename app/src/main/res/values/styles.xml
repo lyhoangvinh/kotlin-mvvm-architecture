@@ -36,4 +36,10 @@
         <item name="android:textSize">@dimen/ts_13_sp</item>
     </style>
 
+    <style name="TextApp" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">@dimen/text_body1</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

@@ -7,6 +7,11 @@
     <color name="color_disable_date">#b4b4b4</color>
     <color name="colorWhite">#ffffff</color>
 
+    <color name="colorText">#222222</color>
+    <color name="colorTextHint">#999999</color>
+    <color name="colorTextSecond">#444444</color>
+    <color name="colorTextLink">#0085ec</color>
+
     <color name="material_amber_700">#FFA000</color>
     <color name="material_blue_700">#1976D2</color>
     <color name="material_purple_700">#7B1FA2</color>
