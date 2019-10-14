@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<androidx.paging>
-  <paging-common versions="2.0.0-alpha1,2.0.0-beta01,2.0.0-rc01,2.0.0,2.1.0-alpha01,2.1.0-beta01,2.1.0-rc01,2.1.0"/>
-  <paging-runtime versions="2.0.0-alpha1,2.0.0-beta01,2.0.0-rc01,2.0.0,2.1.0-alpha01,2.1.0-beta01,2.1.0-rc01,2.1.0"/>
-  <paging-rxjava2 versions="1.0.0-alpha1,2.0.0-alpha1,2.0.0-beta01,2.0.0-rc01,2.0.0,2.1.0-alpha01,2.1.0-beta01,2.1.0-rc01,2.1.0"/>
-  <paging-runtime-ktx versions="2.1.0-alpha01,2.1.0-beta01,2.1.0-rc01,2.1.0"/>
-  <paging-rxjava2-ktx versions="2.1.0-alpha01,2.1.0-beta01,2.1.0-rc01,2.1.0"/>
-  <paging-common-ktx versions="2.1.0-alpha01,2.1.0-beta01,2.1.0-rc01,2.1.0"/>
-</androidx.paging>
