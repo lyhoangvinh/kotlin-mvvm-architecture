@@ -46,7 +46,7 @@ ext {
     kotlinxVersion = '1.2.1'
 
     //dagger2
-    dagger2Version = '2.23.2'
+    dagger2Version = '2.24'
 
     rxjava2Version = '2.2.0'
     rxandroidVersion = '2.1.0'
