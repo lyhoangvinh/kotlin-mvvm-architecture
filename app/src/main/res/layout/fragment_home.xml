@@ -19,39 +19,9 @@
 
         <include layout="@layout/view_recyclerview" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:background="@android:color/white"
-            app:observableConnection="@{vm.connectionObservable.currentConnection}"
-            tools:visibility="visible">
+        <include
+            app:currentConnection="@{vm.connectionObservable.currentConnection}"
+            layout="@layout/layout_state_network_off"/>
 
-            <RelativeLayout
-                android:id="@+id/stub_net"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/stub_net_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_state_network_offline" />
-
-                <TextView
-                    android:id="@+id/stub_net_text"
-                    style="@style/TextApp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/stub_net_icon"
-                    android:gravity="center_horizontal"
-                    android:text="@string/msg_no_internet_connection"
-                    android:textColor="@color/colorTextHint" />
-
-            </RelativeLayout>
-        </FrameLayout>
     </FrameLayout>
 </layout>

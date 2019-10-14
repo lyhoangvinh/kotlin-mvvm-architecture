@@ -5,15 +5,17 @@
 
     <data>
         <variable
-            name="connection"
+            name="currentConnection"
             type="com.lyhoangvinh.simple.data.entities.Connection" />
     </data>
+
     <RelativeLayout
         android:id="@+id/stub_net"
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        app:observableConnection="@{connection}"
+        app:observableConnection="@{currentConnection}"
         tools:visibility="visible">
 
         <ImageView
