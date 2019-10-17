@@ -180,7 +180,7 @@ class HomeRepo @Inject constructor(
         return createResource(
             avgleService.getCategories(),
             avgleService.getCollections((1..10).random(), (5..10).random()),
-            avgleService.getCollections(0, 10),
+            avgleService.getCollections(1, 10),
             avgleService.getAllVideos((0..20).random()),
             object :
                 PlainResponseZipFourConsumer<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>> {
