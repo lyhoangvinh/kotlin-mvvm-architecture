@@ -14,8 +14,6 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo, val connectionObservable: ConnectionObservable) : BaseListDataViewModel<HomeSimpleAdapter>() {
 
-    private val TAG = "HomeViewModel_TAG"
-
     override fun fetchData(page: Int) {
         execute(true, homeRepo.getRepoHome(), object : PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
                 override fun accept(t: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {

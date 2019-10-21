@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.ui.base.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.databinding.ViewRecyclerviewBinding
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import kotlinx.android.synthetic.main.view_no_data.*
 import kotlinx.android.synthetic.main.view_recyclerview.*
@@ -32,7 +35,7 @@ abstract class BaseViewModelPagingActivity<B : ViewDataBinding,
 
     private var scrollTopPosition = DEFAULT_SCROLL_TOP_POSITION
 
-    override fun getLayoutResource() = com.lyhoangvinh.simple.R.layout.view_recyclerview
+    override fun getLayoutResource() = R.layout.view_recyclerview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,17 +62,14 @@ abstract class BaseViewModelPagingActivity<B : ViewDataBinding,
         })
         refreshLayout.setOnRefreshListener(this)
         refreshLayout.setColorSchemeResources(
-            com.lyhoangvinh.simple.R.color.material_amber_700,
-            com.lyhoangvinh.simple.R.color.material_blue_700,
-            com.lyhoangvinh.simple.R.color.material_purple_700,
-            com.lyhoangvinh.simple.R.color.material_lime_700
+            R.color.material_amber_700,
+            R.color.material_blue_700,
+            R.color.material_purple_700,
+            R.color.material_lime_700
         )
         scrollTop.visibility = View.GONE
         scrollTop.setOnClickListener { recyclerView.scrollToPosition(0) }
-        noDataView.visibility = View.GONE
-        viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
-            noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
-        })
+
         recyclerView.setOnTouchListener { _, _ ->
             hideKeyboard()
             false

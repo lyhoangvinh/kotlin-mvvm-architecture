@@ -1,5 +1,6 @@
 package com.lyhoangvinh.simple.data.entities
 
-class DataEmpty (
-    var isEmpty : Boolean
+data class DataEmpty(
+    var isEmpty: Boolean,
+    var message: String
 )

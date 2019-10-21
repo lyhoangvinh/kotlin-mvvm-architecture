@@ -17,7 +17,7 @@ class ComicViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
         refresh()
         issuesRepo.liveData().observe(lifecycleOwner, Observer {
             adapter.submitList(it)
-            hideNoDataState(it.isNullOrEmpty())
+//            hideNoDataState(it.isNullOrEmpty())
         })
     }
 

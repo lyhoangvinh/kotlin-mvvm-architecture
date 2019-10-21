@@ -13,8 +13,6 @@ abstract class BasePagingViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(
     @Nullable
     lateinit var adapter: A
 
-    var dataEmptySafeMutableLiveData = SafeMutableLiveData<DataEmpty>()
-
     @CallSuper
     open fun initAdapter(@NonNull adapter: A) {
         this.adapter = adapter
@@ -30,10 +28,4 @@ abstract class BasePagingViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(
 
     protected abstract fun fetchData()
 
-    /**
-     *  update empty view
-     */
-    fun hideNoDataState(isEmpty: Boolean) {
-        dataEmptySafeMutableLiveData.setValue(DataEmpty(isEmpty))
-    }
 }

@@ -65,10 +65,6 @@ abstract class BaseViewModelPagingFragment<B : ViewDataBinding,
         )
         scrollTop.visibility = View.GONE
         scrollTop.setOnClickListener { recyclerView.scrollToPosition(0) }
-        noDataView.visibility = View.GONE
-        viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
-            noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
-        })
         if (recyclerView.onFlingListener == null) {
             GravitySnapHelper(Gravity.BOTTOM).attachToRecyclerView(recyclerView)
         }

@@ -6,16 +6,14 @@ import android.webkit.WebChromeClient
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.squareup.picasso.Picasso
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
-import android.widget.EditText
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.Connection
+import com.lyhoangvinh.simple.data.entities.DataEmpty
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
-import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
 import com.lyhoangvinh.simple.ui.widget.RotateLoading
 import com.lyhoangvinh.simple.ui.widget.newton.NewtonCradleLoading
 
@@ -24,13 +22,14 @@ object BindingUtils {
     @JvmStatic
     @BindingAdapter("loadImageURL")
     fun loadImageURL(imageView: ImageView, url: String?) {
-        Picasso.get()
-            .load(url)
-            .placeholder(R.drawable.ic_placeholder_rectangle_200px)
-            .error(R.drawable.ic_placeholder_rectangle_200px)
-            .centerCrop()
-            .fit()
-            .into(imageView)
+//        Picasso.get()
+////            .load(url)
+////            .placeholder(R.drawable.ic_placeholder_rectangle_200px)
+////            .error(R.drawable.ic_placeholder_rectangle_200px)
+////            .centerCrop()
+////            .fit()
+////            .into(imageView)
+        imageView.loadImage(url!!)
     }
 
     @JvmStatic
@@ -163,5 +162,14 @@ object BindingUtils {
             return
         }
         view.setVisibility(!connection.isConnected)
+    }
+
+    @JvmStatic
+    @BindingAdapter("observableData")
+    fun observableData(view: View, data: DataEmpty?) {
+        if (data == null) {
+            return
+        }
+        view.setVisibility(data.isEmpty)
     }
 }

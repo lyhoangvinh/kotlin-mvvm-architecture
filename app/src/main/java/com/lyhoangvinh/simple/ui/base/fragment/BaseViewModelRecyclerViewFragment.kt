@@ -87,10 +87,6 @@ abstract class BaseViewModelRecyclerViewFragment<B : ViewDataBinding,
         })
         scrollTop.visibility = View.GONE
         scrollTop.setOnClickListener { recyclerView.scrollToPosition(0) }
-        noDataView.visibility = View.GONE
-        viewModel.dataEmptySafeMutableLiveData.observe(this, Observer {
-            noDataView.visibility = if (it!!.isEmpty) View.VISIBLE else View.GONE
-        })
     }
 
     private fun runLayoutAnimation(recyclerView: RecyclerView) {

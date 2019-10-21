@@ -26,6 +26,10 @@
 
             <include layout="@layout/view_recyclerview" />
 
+            <include
+                layout="@layout/view_no_data"
+                app:errorData="@{vm.stateObservable.dataEmpty}" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <RelativeLayout
@@ -36,28 +40,28 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/rlSearch"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="@{vm.getVisible() ? View.VISIBLE : View.GONE}"
                 android:background="@android:color/darker_gray"
-                android:layout_below="@+id/rlSearch"
+                android:visibility="gone"
                 tools:visibility="visible" />
 
             <FrameLayout
                 android:id="@+id/fmHistory"
-                android:visibility="@{vm.getVisible() ? View.VISIBLE : View.GONE}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/divider">
+                android:layout_below="@+id/divider"
+                android:visibility="gone">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvHistorySearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/white"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:background="@android:color/white"
                     tools:listitem="@layout/item_history" />
             </FrameLayout>
 
@@ -82,8 +86,8 @@
                     android:layout_height="@dimen/square_button_size"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/padding_10dp"
-                    android:layout_toEndOf="@id/imvBack"
                     android:layout_toStartOf="@+id/imvSearch"
+                    android:layout_toEndOf="@id/imvBack"
                     android:background="@drawable/bg_corner_gray_thin"
                     android:gravity="center_vertical"
                     android:hint="@string/search"
@@ -94,13 +98,13 @@
 
                 <ImageView
                     android:id="@+id/imvSearch"
-                    app:srcCompat="@drawable/ic_search_black_24dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/padding_10dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/padding_10dp"/>
+                    android:layout_marginEnd="@dimen/padding_10dp"
+                    android:padding="@dimen/padding_10dp"
+                    app:srcCompat="@drawable/ic_search_black_24dp" />
 
             </RelativeLayout>
 
@@ -109,7 +113,10 @@
     </RelativeLayout>
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.lyhoangvinh.simple.data.entities.DataEmpty"/>
 
         <variable
             name="vm"

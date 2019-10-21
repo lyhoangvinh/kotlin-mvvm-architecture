@@ -18,8 +18,6 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
     @Nullable
     lateinit var adapter: A
 
-    var dataEmptySafeMutableLiveData = SafeMutableLiveData<DataEmpty>()
-
     var isRefreshed = false
 
     var canLoadMore = false
@@ -62,9 +60,9 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
     /**
      *  update empty view
      */
-    fun hideNoDataState(isEmpty: Boolean) {
-        dataEmptySafeMutableLiveData.setValue(DataEmpty(isEmpty))
-    }
+//    fun hideNoDataState(isEmpty: Boolean) {
+//        dataEmptySafeMutableLiveData.setValue(DataEmpty(isEmpty))
+//    }
 
     companion object {
         const val CURRENT_PAGE = 0

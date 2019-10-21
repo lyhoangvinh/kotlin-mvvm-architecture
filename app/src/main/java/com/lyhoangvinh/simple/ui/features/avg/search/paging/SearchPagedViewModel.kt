@@ -2,10 +2,12 @@ package com.lyhoangvinh.simple.ui.features.avg.search.paging
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.lyhoangvinh.simple.data.dao.SearchHistoryDao
+import com.lyhoangvinh.simple.data.entities.DataEmpty
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
@@ -14,26 +16,23 @@ import com.lyhoangvinh.simple.data.repo.SearchPagedRepo
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.suggestion.SearchSuggestionsAdapter
+import com.lyhoangvinh.simple.ui.observableUi.StateObservable
 import javax.inject.Inject
 
-class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: SearchPagedRepo, private val searchHistoryDao: SearchHistoryDao) :
+class SearchPagedViewModel @Inject constructor(
+    private val searchPagedRepo: SearchPagedRepo,
+    private val searchHistoryDao: SearchHistoryDao,
+    val stateObservable: StateObservable
+) :
     BasePagingViewModel<SearchPagedAdapter>() {
 
     private var keyword = ""
 
     private var isFirstState = false
 
-    private var isVisible: Boolean = false
-
-    fun setVisible(isVisible : Boolean){
-        this.isVisible = isVisible
-    }
-
-    fun getVisible() = isVisible
-
     private lateinit var observer: Observer<PagedList<Video>?>
 
-    lateinit var searchSuggestionsAdapter : SearchSuggestionsAdapter
+    lateinit var searchSuggestionsAdapter: SearchSuggestionsAdapter
 
     fun setKeyWord(keyword: String) {
         adapter.submitState(State(Status.LOADING, null))
@@ -44,13 +43,15 @@ class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: Sear
         }, 500L)
     }
 
-    fun suggestions(keyword: String){
-        execute(false, searchHistoryDao.search(keyword), object : PlainConsumer<List<SearchHistory>>{
-            override fun accept(t: List<SearchHistory>) {
-                setVisible(t.isNotEmpty())
-                searchSuggestionsAdapter.submitList(t)
-            }
-        })
+    fun suggestions(keyword: String) {
+        execute(
+            false,
+            searchHistoryDao.search(keyword),
+            object : PlainConsumer<List<SearchHistory>> {
+                override fun accept(t: List<SearchHistory>) {
+                    searchSuggestionsAdapter.submitList(t)
+                }
+            })
     }
 
     override fun fetchData() {
@@ -69,6 +70,7 @@ class SearchPagedViewModel @Inject constructor(private val searchPagedRepo: Sear
                 adapter.submitState(State(Status.SUCCESS, null))
                 searchPagedRepo.insertHistory(query = keyword)
             }
+            Log.d("Activity_SEARCHXXXX_XXX", "list: ${adapter.currentList?.size}")
         }
         searchPagedRepo.liveVideo().observe(lifecycleOwner, observer)
     }

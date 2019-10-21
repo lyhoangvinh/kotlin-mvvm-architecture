@@ -7,8 +7,10 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.text.TextUtils
@@ -26,11 +28,10 @@ import androidx.annotation.ColorRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.gson.annotations.SerializedName
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lyhoangvinh.simple.R
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.text.ParseException
@@ -39,13 +40,13 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 fun ImageView.loadImageIssues(url: String) {
-    Picasso.get()
-        .load(url)
-        .placeholder(R.drawable.ic_placeholder_rectangle_200px)
-        .error(R.drawable.ic_placeholder_rectangle_200px)
-        .centerCrop()
-        .fit()
-        .into(this)
+//    Picasso.get()
+//        .load(url)
+//        .placeholder(R.drawable.ic_placeholder_rectangle_200px)
+//        .error(R.drawable.ic_placeholder_rectangle_200px)
+//        .centerCrop()
+//        .fit()
+//        .into(this)
 }
 
 fun ImageView.loadImage(url: String) {
@@ -55,7 +56,15 @@ fun ImageView.loadImage(url: String) {
         .error(R.drawable.ic_placeholder_rectangle_200px)
         .centerCrop()
         .fit()
-        .into(this)
+        .into(this, object : Callback {
+            override fun onSuccess() {
+
+            }
+
+            override fun onError(e: java.lang.Exception?) {
+                loadImage(url)
+            }
+        })
 }
 
 fun Activity.createDialog(): Dialog? {
@@ -211,7 +220,8 @@ fun TextView.startCustomAnimation(isCollapsing: Boolean, finalText: String, dura
         else ValueAnimator.ofFloat(0.0f, 1.0f)
     animator.addUpdateListener {
         val currentValue = it.animatedValue as Float
-        val ended = (isCollapsing && currentValue == 0.0f) || (!isCollapsing && currentValue == 1.0f)
+        val ended =
+            (isCollapsing && currentValue == 0.0f) || (!isCollapsing && currentValue == 1.0f)
         if (ended) {
             this.text = finalText
         } else {
@@ -262,7 +272,10 @@ fun Fragment.setStatusBarColor(@ColorRes id: Int) {
 }
 
 fun Activity.removeStatusBar() {
-    window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    window.setFlags(
+        WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        WindowManager.LayoutParams.FLAG_FULLSCREEN
+    )
 }
 
 fun Fragment.removeStatusBar() {

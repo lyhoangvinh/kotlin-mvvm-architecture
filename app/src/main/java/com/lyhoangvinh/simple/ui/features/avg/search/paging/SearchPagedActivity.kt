@@ -55,7 +55,6 @@ class SearchPagedActivity :
 
     private fun search() {
         viewModel.setKeyWord(binding.edtSearch.text.toString())
-        viewModel.setVisible(false)
         hideKeyboard()
     }
 }

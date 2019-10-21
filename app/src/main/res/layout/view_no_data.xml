@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="errorData"
+            type="com.lyhoangvinh.simple.data.entities.DataEmpty" />
+    </data>
+
     <RelativeLayout
-            android:id="@+id/noDataView"
+        android:id="@+id/noDataView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:observableData="@{errorData}"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_not_found" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-        <LinearLayout
-                android:id="@+id/stub_empty_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-            <ImageView
-                    android:id="@+id/stub_empty_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_do_not_disturb_black_24dp"/>
-
-            <TextView
-                    android:id="@+id/stub_empty_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="No Data"
-                    android:textSize="26sp"/>
-
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imvNotFound"
+            android:background="@color/color_disable_date"
+            android:gravity="center"
+            android:padding="@dimen/padding_10dp"
+            android:text="@{errorData.message}"
+            android:textColor="@color/colorWhite"
+            tools:text="@string/could_not_found" />
     </RelativeLayout>
 </layout>
