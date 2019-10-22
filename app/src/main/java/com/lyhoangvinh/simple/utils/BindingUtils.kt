@@ -22,14 +22,13 @@ object BindingUtils {
     @JvmStatic
     @BindingAdapter("loadImageURL")
     fun loadImageURL(imageView: ImageView, url: String?) {
-//        Picasso.get()
-////            .load(url)
-////            .placeholder(R.drawable.ic_placeholder_rectangle_200px)
-////            .error(R.drawable.ic_placeholder_rectangle_200px)
-////            .centerCrop()
-////            .fit()
-////            .into(imageView)
         imageView.loadImage(url!!)
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadImageNotFit")
+    fun loadImageNotFit(imageView: ImageView, url: String?) {
+        imageView.loadImageNotFit(url!!)
     }
 
     @JvmStatic

@@ -53,7 +53,7 @@ fun ImageView.loadImage(url: String) {
     Picasso.get()
         .load(url)
         .placeholder(R.drawable.ic_placeholder_rectangle_200px)
-        .error(R.drawable.ic_placeholder_rectangle_200px)
+        .error(R.drawable.poster_show_not_available)
         .centerCrop()
         .fit()
         .into(this, object : Callback {
@@ -63,6 +63,22 @@ fun ImageView.loadImage(url: String) {
 
             override fun onError(e: java.lang.Exception?) {
                 loadImage(url)
+            }
+        })
+}
+
+fun ImageView.loadImageNotFit(url: String) {
+    Picasso.get()
+        .load(url)
+        .placeholder(R.drawable.ic_placeholder_rectangle_200px)
+        .error(R.drawable.poster_show_not_available)
+        .into(this, object : Callback {
+            override fun onSuccess() {
+
+            }
+
+            override fun onError(e: java.lang.Exception?) {
+                loadImageNotFit(url)
             }
         })
 }
@@ -281,6 +297,17 @@ fun Activity.removeStatusBar() {
 fun Fragment.removeStatusBar() {
     activity?.removeStatusBar()
 }
+
+fun Context.calculateNoOfColumnsShow(): Int {
+    val displayMetrics = this.resources.displayMetrics
+    val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+    return (dpWidth / 220).toInt()
+}
+
+fun Activity.calculateNoOfColumnsShow(): Int = applicationContext.calculateNoOfColumnsShow()
+
+fun Fragment.calculateNoOfColumnsShow(): Int = activity!!.calculateNoOfColumnsShow()
+
 
 /**
  * Excute room

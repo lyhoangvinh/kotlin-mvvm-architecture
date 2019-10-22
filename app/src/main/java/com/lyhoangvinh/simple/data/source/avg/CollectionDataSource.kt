@@ -18,7 +18,7 @@ import javax.inject.Singleton
 class CollectionDataSource @Inject constructor(private val avgleService: AvgleService) :
     BasePageKeyedDataSource<Collection, CollectionsResponseAvgle>() {
     override fun getRequest(page: Int): Single<BaseResponseAvgle<CollectionsResponseAvgle>> =
-        avgleService.getCollections(page, 50)
+        avgleService.getCollections(page, 10)
 
     @Singleton
     class CollectionFactory @Inject constructor(private val provider: Provider<CollectionDataSource>) :

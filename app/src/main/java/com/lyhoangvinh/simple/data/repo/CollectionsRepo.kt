@@ -24,20 +24,19 @@ class CollectionsRepo @Inject constructor(
 ) : BaseRepo() {
 
     private lateinit var liveData: LiveData<PagedList<Collection>>
-    var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
     private fun rxLiveData(): LiveData<PagedList<Collection>> {
         val config = PagedList.Config.Builder()
             .setPageSize(50)
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(60)
-            .setPrefetchDistance(60)
+            .setInitialLoadSizeHint(50)
+//            .setPrefetchDistance(50)
             .build()
         liveData = LivePagedListBuilder(rxFactory, config)
             .setBoundaryCallback(object : PagedList.BoundaryCallback<Collection>(){
                 override fun onItemAtEndLoaded(itemAtEnd: Collection) {
                     super.onItemAtEndLoaded(itemAtEnd)
-                    Log.d(TAG_X, "reached end of feed")
+                    Log.d("XXX", "reached end of feed")
                 }
             })
             .build()

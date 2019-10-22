@@ -65,11 +65,14 @@ abstract class BaseViewModelPagingFragment<B : ViewDataBinding,
         )
         scrollTop.visibility = View.GONE
         scrollTop.setOnClickListener { recyclerView.scrollToPosition(0) }
-        if (recyclerView.onFlingListener == null) {
+        if (recyclerView.onFlingListener == null && layoutManager is LinearLayoutManager) {
             GravitySnapHelper(Gravity.BOTTOM).attachToRecyclerView(recyclerView)
         }
-        recyclerView.addItemDecoration(VerticalSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.padding_10dp)))
+        recyclerView.addItemDecoration(createItemDecoration())
     }
+
+    open fun createItemDecoration(): RecyclerView.ItemDecoration =
+        VerticalSpaceItemDecoration(resources.getDimensionPixelSize(R.dimen.padding_10dp))
 
     open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(activity)
 
