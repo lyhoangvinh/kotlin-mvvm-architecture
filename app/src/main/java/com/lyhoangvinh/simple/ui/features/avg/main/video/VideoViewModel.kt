@@ -53,6 +53,14 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
         videoRepo.fetchData().observe(lifecycleOwner, Observer {
             when (it) {
                 is VideoData -> adapter.submitList(it.videoItems)
+                is StateData -> {
+                    if (isFirstState) {
+                        adapter.submitState(it.state)
+                    } else {
+                        isFirstState = true
+                    }
+                    publishState(it.state)
+                }
             }
             if(isFirstState){
                 isFirstState = false

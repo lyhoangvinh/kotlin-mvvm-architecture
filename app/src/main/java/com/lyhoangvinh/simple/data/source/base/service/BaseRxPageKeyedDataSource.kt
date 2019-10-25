@@ -34,7 +34,7 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
 
     var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
-    private var stateLiveData: SafeMutableLiveData<State>? = null
+    var stateLiveData: SafeMutableLiveData<State>? = null
 
     private var compositeDisposable: CompositeDisposable? = null
 
@@ -66,7 +66,6 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
         if (compositeDisposable != null) {
             compositeDisposable?.dispose()
         }
-        stateLiveData = null
         compositeDisposable = null
     }
 
@@ -106,16 +105,9 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
 
     abstract fun getResourceFollowable(page: Int): Flowable<Resource<BaseResponseAvgle<T>>>
 
-    fun getStateLiveData(): SafeMutableLiveData<State> {
-        if (stateLiveData == null) {
-            stateLiveData = SafeMutableLiveData()
-        }
-        return stateLiveData!!
-    }
-
     private fun publishState(state: State) {
         if (stateLiveData == null) {
-            stateLiveData = SafeMutableLiveData()
+            return
         }
         stateLiveData?.postValue(state)
         if (!TextUtils.isEmpty(state.message)) {

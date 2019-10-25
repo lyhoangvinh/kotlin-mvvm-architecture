@@ -32,24 +32,17 @@ class CollectionRxDataSource @Inject constructor(private val avgleService: Avgle
     ) :
         DataSource.Factory<Int, Collection>() {
 
-        private var isCurrentSource = false
+
         private val sourceLiveData = SafeMutableLiveData<CollectionRxDataSource>()
         private lateinit var newSource: CollectionRxDataSource
+        private var stateLiveData: SafeMutableLiveData<State>? = null
 
         fun invalidate() {
             sourceLiveData.value?.invalidate()
         }
 
-        fun stateLiveData(): LiveData<State> {
-            if (!isCurrentSource) {
-                newSource = CollectionRxDataSource(avgleService)
-                isCurrentSource = true
-            }
-            return if (sourceLiveData.value == null) {
-                newSource.getStateLiveData()
-            } else {
-                sourceLiveData.value?.getStateLiveData()!!
-            }
+        fun setStateLiveData(stateLiveData: SafeMutableLiveData<State>) {
+            this.stateLiveData = stateLiveData
         }
 
         fun dispose() {
@@ -57,9 +50,8 @@ class CollectionRxDataSource @Inject constructor(private val avgleService: Avgle
         }
 
         override fun create(): DataSource<Int, Collection> {
-            if (isCurrentSource) {
-                newSource = CollectionRxDataSource(avgleService)
-            }
+            newSource = CollectionRxDataSource(avgleService)
+            newSource.stateLiveData = stateLiveData
             sourceLiveData.postValue(newSource)
             return newSource
         }

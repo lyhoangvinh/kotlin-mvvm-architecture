@@ -40,13 +40,18 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
         private val sourceLiveData = MutableLiveData<VideoDataSource>()
         private var newSource: VideoDataSource? = VideoDataSource(avgleService)
         private var chId: String? = ""
+        private var stateLiveData: SafeMutableLiveData<State>? = null
 
         fun setChId(chId: String) {
             this.chId = chId
         }
 
-        fun stateLiveSource(): MutableLiveData<State> {
-            return newSource?.getStateLiveData()!!
+//        fun stateLiveSource(): MutableLiveData<State> {
+//            return newSource?.stateLiveData()!!
+//        }
+
+        fun setStateLiveData(stateLiveData: SafeMutableLiveData<State>) {
+            this.stateLiveData = stateLiveData
         }
 
         fun dispose() {
@@ -58,9 +63,9 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
         }
 
         override fun create(): DataSource<Int, Video> {
-            newSource = null
             newSource = VideoDataSource(avgleService)
-            newSource!!.setChId(chId.toString())
+            newSource?.setChId(chId.toString())
+            newSource?.stateLiveData = stateLiveData
             sourceLiveData.postValue(newSource)
             return newSource!!
         }

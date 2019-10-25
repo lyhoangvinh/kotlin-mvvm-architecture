@@ -3,7 +3,6 @@ package com.lyhoangvinh.simple.data.repo
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.lyhoangvinh.simple.data.entities.State
@@ -13,9 +12,7 @@ import com.lyhoangvinh.simple.data.entities.avgle.MergedData
 import com.lyhoangvinh.simple.data.entities.avgle.StateData
 import com.lyhoangvinh.simple.data.source.avg.CollectionDataSource
 import com.lyhoangvinh.simple.data.source.avg.CollectionRxDataSource
-import com.lyhoangvinh.simple.data.source.base.service.BaseRxPageKeyedDataSource
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class CollectionsRepo @Inject constructor(
@@ -25,15 +22,16 @@ class CollectionsRepo @Inject constructor(
 
     private lateinit var liveData: LiveData<PagedList<Collection>>
 
-    private fun rxLiveData(): LiveData<PagedList<Collection>> {
+    private fun rxLiveData(stateLiveData: SafeMutableLiveData<State>): LiveData<PagedList<Collection>> {
         val config = PagedList.Config.Builder()
             .setPageSize(50)
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(50)
 //            .setPrefetchDistance(50)
             .build()
+        rxFactory.setStateLiveData(stateLiveData)
         liveData = LivePagedListBuilder(rxFactory, config)
-            .setBoundaryCallback(object : PagedList.BoundaryCallback<Collection>(){
+            .setBoundaryCallback(object : PagedList.BoundaryCallback<Collection>() {
                 override fun onItemAtEndLoaded(itemAtEnd: Collection) {
                     super.onItemAtEndLoaded(itemAtEnd)
                     Log.d("XXX", "reached end of feed")
@@ -45,10 +43,11 @@ class CollectionsRepo @Inject constructor(
 
     fun rxFetchData(): MediatorLiveData<MergedData> {
         val liveDataMerger = MediatorLiveData<MergedData>()
-        liveDataMerger.addSource(rxLiveData()) {
+        val stateLiveData = SafeMutableLiveData<State>()
+        liveDataMerger.addSource(rxLiveData(stateLiveData)) {
             liveDataMerger.value = CollectionData(it)
         }
-        liveDataMerger.addSource(rxFactory.stateLiveData()) {
+        liveDataMerger.addSource(stateLiveData) {
             liveDataMerger.value = StateData(it)
         }
         return liveDataMerger
@@ -82,7 +81,7 @@ class CollectionsRepo @Inject constructor(
         return liveDataMerger
     }
 
-    fun dispose(){
+    fun dispose() {
         rxFactory.dispose()
     }
 }

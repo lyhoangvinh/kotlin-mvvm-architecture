@@ -8,12 +8,19 @@ import com.lyhoangvinh.simple.data.entities.avgle.CollectionData
 import com.lyhoangvinh.simple.data.entities.avgle.StateData
 import com.lyhoangvinh.simple.data.repo.CollectionsRepo
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
+import com.lyhoangvinh.simple.ui.observableUi.StateObservable
+import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import javax.inject.Inject
 
-class CollectionViewModel @Inject constructor(private val collectionsRepo: CollectionsRepo) :
+class CollectionViewModel @Inject constructor(
+    private val collectionsRepo: CollectionsRepo,
+    private val stateObservable: StateObservable
+) :
     BasePagingViewModel<CollectionsAdapter>() {
 
     var title = "Collections all"
+
+    var isFirst = false
 
     override fun fetchData() {
         collectionsRepo.invalidateDataSource()
@@ -28,9 +35,17 @@ class CollectionViewModel @Inject constructor(private val collectionsRepo: Colle
 //                is CollectionData -> adapter.submitList(it.collections)
 //            }
 //        })
+
         collectionsRepo.rxFetchData().observe(lifecycleOwner, Observer {
             when (it) {
-                is StateData -> adapter.submitState(it.state)
+                is StateData -> {
+                    if (isFirst) {
+                        adapter.submitState(it.state)
+                    } else {
+                        isFirst = true
+                    }
+                    publishState(it.state)
+                }
                 is CollectionData -> adapter.submitList(it.collections)
             }
         })

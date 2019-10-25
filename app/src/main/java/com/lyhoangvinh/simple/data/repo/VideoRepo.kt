@@ -32,29 +32,31 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
         }
     }
 
-    private fun liveVideo(): LiveData<PagedList<Video>> {
+    private fun liveVideo(stateLiveData: SafeMutableLiveData<State>): LiveData<PagedList<Video>> {
         val config = PagedList.Config.Builder()
             .setPageSize(50)
             .setEnablePlaceholders(true)
             .setInitialLoadSizeHint(100)
             .setPrefetchDistance(50)
             .build()
+        videoFactory.setStateLiveData(stateLiveData)
         live = LivePagedListBuilder(videoFactory, config).build()
         return live
     }
 
     fun fetchData(): MediatorLiveData<MergedData> {
         val liveDataMerger = MediatorLiveData<MergedData>()
-        liveDataMerger.addSource(liveVideo()) {
+        val stateLiveData = SafeMutableLiveData<State>()
+        liveDataMerger.addSource(liveVideo(stateLiveData)) {
             liveDataMerger.value = VideoData(it)
         }
-        liveDataMerger.addSource(videoFactory.stateLiveSource()) {
+        liveDataMerger.addSource(stateLiveData) {
             liveDataMerger.value = StateData(it)
         }
         return liveDataMerger
     }
 
-    fun stateLiveSource() = videoFactory.stateLiveSource()
+//    fun stateLiveSource() = videoFactory.stateLiveSource()
 
     fun reSet() {
         execute {
