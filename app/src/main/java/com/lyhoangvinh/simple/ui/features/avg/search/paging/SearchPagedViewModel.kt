@@ -10,8 +10,7 @@ import com.lyhoangvinh.simple.data.dao.SearchHistoryDao
 import com.lyhoangvinh.simple.data.entities.DataEmpty
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
-import com.lyhoangvinh.simple.data.entities.avgle.SearchHistory
-import com.lyhoangvinh.simple.data.entities.avgle.Video
+import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.repo.SearchPagedRepo
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
@@ -30,12 +29,9 @@ class SearchPagedViewModel @Inject constructor(
 
     private var isFirstState = false
 
-    private lateinit var observer: Observer<PagedList<Video>?>
-
     lateinit var searchSuggestionsAdapter: SearchSuggestionsAdapter
 
     fun setKeyWord(keyword: String) {
-        adapter.submitState(State(Status.LOADING, null))
         Handler().postDelayed({
             this.keyword = keyword
             searchPagedRepo.setQuery(keyword)
@@ -55,29 +51,32 @@ class SearchPagedViewModel @Inject constructor(
     }
 
     override fun fetchData() {
-        adapter.submitState(State(Status.LOADING, null))
         Handler().postDelayed({
             searchPagedRepo.setQuery(keyword)
         }, 500L)
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        observer = Observer {
-            adapter.submitList(it)
-            publishState(State.success(null))
-            if (isFirstState) {
-                isFirstState = false
-                adapter.submitState(State(Status.SUCCESS, null))
-                searchPagedRepo.insertHistory(query = keyword)
+        searchPagedRepo.rxFetchData().observe(lifecycleOwner, Observer {
+            when (it) {
+                is StateData -> {
+                    if (isFirstState) {
+                        adapter.submitState(it.state)
+                    } else {
+                        isFirstState = true
+                    }
+                }
+                is VideoData -> adapter.submitList(it.videoItems)
+                is EmptyMergerdData-> {
+                    it.dataEmpty.message = keyword
+                    stateObservable.notifyDataEmpty(it.dataEmpty)
+                }
             }
-            Log.d("Activity_SEARCHXXXX_XXX", "list: ${adapter.currentList?.size}")
-        }
-        searchPagedRepo.liveVideo().observe(lifecycleOwner, observer)
+        })
     }
 
     override fun onCleared() {
         super.onCleared()
         searchPagedRepo.setQuery("")
-        searchPagedRepo.liveVideo().removeObserver(observer)
     }
 }

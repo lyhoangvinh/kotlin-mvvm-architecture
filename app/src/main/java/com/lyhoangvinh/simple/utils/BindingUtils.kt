@@ -166,9 +166,12 @@ object BindingUtils {
     @JvmStatic
     @BindingAdapter("observableData")
     fun observableData(view: View, data: DataEmpty?) {
-        if (data == null) {
-            return
-        }
-        view.setVisibility(data.isEmpty)
+        view.setVisibility(data != null && data.isEmpty)
+    }
+
+    @JvmStatic
+    @BindingAdapter("messageDataEmpty")
+    fun messageDataEmpty(textView: TextView, keyword: String?) {
+        textView.text = String.format(textView.context.getString(R.string.could_not_found), keyword)
     }
 }

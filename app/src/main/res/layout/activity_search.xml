@@ -28,7 +28,7 @@
 
             <include
                 layout="@layout/view_no_data"
-                app:errorData="@{vm.stateObservable.dataEmpty}" />
+                app:errorData="@{vm.stateObservable.emptyDataOb}" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

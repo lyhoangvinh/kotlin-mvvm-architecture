@@ -9,10 +9,10 @@ import javax.inject.Inject
 class StateObservable @Inject constructor() : BaseObservable() {
 
     @Bindable
-    var dataEmpty: DataEmpty? = null
+    var emptyDataOb: DataEmpty? = null
 
-    fun notifyDataEmpty(dataEmpty: DataEmpty) {
-        this.dataEmpty = dataEmpty
-        notifyPropertyChanged(BR.dataEmpty)
+    fun notifyDataEmpty(emptyDataOb: DataEmpty) {
+        this.emptyDataOb = emptyDataOb
+        notifyPropertyChanged(BR.emptyDataOb)
     }
 }

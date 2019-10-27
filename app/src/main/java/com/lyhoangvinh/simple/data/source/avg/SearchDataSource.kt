@@ -2,12 +2,15 @@ package com.lyhoangvinh.simple.data.source.avg
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
+import com.lyhoangvinh.simple.data.entities.DataEmpty
+import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.avgle.Video
 import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
 import com.lyhoangvinh.simple.data.response.VideosResponseAvgle
 import com.lyhoangvinh.simple.data.services.AvgleService
 import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.data.source.base.service.BaseRxPageKeyedDataSource
+import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -32,10 +35,20 @@ class SearchDataSource @Inject constructor(private val avgleService: AvgleServic
         private val sourceLiveData = MutableLiveData<SearchDataSource>()
         private var newSource: SearchDataSource? = SearchDataSource(avgleService)
         private var query: String? = ""
-        private var compositeDisposable : CompositeDisposable? = null
+        private var compositeDisposable: CompositeDisposable? = null
+        private var stateLiveData: SafeMutableLiveData<State>? = null
+        private var emptyLiveData: SafeMutableLiveData<DataEmpty>? = null
 
         fun setQuery(query: String) {
             this.query = query
+        }
+
+        fun setStateLiveData(stateLiveData: SafeMutableLiveData<State>) {
+            this.stateLiveData = stateLiveData
+        }
+
+        fun setEmptyLiveData(emptyLiveData: SafeMutableLiveData<DataEmpty>) {
+            this.emptyLiveData = emptyLiveData
         }
 
         fun setCompositeDisposable(compositeDisposable: CompositeDisposable) {
@@ -47,9 +60,10 @@ class SearchDataSource @Inject constructor(private val avgleService: AvgleServic
         }
 
         override fun create(): DataSource<Int, Video> {
-            newSource = null
             newSource = SearchDataSource(avgleService)
-            newSource!!.setQuery(query.toString())
+            newSource?.setQuery(query.toString())
+            newSource?.emptyLiveData = emptyLiveData
+            newSource?.stateLiveData = stateLiveData
             sourceLiveData.postValue(newSource)
             return newSource!!
         }

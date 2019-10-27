@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.PageKeyedDataSource
+import com.lyhoangvinh.simple.data.entities.DataEmpty
 import com.lyhoangvinh.simple.data.entities.Entities
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
@@ -35,6 +36,8 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
     var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
     var stateLiveData: SafeMutableLiveData<State>? = null
+
+    var emptyLiveData: SafeMutableLiveData<DataEmpty>? = null
 
     private var compositeDisposable: CompositeDisposable? = null
 
@@ -85,14 +88,15 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
                     Log.d("source", "addRequest: resource changed: $resource")
                     if (resource.data != null) {
                         val nextPage = page + 1
-                        loadInitialCallback?.onResult(
-                            resource.data.response.listData(),
-                            0,
-                            resource.data.response.listData().size,
-                            null,
-                            nextPage
-                        )
+                        loadInitialCallback?.onResult(resource.data.response.listData(), 0, resource.data.response.listData().size, null, nextPage)
                         loadCallback?.onResult(resource.data.response.listData(), nextPage)
+                        if (loadInitialCallback != null){
+                            if (resource.data.response.listData().isNullOrEmpty()){
+                                publishDataEmpty(DataEmpty(true, ""))
+                            }else{
+                                publishDataEmpty(DataEmpty(false, ""))
+                            }
+                        }
                     }
                     if (resource.state.status == Status.LOADING) {
                         // do nothing if progress showing is not allowed
@@ -121,6 +125,12 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
                 )
             }, 100)
         }
+    }
+
+    private fun publishDataEmpty(dataEmpty: DataEmpty){
+        if (emptyLiveData == null) return
+
+        emptyLiveData?.setValue(dataEmpty)
     }
 
     /**

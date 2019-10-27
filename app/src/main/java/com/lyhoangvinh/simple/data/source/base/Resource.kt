@@ -54,5 +54,6 @@ class Resource<T>(status: Status, val data: T?, message: String?) {
         fun <T> loading(data: T?): Resource<T> {
             return Resource(LOADING, data, null)
         }
+
     }
 }
