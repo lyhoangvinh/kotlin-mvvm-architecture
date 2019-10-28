@@ -37,24 +37,7 @@ class SearchPagedActivity :
         binding.edtSearch.textChanges {
             viewModel.suggestions(it)
         }
-        binding.edtSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search()
-                    return true
-                }
-                return false
-            }
-
-        })
-        binding.imvSearch.setOnClickListener {
-            search()
-        }
         binding.imvBack.setOnClickListener { onBackPressed() }
     }
 
-    private fun search() {
-        viewModel.setKeyWord(binding.edtSearch.text.toString())
-        hideKeyboard()
-    }
 }

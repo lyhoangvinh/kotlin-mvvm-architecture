@@ -1,6 +1,5 @@
 package com.lyhoangvinh.simple.data.repo
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -8,19 +7,11 @@ import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.source.avg.VideoDataSource
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
-import com.lyhoangvinh.simple.utils.genericCastOrNull
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import lyhoangvinh.com.myutil.thread.BackgroundThreadExecutor
 import javax.inject.Inject
 
 class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) :
     BaseRepo() {
-
-    private lateinit var live: LiveData<PagedList<Video>>
 
     private var chId: String = ""
 
@@ -32,37 +23,23 @@ class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.Vi
         }
     }
 
-    private fun liveVideo(stateLiveData: SafeMutableLiveData<State>): LiveData<PagedList<Video>> {
-        val config = PagedList.Config.Builder()
-            .setPageSize(50)
-            .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(100)
-            .setPrefetchDistance(50)
-            .build()
-        videoFactory.setStateLiveData(stateLiveData)
-        live = LivePagedListBuilder(videoFactory, config).build()
-        return live
-    }
-
-    fun fetchData(): MediatorLiveData<MergedData> {
-        val liveDataMerger = MediatorLiveData<MergedData>()
+    fun fetchData(compositeDisposable: CompositeDisposable): MediatorLiveData<MergedData> {
         val stateLiveData = SafeMutableLiveData<State>()
-        liveDataMerger.addSource(liveVideo(stateLiveData)) {
-            liveDataMerger.value = VideoData(it)
+        return MediatorLiveData<MergedData>().apply {
+            addSource(LivePagedListBuilder(videoFactory.apply {
+                setCompositeDisposable(compositeDisposable)
+                setStateLiveData(stateLiveData)
+            }, PagedList.Config.Builder().apply {
+                setPageSize(50)
+                    .setEnablePlaceholders(true)
+                    .setInitialLoadSizeHint(100)
+                    .setPrefetchDistance(50)
+            }.build()).build()) {
+                value = VideoData(it)
+            }
+            addSource(stateLiveData) {
+                value = StateData(it)
+            }
         }
-        liveDataMerger.addSource(stateLiveData) {
-            liveDataMerger.value = StateData(it)
-        }
-        return liveDataMerger
     }
-
-//    fun stateLiveSource() = videoFactory.stateLiveSource()
-
-    fun reSet() {
-        execute {
-            videoFactory.invalidate()
-        }
-    }
-
-    fun dispose() = videoFactory.dispose()
 }

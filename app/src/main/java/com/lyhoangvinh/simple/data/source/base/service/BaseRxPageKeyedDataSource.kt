@@ -35,9 +35,9 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
 
     var TAG_X = "LOG_BASE_PageKeyedDataSource"
 
-    var stateLiveData: SafeMutableLiveData<State>? = null
+    private var stateLiveData: SafeMutableLiveData<State>? = null
 
-    var emptyLiveData: SafeMutableLiveData<DataEmpty>? = null
+    private var emptyLiveData: SafeMutableLiveData<DataEmpty>? = null
 
     private var compositeDisposable: CompositeDisposable? = null
 
@@ -61,15 +61,26 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
         // Do nothing, since data is loaded from our initial load itself
     }
 
-    fun setCompositeDisposable(compositeDisposable: CompositeDisposable) {
+    fun setStateLiveData(stateLiveData: SafeMutableLiveData<State>?) {
+        this.stateLiveData = stateLiveData
+    }
+
+    fun setEmptyLiveData(emptyLiveData: SafeMutableLiveData<DataEmpty>?) {
+        this.emptyLiveData = emptyLiveData
+    }
+
+    fun setCompositeDisposable(compositeDisposable: CompositeDisposable?) {
         this.compositeDisposable = compositeDisposable
     }
 
-    fun dispose() {
-        if (compositeDisposable != null) {
-            compositeDisposable?.dispose()
-        }
-        compositeDisposable = null
+    fun setUpPageKeyedDataSource(
+        stateLiveData: SafeMutableLiveData<State>?,
+        emptyLiveData: SafeMutableLiveData<DataEmpty>?,
+        compositeDisposable: CompositeDisposable?
+    ) {
+        this.stateLiveData = stateLiveData
+        this.emptyLiveData = emptyLiveData
+        this.compositeDisposable = compositeDisposable
     }
 
     private fun callApi(
@@ -79,7 +90,7 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
     ) {
         publishState(State.loading(null))
         if (compositeDisposable == null) {
-            compositeDisposable = CompositeDisposable()
+            return
         }
         compositeDisposable?.add(getResourceFollowable(page).observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
@@ -88,12 +99,18 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
                     Log.d("source", "addRequest: resource changed: $resource")
                     if (resource.data != null) {
                         val nextPage = page + 1
-                        loadInitialCallback?.onResult(resource.data.response.listData(), 0, resource.data.response.listData().size, null, nextPage)
+                        loadInitialCallback?.onResult(
+                            resource.data.response.listData(),
+                            0,
+                            resource.data.response.listData().size,
+                            null,
+                            nextPage
+                        )
                         loadCallback?.onResult(resource.data.response.listData(), nextPage)
-                        if (loadInitialCallback != null){
-                            if (resource.data.response.listData().isNullOrEmpty()){
+                        if (loadInitialCallback != null) {
+                            if (resource.data.response.listData().isNullOrEmpty()) {
                                 publishDataEmpty(DataEmpty(true, ""))
-                            }else{
+                            } else {
                                 publishDataEmpty(DataEmpty(false, ""))
                             }
                         }
@@ -127,7 +144,7 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
         }
     }
 
-    private fun publishDataEmpty(dataEmpty: DataEmpty){
+    private fun publishDataEmpty(dataEmpty: DataEmpty) {
         if (emptyLiveData == null) return
 
         emptyLiveData?.setValue(dataEmpty)

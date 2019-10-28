@@ -33,7 +33,6 @@ class SearchDataSource @Inject constructor(private val avgleService: AvgleServic
         DataSource.Factory<Int, Video>() {
 
         private val sourceLiveData = MutableLiveData<SearchDataSource>()
-        private var newSource: SearchDataSource? = SearchDataSource(avgleService)
         private var query: String? = ""
         private var compositeDisposable: CompositeDisposable? = null
         private var stateLiveData: SafeMutableLiveData<State>? = null
@@ -60,12 +59,12 @@ class SearchDataSource @Inject constructor(private val avgleService: AvgleServic
         }
 
         override fun create(): DataSource<Int, Video> {
-            newSource = SearchDataSource(avgleService)
-            newSource?.setQuery(query.toString())
-            newSource?.emptyLiveData = emptyLiveData
-            newSource?.stateLiveData = stateLiveData
-            sourceLiveData.postValue(newSource)
-            return newSource!!
+            val newQuery = query.toString()
+            return SearchDataSource(avgleService).apply {
+                setQuery(newQuery)
+                setUpPageKeyedDataSource(stateLiveData, emptyLiveData, compositeDisposable)
+                sourceLiveData.postValue(this)
+            }
         }
     }
 }

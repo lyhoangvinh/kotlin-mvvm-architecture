@@ -38,24 +38,20 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
         DataSource.Factory<Int, Video>() {
 
         private val sourceLiveData = MutableLiveData<VideoDataSource>()
-        private var newSource: VideoDataSource? = VideoDataSource(avgleService)
         private var chId: String? = ""
         private var stateLiveData: SafeMutableLiveData<State>? = null
+        private var compositeDisposable: CompositeDisposable? = null
 
         fun setChId(chId: String) {
             this.chId = chId
         }
 
-//        fun stateLiveSource(): MutableLiveData<State> {
-//            return newSource?.stateLiveData()!!
-//        }
-
         fun setStateLiveData(stateLiveData: SafeMutableLiveData<State>) {
             this.stateLiveData = stateLiveData
         }
 
-        fun dispose() {
-            newSource?.dispose()
+        fun setCompositeDisposable(compositeDisposable: CompositeDisposable) {
+            this.compositeDisposable = compositeDisposable
         }
 
         fun invalidate() {
@@ -63,11 +59,13 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
         }
 
         override fun create(): DataSource<Int, Video> {
-            newSource = VideoDataSource(avgleService)
-            newSource?.setChId(chId.toString())
-            newSource?.stateLiveData = stateLiveData
-            sourceLiveData.postValue(newSource)
-            return newSource!!
+            val newChId = chId.toString()
+            return VideoDataSource(avgleService).apply {
+                setChId(newChId)
+                setCompositeDisposable(compositeDisposable)
+                setStateLiveData(stateLiveData)
+                sourceLiveData.postValue(this)
+            }
         }
     }
 }

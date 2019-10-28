@@ -50,7 +50,7 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
             query = ""
         }
 
-        videoRepo.fetchData().observe(lifecycleOwner, Observer {
+        videoRepo.fetchData(mCompositeDisposable).observe(lifecycleOwner, Observer {
             when (it) {
                 is VideoData -> adapter.submitList(it.videoItems)
                 is StateData -> {
@@ -68,10 +68,5 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
             }
         })
         videoRepo.setUpRepo(query)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        videoRepo.dispose()
     }
 }

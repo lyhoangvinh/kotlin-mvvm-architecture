@@ -34,6 +34,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.lang.ref.WeakReference
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -308,6 +309,20 @@ fun Activity.calculateNoOfColumnsShow(): Int = applicationContext.calculateNoOfC
 
 fun Fragment.calculateNoOfColumnsShow(): Int = activity!!.calculateNoOfColumnsShow()
 
+fun View.setDelayedClickable(clickable: Boolean, delayedMillis: Long) {
+    if (delayedMillis > 0) {
+        val weakView = WeakReference<View>(this)
+        weakView.get()?.postDelayed({
+            weakView.get()?.isClickable = clickable
+        }, delayedMillis)
+    } else {
+        isClickable = clickable
+    }
+}
+
+fun View.setDelayedClickable(clickable: Boolean){
+    setDelayedClickable(clickable, 300L)
+}
 
 /**
  * Excute room

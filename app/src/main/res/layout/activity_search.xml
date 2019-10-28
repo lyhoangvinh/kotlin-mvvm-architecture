@@ -94,6 +94,8 @@
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:padding="@dimen/padding_8dp"
+                    app:setOnEditorActionListener="@{vm.searchClickable}"
+                    android:text="@={vm.keyword}"
                     android:textSize="@dimen/search_bar_text_size" />
 
                 <ImageView
@@ -104,10 +106,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/padding_10dp"
                     android:padding="@dimen/padding_10dp"
+                    app:setButtonSearchClickable="@{vm.searchClickable}"
                     app:srcCompat="@drawable/ic_search_black_24dp" />
 
             </RelativeLayout>
-
 
         </RelativeLayout>
     </RelativeLayout>
@@ -116,7 +118,9 @@
 
         <import type="android.view.View" />
 
-        <import type="com.lyhoangvinh.simple.data.entities.DataEmpty"/>
+        <import type="com.lyhoangvinh.simple.data.entities.DataEmpty" />
+
+        <import type="com.lyhoangvinh.simple.ui.base.interfaces.SearchClickable"/>
 
         <variable
             name="vm"

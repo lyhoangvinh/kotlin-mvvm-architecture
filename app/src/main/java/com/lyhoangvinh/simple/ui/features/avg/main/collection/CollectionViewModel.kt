@@ -12,10 +12,7 @@ import com.lyhoangvinh.simple.ui.observableUi.StateObservable
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import javax.inject.Inject
 
-class CollectionViewModel @Inject constructor(
-    private val collectionsRepo: CollectionsRepo,
-    private val stateObservable: StateObservable
-) :
+class CollectionViewModel @Inject constructor(private val collectionsRepo: CollectionsRepo) :
     BasePagingViewModel<CollectionsAdapter>() {
 
     var title = "Collections all"
@@ -28,15 +25,7 @@ class CollectionViewModel @Inject constructor(
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-//        collectionsRepo.setUpRepo(mCompositeDisposable)
-//        collectionsRepo.fetchData().observe(lifecycleOwner, Observer {
-//            when (it) {
-//                is StateData -> adapter.submitState(it.state)
-//                is CollectionData -> adapter.submitList(it.collections)
-//            }
-//        })
-
-        collectionsRepo.rxFetchData().observe(lifecycleOwner, Observer {
+        collectionsRepo.rxFetchData(mCompositeDisposable).observe(lifecycleOwner, Observer {
             when (it) {
                 is StateData -> {
                     if (isFirst) {
@@ -49,10 +38,5 @@ class CollectionViewModel @Inject constructor(
                 is CollectionData -> adapter.submitList(it.collections)
             }
         })
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        collectionsRepo.dispose()
     }
 }

@@ -14,6 +14,7 @@ import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.repo.SearchPagedRepo
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
+import com.lyhoangvinh.simple.ui.base.interfaces.SearchClickable
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.suggestion.SearchSuggestionsAdapter
 import com.lyhoangvinh.simple.ui.observableUi.StateObservable
 import javax.inject.Inject
@@ -25,18 +26,21 @@ class SearchPagedViewModel @Inject constructor(
 ) :
     BasePagingViewModel<SearchPagedAdapter>() {
 
-    private var keyword = ""
+    var keyword = ""
+
+    var searchClickable = object : SearchClickable{
+        override fun accept() {
+            setKeyWord()
+        }
+    }
 
     private var isFirstState = false
 
     lateinit var searchSuggestionsAdapter: SearchSuggestionsAdapter
 
-    fun setKeyWord(keyword: String) {
-        Handler().postDelayed({
-            this.keyword = keyword
-            searchPagedRepo.setQuery(keyword)
-            isFirstState = true
-        }, 500L)
+    fun setKeyWord() {
+        searchPagedRepo.setQuery(keyword)
+        isFirstState = true
     }
 
     fun suggestions(keyword: String) {
@@ -51,13 +55,11 @@ class SearchPagedViewModel @Inject constructor(
     }
 
     override fun fetchData() {
-        Handler().postDelayed({
-            searchPagedRepo.setQuery(keyword)
-        }, 500L)
+        searchPagedRepo.setQuery(keyword)
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        searchPagedRepo.rxFetchData().observe(lifecycleOwner, Observer {
+        searchPagedRepo.rxFetchData(mCompositeDisposable).observe(lifecycleOwner, Observer {
             when (it) {
                 is StateData -> {
                     if (isFirstState) {
@@ -67,16 +69,11 @@ class SearchPagedViewModel @Inject constructor(
                     }
                 }
                 is VideoData -> adapter.submitList(it.videoItems)
-                is EmptyMergerdData-> {
+                is EmptyMergerdData -> {
                     it.dataEmpty.message = keyword
                     stateObservable.notifyDataEmpty(it.dataEmpty)
                 }
             }
         })
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        searchPagedRepo.setQuery("")
     }
 }

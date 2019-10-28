@@ -61,10 +61,6 @@ class SearchRepo @Inject constructor(
             liveDataMerger.value = SearchHistoryData(it!!)
         }
 
-//        liveDataMerger.addSource(LivePagedListBuilder(videosDao.liveDataFactoryFromType(Constants.TYPE_SEARCH), config).build()) {
-//            liveDataMerger.value = VideoData(it!!)
-//        }
-
         liveDataMerger.addSource(videosDao.liveDataFromType(Constants.TYPE_SEARCH)) {
             liveDataMerger.value = SearchData(it!!)
         }

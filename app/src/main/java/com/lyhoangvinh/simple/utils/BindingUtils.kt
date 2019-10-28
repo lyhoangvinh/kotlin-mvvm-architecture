@@ -1,7 +1,9 @@
 package com.lyhoangvinh.simple.utils
 
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.webkit.WebChromeClient
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,11 +11,14 @@ import androidx.databinding.BindingAdapter
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
+import android.widget.EditText
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.Connection
 import com.lyhoangvinh.simple.data.entities.DataEmpty
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
+import com.lyhoangvinh.simple.generated.callback.OnClickListener
+import com.lyhoangvinh.simple.ui.base.interfaces.SearchClickable
 import com.lyhoangvinh.simple.ui.widget.RotateLoading
 import com.lyhoangvinh.simple.ui.widget.newton.NewtonCradleLoading
 
@@ -173,5 +178,33 @@ object BindingUtils {
     @BindingAdapter("messageDataEmpty")
     fun messageDataEmpty(textView: TextView, keyword: String?) {
         textView.text = String.format(textView.context.getString(R.string.could_not_found), keyword)
+    }
+
+    @JvmStatic
+    @BindingAdapter("setButtonSearchClickable")
+    fun setButtonSearchClickable(view: View, listener: SearchClickable?) {
+        view.setOnClickListener {
+            if (listener != null) {
+                view.setDelayedClickable(false)
+                listener.accept()
+                view.setDelayedClickable(true)
+            }
+            view.context.hideKeyboard(view)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setOnEditorActionListener")
+    fun setOnEditorActionListener(editText: EditText, listener: SearchClickable?){
+        editText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    listener?.accept()
+                    editText.context.hideKeyboard(editText)
+                    return true
+                }
+                return false
+            }
+        })
     }
 }
