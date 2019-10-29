@@ -28,7 +28,7 @@ class SearchPagedViewModel @Inject constructor(
 
     var keyword = ""
 
-    var searchClickable = object : SearchClickable{
+    var searchClickable = object : SearchClickable {
         override fun accept() {
             setKeyWord()
         }
@@ -70,7 +70,9 @@ class SearchPagedViewModel @Inject constructor(
                 }
                 is VideoData -> adapter.submitList(it.videoItems)
                 is EmptyMergerdData -> {
-                    stateObservable.notifyDataEmpty(it.dataEmpty.apply { message = keyword })
+                    stateObservable.notifyDataEmpty(it.dataEmpty.apply {
+                        message = keyword
+                    })
                 }
             }
         })
