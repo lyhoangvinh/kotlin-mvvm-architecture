@@ -46,7 +46,6 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) :
             title = "All"
             query = ""
         }
-        videoRepo.setUpRepo(query)
         videoRepo.fetchData(mCompositeDisposable).observe(lifecycleOwner, Observer {
             when (it) {
                 is VideoData -> adapter.submitList(it.videoItems)
@@ -64,5 +63,6 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) :
                 adapter.submitState(State(Status.SUCCESS, null))
             }
         })
+        videoRepo.setUpRepo(query)
     }
 }
