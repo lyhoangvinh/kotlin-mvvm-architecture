@@ -70,8 +70,7 @@ class SearchPagedViewModel @Inject constructor(
                 }
                 is VideoData -> adapter.submitList(it.videoItems)
                 is EmptyMergerdData -> {
-                    it.dataEmpty.message = keyword
-                    stateObservable.notifyDataEmpty(it.dataEmpty)
+                    stateObservable.notifyDataEmpty(it.dataEmpty.apply { message = keyword })
                 }
             }
         })

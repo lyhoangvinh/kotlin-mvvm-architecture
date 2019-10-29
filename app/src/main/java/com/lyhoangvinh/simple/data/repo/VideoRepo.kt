@@ -13,10 +13,7 @@ import javax.inject.Inject
 class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) :
     BaseRepo() {
 
-    private var chId: String = ""
-
     fun setUpRepo(chId: String) {
-        this.chId = chId
         execute {
             videoFactory.setChId(chId)
             videoFactory.invalidate()

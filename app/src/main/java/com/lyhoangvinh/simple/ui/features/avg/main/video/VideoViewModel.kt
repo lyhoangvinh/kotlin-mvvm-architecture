@@ -16,7 +16,8 @@ import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import java.net.URLDecoder
 import javax.inject.Inject
 
-class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : BasePagingViewModel<VideoAdapter>() {
+class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) :
+    BasePagingViewModel<VideoAdapter>() {
 
     var title = "All"
 
@@ -24,11 +25,7 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
     private var isFirstState = false
 
     override fun fetchData() {
-        adapter.submitState(State(Status.LOADING, null))
-        Handler().postDelayed({
-            videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"))
-            publishState(State.success(null))
-        }, 500L)
+        videoRepo.setUpRepo(URLDecoder.decode(query, "utf-8"))
         isFirstState = true
     }
 
@@ -62,11 +59,10 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) : Bas
                     publishState(it.state)
                 }
             }
-            if(isFirstState){
+            if (isFirstState) {
                 isFirstState = false
                 adapter.submitState(State(Status.SUCCESS, null))
             }
         })
-        videoRepo.setUpRepo(query)
     }
 }
