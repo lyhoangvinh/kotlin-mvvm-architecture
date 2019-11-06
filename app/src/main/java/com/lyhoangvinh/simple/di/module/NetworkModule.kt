@@ -25,9 +25,9 @@ class NetworkModule {
 //        .addInterceptor().build()
 //todo: https://stackoverflow.com/questions/45284974/how-to-specify-get-request-encoding-retrofit-okhttp
 
-    @Singleton
-    @Provides
-    internal fun providesConnectionLiveData(context: MyApplication): ConnectionLiveData = ConnectionLiveData(context)
+//    @Singleton
+//    @Provides
+//    internal fun providesConnectionLiveData(context: MyApplication): ConnectionLiveData = ConnectionLiveData(context)
 
     @Provides
     @Singleton

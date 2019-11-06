@@ -6,12 +6,15 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.data.entities.Connection
 import com.lyhoangvinh.simple.receiver.NetworkReceiver
+import javax.inject.Inject
 
 
 @Suppress("DEPRECATION")
-class ConnectionLiveData(private val context: Context) : LiveData<Connection>() {
+class ConnectionLiveData @Inject constructor(private val context: MyApplication) :
+    LiveData<Connection>() {
 
     override fun onActive() {
         super.onActive()
@@ -27,7 +30,8 @@ class ConnectionLiveData(private val context: Context) : LiveData<Connection>() 
     private val networkReceiver = object : NetworkReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.extras != null) {
-                val activeNetwork = intent.extras!!.get(ConnectivityManager.EXTRA_NETWORK_INFO) as NetworkInfo
+                val activeNetwork =
+                    intent.extras!!.get(ConnectivityManager.EXTRA_NETWORK_INFO) as NetworkInfo
                 val isConnected = activeNetwork.isConnectedOrConnecting
                 if (isConnected) {
                     when (activeNetwork.type) {
