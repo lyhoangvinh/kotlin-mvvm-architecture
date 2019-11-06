@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.lyhoangvinh.simple.BuildConfig
+import com.lyhoangvinh.simple.utils.SingletonHolder
 
 /**
  * Created by LyHoangVinh on 11/5/2017.
@@ -18,16 +19,8 @@ class SharedPrefs private constructor(application: Application) {
         mSharedPreferences = application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    companion object {
+    companion object : SingletonHolder<SharedPrefs, Application>(::SharedPrefs) {
         private const val PREFS_NAME = "share_prefs" + BuildConfig.APPLICATION_ID
-        private var mInstance: SharedPrefs? = null
-
-        fun getInstance(application: Application): SharedPrefs {
-            if (mInstance == null) {
-                mInstance = SharedPrefs(application)
-            }
-            return mInstance as SharedPrefs
-        }
     }
 
     operator fun <T> get(key: String, anonymousClass: Class<T>): T {
