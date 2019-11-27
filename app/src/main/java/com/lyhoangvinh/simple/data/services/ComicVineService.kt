@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface ComicVineService {
 
-    @GET("/issues")
+    @GET("issues")
     fun getIssues(
         @Query("limit") limit: Int, @Query("offset") offset: Int
         , @Query("api_key") api_key: String, @Query("format") format: String

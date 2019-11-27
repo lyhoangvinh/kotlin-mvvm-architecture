@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.lyhoangvinh.simple.Constants
+import com.lyhoangvinh.simple.data.SharedPrefs
 import com.lyhoangvinh.simple.data.repo.HomeRepo
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
@@ -13,26 +15,41 @@ import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
     private val homeRepo: HomeRepo,
-    private val connectionLiveData: ConnectionLiveData
+    private val connectionLiveData: ConnectionLiveData,
+    private val sharedPrefs: SharedPrefs
 ) : BaseViewModel() {
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        connectionLiveData.observe(lifecycleOwner, Observer {
-            if (it!!.isConnected) {
-                execute(true,
-                    homeRepo.getRepoHome(), object :
-                        PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
-                        override fun accept(t: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
-                            openHome()
-                        }
-                    })
-            } else {
-                openHome()
-            }
-        })
+        val options = sharedPrefs[Constants.OPTION, Int::class.java]
+        if (options == Constants.OPTION_1) {
+            openComic()
+        } else {
+            connectionLiveData.observe(lifecycleOwner, Observer {
+                if (it.isConnected) {
+                    execute(true,
+                        homeRepo.getRepoHome(), object :
+                            PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
+                            override fun accept(t: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
+                                when (options) {
+                                    Constants.OPTIONS_2 -> openHome()
+                                    Constants.OPTIONS_3 -> openComicAvg()
+                                }
+                            }
+                        })
+                }
+            })
+        }
     }
 
     private fun openHome() {
-        Handler().postDelayed({ navigatorHelper.navigateAvgleActivity() }, 300L)
+        navigatorHelper.navigateAvgleActivity()
+    }
+
+    private fun openComic() {
+        navigatorHelper.navigateIssusActivity()
+    }
+
+    private fun openComicAvg() {
+        navigatorHelper.navigateComicAvgActivity()
     }
 }

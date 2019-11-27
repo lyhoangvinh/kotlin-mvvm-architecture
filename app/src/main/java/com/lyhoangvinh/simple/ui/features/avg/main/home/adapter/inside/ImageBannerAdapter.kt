@@ -8,7 +8,7 @@ import com.lyhoangvinh.simple.data.entities.avgle.Collection
 class ImageBannerAdapter(fm: FragmentManager, private var mBannerList: List<Collection>) :
     FragmentStatePagerAdapter(fm) {
 
-    override fun getItem(position: Int): Fragment? {
+    override fun getItem(position: Int): Fragment {
         return BannerImagesFragment.getInstance(mBannerList[position])
     }
 

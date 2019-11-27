@@ -129,6 +129,7 @@ object BindingUtils {
         val animFadeOut = AnimationUtils.loadAnimation(target.context, R.anim.fade_out)
         target.visibility =
             if (isVisible) View.VISIBLE else View.GONE
+
         target.animation =
             if (isVisible) animFadeIn else animFadeOut
     }

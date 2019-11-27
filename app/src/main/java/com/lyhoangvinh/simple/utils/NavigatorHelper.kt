@@ -8,12 +8,14 @@ import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.data.entities.avgle.Collection
-import com.lyhoangvinh.simple.ui.features.avg.main.AgvActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.AvgActivity
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionFragment
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.SearchPagedActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
+import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
+import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgActivity
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
 import lyhoangvinh.com.myutil.navigation.FragmentNavigator
 import lyhoangvinh.com.myutil.navigation.Navigator
@@ -33,12 +35,13 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     }
 
     fun navigateIssusActivity(){
-        mNavigator.startActivity(ComicActivity::class.java)
+        mNavigator.startActivity(ComicPagingActivity::class.java)
+        mNavigator.finishActivity()
     }
 
     fun navigateAvgleActivity() {
-//        mNavigator.startActivityWithTransition(AgvActivity::class.java, PlainConsumer { }, true, true)
-        mNavigator.startActivity(AgvActivity::class.java)
+//        mNavigator.startActivityWithTransition(AvgActivity::class.java, PlainConsumer { }, true, true)
+        mNavigator.startActivity(AvgActivity::class.java)
         mNavigator.finishActivity()
     }
 
@@ -90,5 +93,10 @@ class NavigatorHelper(private var mNavigator: Navigator) {
 
         //live data api
         activity.startActivityTransition(SearchPagedActivity::class.java, false)
+    }
+
+    fun navigateComicAvgActivity(){
+        mNavigator.startActivity(ComicAvgActivity::class.java)
+        mNavigator.finishActivity()
     }
 }

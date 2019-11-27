@@ -46,7 +46,7 @@
         </activity>
 
         <activity
-            android:name=".ui.features.avg.main.AgvActivity"
+            android:name=".ui.features.avg.main.AvgActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -67,7 +67,17 @@
             android:name="com.lyhoangvinh.simple.ui.features.avg.search.paging.SearchPagedActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.features.comic.testactivity.ComicActivity" />
+        <activity
+            android:name=".ui.features.comic.testactivity.ComicActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.features.comicavg.ComicAvgActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.features.setting.SettingActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".receiver.NetworkReceiver" />
 

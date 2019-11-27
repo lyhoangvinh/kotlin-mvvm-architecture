@@ -14,6 +14,9 @@ import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingViewModel
+import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgViewModel
+import com.lyhoangvinh.simple.ui.features.comicavg.portal.PortalViewModel
+import com.lyhoangvinh.simple.ui.features.setting.SettingViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -73,4 +76,20 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchPagedViewModel::class)
     internal abstract fun searchPagedViewModel(viewModel: SearchPagedViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ComicAvgViewModel::class)
+    internal abstract fun comicAvgViewModel(viewModel: ComicAvgViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PortalViewModel::class)
+    internal abstract fun portalViewModel(viewModel: PortalViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingViewModel::class)
+    internal abstract fun settingViewModel(viewModel: SettingViewModel): ViewModel
+
 }

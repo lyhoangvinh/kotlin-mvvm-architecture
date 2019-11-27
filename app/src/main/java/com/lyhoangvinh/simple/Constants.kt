@@ -1,5 +1,7 @@
 package com.lyhoangvinh.simple
 
+import retrofit2.http.OPTIONS
+
 class Constants {
     companion object {
         const val COMIC_ENDPOINT = BuildConfig.COMIC_ENDPOINT
@@ -16,5 +18,10 @@ class Constants {
         const val TYPE_HOME_BANNER = 1
         const val TYPE_HOME_BOTTOM = 2
 
-     }
+        //options
+        const val OPTION = "option_open"
+        const val OPTION_1 = 0
+        const val OPTIONS_2 = 1
+        const val OPTIONS_3 = 2
+    }
 }

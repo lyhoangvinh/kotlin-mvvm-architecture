@@ -4,4 +4,4 @@ import com.lyhoangvinh.simple.di.module.BaseActivityModule
 import dagger.Module
 
 @Module
-class AgvActivityModule : BaseActivityModule<AgvActivity>()
+class AvgActivityModule : BaseActivityModule<AvgActivity>()

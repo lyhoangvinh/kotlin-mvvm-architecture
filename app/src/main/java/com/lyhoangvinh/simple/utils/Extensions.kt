@@ -1,5 +1,7 @@
 package com.lyhoangvinh.simple.utils
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -18,6 +20,7 @@ import android.transition.ChangeBounds
 import android.transition.Slide
 import android.view.Gravity
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -25,8 +28,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.core.animation.addListener
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.core.math.MathUtils
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lyhoangvinh.simple.R
@@ -39,6 +44,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.hypot
 
 fun ImageView.loadImageIssues(url: String) {
 //    Picasso.get()
@@ -190,6 +196,25 @@ fun View.setVisibility(isVisible: Boolean) {
     this.visibility = if (isVisible) View.VISIBLE else View.GONE
 }
 
+fun View.setVisibilityAnim(isVisible: Boolean) {
+    val cx = width / 2
+    val cy = height / 2
+
+    val radius = hypot(cx.toFloat(), cy.toFloat())
+    val anim = if (isVisible) {
+        ViewAnimationUtils.createCircularReveal(this, cx, cy, 0f, radius)
+    } else {
+        ViewAnimationUtils.createCircularReveal(this, cx, cy, radius, 0f)
+    }
+    anim.addListener(object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator?) {
+            super.onAnimationEnd(animation)
+            setVisibility(isVisible)
+        }
+    })
+    anim.start()
+}
+
 fun Fragment.addAnimations(): Fragment {
     return this.apply {
         val slideTransition = Slide(Gravity.END)
@@ -320,7 +345,7 @@ fun View.setDelayedClickable(clickable: Boolean, delayedMillis: Long) {
     }
 }
 
-fun View.setDelayedClickable(clickable: Boolean){
+fun View.setDelayedClickable(clickable: Boolean) {
     setDelayedClickable(clickable, 300L)
 }
 

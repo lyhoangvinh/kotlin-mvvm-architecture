@@ -1,7 +1,7 @@
 package com.lyhoangvinh.simple.di.module
 
-import com.lyhoangvinh.simple.ui.features.avg.main.AgvActivity
-import com.lyhoangvinh.simple.ui.features.avg.main.AgvActivityModule
+import com.lyhoangvinh.simple.ui.features.avg.main.AvgActivity
+import com.lyhoangvinh.simple.ui.features.avg.main.AvgActivityModule
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailModule
 import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionFragment
@@ -26,6 +26,12 @@ import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivityModule
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashActivity
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashModule
+import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgActivity
+import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgModule
+import com.lyhoangvinh.simple.ui.features.comicavg.portal.PortalFragment
+import com.lyhoangvinh.simple.ui.features.comicavg.portal.PortalModule
+import com.lyhoangvinh.simple.ui.features.setting.SettingActivity
+import com.lyhoangvinh.simple.ui.features.setting.SettingModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -41,8 +47,8 @@ abstract class BuildersModule {
     @ContributesAndroidInjector(modules = [ComicFragmentModule::class])
     abstract fun comicFragmentFragment(): ComicFragment
 
-    @ContributesAndroidInjector(modules = [AgvActivityModule::class])
-    abstract fun avgActivity(): AgvActivity
+    @ContributesAndroidInjector(modules = [AvgActivityModule::class])
+    abstract fun avgActivity(): AvgActivity
 
     @ContributesAndroidInjector(modules = [HomeFragmentModule::class])
     abstract fun homeFragment(): HomeFragment
@@ -70,4 +76,13 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [SearchPagedModule::class])
     abstract fun searchPagedActivity(): SearchPagedActivity
+
+    @ContributesAndroidInjector(modules = [ComicAvgModule::class])
+    abstract fun comicAvgActivity(): ComicAvgActivity
+
+    @ContributesAndroidInjector(modules = [PortalModule::class])
+    abstract fun portalFragment(): PortalFragment
+
+    @ContributesAndroidInjector(modules = [SettingModule::class])
+    abstract fun settingActivity(): SettingActivity
 }
