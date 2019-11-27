@@ -1,5 +1,5 @@
 package com.lyhoangvinh.simple.ui.base.interfaces
 
-interface SearchClickable {
+interface OnClickable {
     fun accept()
 }

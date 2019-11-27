@@ -46,6 +46,7 @@ class SearchPagedRepo @Inject constructor(
             searchFactory.setQuery(query)
             searchFactory.invalidate()
         }
+        insertHistory(query)
     }
 
     fun insertHistory(query: String) {

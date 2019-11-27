@@ -34,9 +34,9 @@ class SearchPagedActivity :
         viewModel.searchSuggestionsAdapter = searchSuggestionsAdapter
         binding.rcvHistorySearch.adapter = searchSuggestionsAdapter
         binding.vm = viewModel
-        binding.edtSearch.textChanges {
-            viewModel.suggestions(it)
-        }
+//        binding.edtSearch.textChanges {
+//            viewModel.suggestions(it)
+//        }
         binding.imvBack.setOnClickListener { onBackPressed() }
     }
 

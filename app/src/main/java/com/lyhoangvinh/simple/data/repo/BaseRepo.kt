@@ -1,5 +1,6 @@
 package com.lyhoangvinh.simple.data.repo
 
+import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.response.ResponseBiZip
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
 import com.lyhoangvinh.simple.data.source.base.*
@@ -120,7 +121,8 @@ abstract class BaseRepo {
         remote2: Single<T2>,
         remote3: Single<T3>,
         remote4: Single<T4>,
-        onSave: PlainResponseZipFourConsumer<T1, T2, T3, T4>
+        onSave: PlainResponseZipFourConsumer<T1, T2, T3, T4>,
+        onError: PlainConsumer<ErrorEntity>
     ): Flowable<Resource<ResponseFourZip<T1, T2, T3, T4>>> {
         return Flowable.create({
             object : SimpleNetworkBoundSourceFourRemote<T1, T2, T3, T4>(it, true) {
@@ -131,7 +133,9 @@ abstract class BaseRepo {
                 override fun saveCallResult(data: ResponseFourZip<T1, T2, T3, T4>, isRefresh: Boolean) {
                     onSave.accept(data)
                 }
-
+                override fun errorResult(errorEntity: ErrorEntity) {
+                    onError.accept(errorEntity)
+                }
             }
         }, BackpressureStrategy.BUFFER)
     }

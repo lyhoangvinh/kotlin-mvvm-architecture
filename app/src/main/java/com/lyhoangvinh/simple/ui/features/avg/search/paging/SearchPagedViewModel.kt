@@ -1,20 +1,16 @@
 package com.lyhoangvinh.simple.ui.features.avg.search.paging
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
+import android.text.TextUtils
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.paging.PagedList
 import com.lyhoangvinh.simple.data.dao.SearchHistoryDao
-import com.lyhoangvinh.simple.data.entities.DataEmpty
-import com.lyhoangvinh.simple.data.entities.State
-import com.lyhoangvinh.simple.data.entities.Status
+import com.lyhoangvinh.simple.data.entities.VisibilityView
 import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.repo.SearchPagedRepo
 import com.lyhoangvinh.simple.ui.base.viewmodel.BasePagingViewModel
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
-import com.lyhoangvinh.simple.ui.base.interfaces.SearchClickable
+import com.lyhoangvinh.simple.ui.base.interfaces.OnClickable
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.suggestion.SearchSuggestionsAdapter
 import com.lyhoangvinh.simple.ui.observableUi.StateObservable
 import javax.inject.Inject
@@ -28,9 +24,25 @@ class SearchPagedViewModel @Inject constructor(
 
     var keyword = ""
 
-    var searchClickable = object : SearchClickable {
+    var searchClickable = object : OnClickable {
         override fun accept() {
             setKeyWord()
+        }
+    }
+
+    var onClearTextClickable = object : OnClickable {
+        override fun accept() {
+            keyword = ""
+            stateObservable.notifyShowClearText(false)
+        }
+    }
+
+    var searchSuggestionsListener = object : OnClickable{
+        override fun accept() {
+            if (!TextUtils.isEmpty(keyword)){
+                suggestions(keyword)
+            }
+            stateObservable.notifyShowClearText(keyword.isNotEmpty())
         }
     }
 
@@ -39,8 +51,10 @@ class SearchPagedViewModel @Inject constructor(
     lateinit var searchSuggestionsAdapter: SearchSuggestionsAdapter
 
     fun setKeyWord() {
-        searchPagedRepo.setQuery(keyword)
-        isFirstState = true
+        if (!TextUtils.isEmpty(keyword)) {
+            searchPagedRepo.setQuery(keyword)
+            isFirstState = true
+        }
     }
 
     fun suggestions(keyword: String) {
@@ -49,7 +63,10 @@ class SearchPagedViewModel @Inject constructor(
             searchHistoryDao.search(keyword),
             object : PlainConsumer<List<SearchHistory>> {
                 override fun accept(t: List<SearchHistory>) {
-                    searchSuggestionsAdapter.submitList(t)
+                    if (t.isNullOrEmpty()) {
+                        searchSuggestionsAdapter.submitList(t)
+                    }
+                    stateObservable.notifyShowSuggestionView(VisibilityView(!t.isNullOrEmpty()))
                 }
             })
     }

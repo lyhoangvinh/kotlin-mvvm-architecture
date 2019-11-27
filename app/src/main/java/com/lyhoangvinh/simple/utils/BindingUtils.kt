@@ -13,12 +13,8 @@ import android.webkit.WebViewClient
 import android.webkit.WebSettings
 import android.widget.EditText
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.data.entities.Connection
-import com.lyhoangvinh.simple.data.entities.DataEmpty
-import com.lyhoangvinh.simple.data.entities.State
-import com.lyhoangvinh.simple.data.entities.Status
-import com.lyhoangvinh.simple.generated.callback.OnClickListener
-import com.lyhoangvinh.simple.ui.base.interfaces.SearchClickable
+import com.lyhoangvinh.simple.data.entities.*
+import com.lyhoangvinh.simple.ui.base.interfaces.OnClickable
 import com.lyhoangvinh.simple.ui.widget.RotateLoading
 import com.lyhoangvinh.simple.ui.widget.newton.NewtonCradleLoading
 
@@ -127,7 +123,7 @@ object BindingUtils {
     }
 
     @JvmStatic
-    @BindingAdapter("android:animatedVisibility")
+    @BindingAdapter("setAnimatedVisibility")
     fun setAnimatedVisibility(target: View, isVisible: Boolean) {
         val animFadeIn = AnimationUtils.loadAnimation(target.context, R.anim.fade_in)
         val animFadeOut = AnimationUtils.loadAnimation(target.context, R.anim.fade_out)
@@ -135,6 +131,20 @@ object BindingUtils {
             if (isVisible) View.VISIBLE else View.GONE
         target.animation =
             if (isVisible) animFadeIn else animFadeOut
+    }
+
+    @JvmStatic
+    @BindingAdapter("setAnimatedVisibility")
+    fun setAnimatedVisibility(target: View, visible: VisibilityView?) {
+        if (visible == null){
+            return
+        }
+        val animFadeIn = AnimationUtils.loadAnimation(target.context, R.anim.fade_in)
+        val animFadeOut = AnimationUtils.loadAnimation(target.context, R.anim.fade_out)
+        target.visibility =
+            if (visible.isVisible) View.VISIBLE else View.GONE
+        target.animation =
+            if (visible.isVisible) animFadeIn else animFadeOut
     }
 
     @JvmStatic
@@ -182,7 +192,7 @@ object BindingUtils {
 
     @JvmStatic
     @BindingAdapter("setButtonSearchClickable")
-    fun setButtonSearchClickable(view: View, listener: SearchClickable?) {
+    fun setButtonSearchClickable(view: View, listener: OnClickable?) {
         view.setOnClickListener {
             if (listener != null) {
                 view.setDelayedClickable(false)
@@ -195,7 +205,7 @@ object BindingUtils {
 
     @JvmStatic
     @BindingAdapter("setOnEditorActionListener")
-    fun setOnEditorActionListener(editText: EditText, listener: SearchClickable?){
+    fun setOnEditorActionListener(editText: EditText, listener: OnClickable?) {
         editText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -206,5 +216,21 @@ object BindingUtils {
                 return false
             }
         })
+    }
+
+    @JvmStatic
+    @BindingAdapter("setTextChanges")
+    fun setTextChanges(editText: EditText, listener: OnClickable?) {
+        editText.textChanges {
+            listener?.accept()
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setOnClearTextClickable")
+    fun setOnClearTextClickable(view: View, listener: OnClickable?) {
+        view.setOnClickListener {
+            listener?.accept()
+        }
     }
 }

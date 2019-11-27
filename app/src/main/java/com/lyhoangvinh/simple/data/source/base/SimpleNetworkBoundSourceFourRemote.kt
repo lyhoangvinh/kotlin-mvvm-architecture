@@ -35,6 +35,7 @@ abstract class SimpleNetworkBoundSourceFourRemote<T1, T2, T3, T4>(
         }, object : PlainConsumer<ErrorEntity> {
             override fun accept(t: ErrorEntity) {
                 Log.d(TAG, "SimpleNetworkBoundSource: call API error: " + t.getMessage())
+                errorResult(t)
                 emitter.onNext(Resource.error(t.getMessage(), null))
             }
         })
@@ -49,6 +50,8 @@ abstract class SimpleNetworkBoundSourceFourRemote<T1, T2, T3, T4>(
     abstract fun getRemote4(): Single<T4>
 
     abstract fun saveCallResult(data: ResponseFourZip<T1, T2, T3, T4>, isRefresh: Boolean)
+
+    abstract fun errorResult(errorEntity: ErrorEntity)
 
     companion object {
         val TAG = "resource"

@@ -9,6 +9,7 @@ import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.dao.CategoriesDao
 import com.lyhoangvinh.simple.data.dao.CollectionDao
 import com.lyhoangvinh.simple.data.dao.VideosDao
+import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.data.response.*
@@ -16,6 +17,7 @@ import com.lyhoangvinh.simple.data.services.AvgleService
 import com.lyhoangvinh.simple.data.source.base.PlainResponseZipFourConsumer
 import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
+import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.genericCastOrNull
 import io.reactivex.Flowable
@@ -35,7 +37,12 @@ class HomeRepo @Inject constructor(
 
     fun fetchData(): LiveData<List<ItemViewModel>> {
         val liveDataMerger = MediatorLiveData<MergedData>()
-        liveDataMerger.addSource(LivePagedListBuilder(categoriesDao.liveDataFactory(), 10).build()) {
+        liveDataMerger.addSource(
+            LivePagedListBuilder(
+                categoriesDao.liveDataFactory(),
+                10
+            ).build()
+        ) {
             liveDataMerger.value = CategoryData(it!!)
         }
         liveDataMerger.addSource(collectionDao.liveDataFromType(Constants.TYPE_HOME_BANNER)) {
@@ -80,7 +87,12 @@ class HomeRepo @Inject constructor(
                         "CollectionBottomItem ${it.collectionBottomItems.size}"
                     )
                 )
-                is VideoData -> pagedList.add(VideoItem(it.videoItems, "VideoItem ${it.videoItems.size}"))
+                is VideoData -> pagedList.add(
+                    VideoItem(
+                        it.videoItems,
+                        "VideoItem ${it.videoItems.size}"
+                    )
+                )
             }
             liveData.setValue(pagedList)
             return@Function liveData
@@ -146,7 +158,12 @@ class HomeRepo @Inject constructor(
 //            .build()
         val liveDataMerger = MediatorLiveData<MergedData>()
 
-        liveDataMerger.addSource(LivePagedListBuilder(categoriesDao.liveDataFactory(), 10).build()) {
+        liveDataMerger.addSource(
+            LivePagedListBuilder(
+                categoriesDao.liveDataFactory(),
+                10
+            ).build()
+        ) {
             liveDataMerger.value = CategoryData(it!!)
         }
         liveDataMerger.addSource(
@@ -181,7 +198,7 @@ class HomeRepo @Inject constructor(
             avgleService.getCategories(),
             avgleService.getCollections((1..10).random(), (5..10).random()),
             avgleService.getCollections(1, 10),
-            avgleService.getAllVideos((0..20).random()),
+            avgleService.getAllVideos((0..10).random()),
             object :
                 PlainResponseZipFourConsumer<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>> {
                 override fun accept(dto: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
@@ -214,6 +231,10 @@ class HomeRepo @Inject constructor(
                         videosDao.insertIgnore(videos)
                         videosDao.updateIgnore(videos)
                     }
+                }
+            }, object : PlainConsumer<ErrorEntity> {
+                override fun accept(t: ErrorEntity) {
+
                 }
             })
     }

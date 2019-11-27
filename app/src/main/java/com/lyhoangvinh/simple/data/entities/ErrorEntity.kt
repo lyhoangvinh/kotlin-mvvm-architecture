@@ -43,7 +43,7 @@ class ErrorEntity {
                     e.setHttpCode(baseResponse.code())
                     if (!baseResponse.isSuccessful && baseResponse.errorBody() != null) {
                         try {
-                            val jObjError = JSONObject(baseResponse.errorBody()!!.string())
+                            val jObjError = JSONObject(baseResponse.errorBody()?.string()!!)
                             e.setMessage(jObjError.getString("message"))
                         } catch (eXX: Exception) {
                             eXX.printStackTrace()

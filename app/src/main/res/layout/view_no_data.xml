@@ -15,9 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:visibility="gone"
-        app:observableData="@{errorData}"
-        tools:visibility="visible">
+        android:visibility="visible"
+        app:observableData="@{errorData}">
 
         <ImageView
             android:id="@+id/imvNotFound"
@@ -35,6 +34,6 @@
             android:padding="@dimen/padding_10dp"
             app:messageDataEmpty="@{errorData.message}"
             android:textColor="@color/colorWhite"
-            tools:text="@string/could_not_found" />
+            android:text="@string/could_not_found" />
     </RelativeLayout>
 </layout>
