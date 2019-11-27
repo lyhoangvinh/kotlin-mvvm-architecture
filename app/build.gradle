@@ -75,6 +75,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.lifecycleExtensionsVersion"
     implementation "androidx.core:core:$rootProject.ext.coreVersion"
     implementation "androidx.core:core-ktx:$rootProject.ext.coreKtxVersion"
+    implementation "androidx.viewpager2:viewpager2:$rootProject.ext.androidxSupportVersion"
 
     //kotlin coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.ext.kotlinxVersion"
