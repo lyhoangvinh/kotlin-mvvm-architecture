@@ -19,8 +19,8 @@ class Constants {
         const val TYPE_HOME_BOTTOM = 2
 
         //options
-        const val OPTION = "option_open"
-        const val OPTION_1 = 0
+        const val OPTIONS = "option_open"
+        const val OPTIONS_1 = 0
         const val OPTIONS_2 = 1
         const val OPTIONS_3 = 2
     }

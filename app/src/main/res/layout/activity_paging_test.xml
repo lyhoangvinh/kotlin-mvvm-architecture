@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="vm"
-                  type="com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingViewModel"/>
+
+        <variable
+            name="vm"
+            type="com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingViewModel" />
 
     </data>
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="match_parent">
-        <include
-                layout="@layout/view_recyclerview"/>
-    </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/title_comic"
+                app:titleTextColor="@color/colorWhite" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include layout="@layout/view_recyclerview" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
 

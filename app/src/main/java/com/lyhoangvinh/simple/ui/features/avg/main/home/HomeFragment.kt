@@ -26,5 +26,12 @@ class HomeFragment : BaseViewModelRecyclerViewFragment<FragmentHomeBinding, Home
             ) / 2
         val mHeight = mWidth * 5 / 7
         viewModel.setLayoutParams(mWidth, mHeight, activity!!)
+        binding.toolbar.inflateMenu(R.menu.menu_setting)
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.setting){
+                navigatorHelper.navigateSettingActivity()
+            }
+            return@setOnMenuItemClickListener false
+        }
     }
 }

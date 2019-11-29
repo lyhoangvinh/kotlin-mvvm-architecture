@@ -20,8 +20,8 @@ class SplashViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-        val options = sharedPrefs[Constants.OPTION, Int::class.java]
-        if (options == Constants.OPTION_1) {
+        val options = sharedPrefs[Constants.OPTIONS, Int::class.java]
+        if (options == Constants.OPTIONS_1) {
             openComic()
         } else {
             connectionLiveData.observe(lifecycleOwner, Observer {

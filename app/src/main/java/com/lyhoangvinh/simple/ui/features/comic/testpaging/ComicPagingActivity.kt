@@ -11,5 +11,12 @@ class ComicPagingActivity : BaseViewModelPagingActivity<ActivityPagingTestBindin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.vm = viewModel
+        binding.toolbar.inflateMenu(R.menu.menu_setting)
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.setting){
+                navigatorHelper.navigateSettingActivity()
+            }
+            return@setOnMenuItemClickListener false
+        }
     }
 }

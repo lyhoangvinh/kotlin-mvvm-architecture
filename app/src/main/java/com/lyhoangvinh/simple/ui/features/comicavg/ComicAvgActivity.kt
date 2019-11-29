@@ -9,6 +9,12 @@ class ComicAvgActivity : BaseViewModelActivity<ActivityComicAvgBinding, ComicAvg
     override fun getLayoutResource() = R.layout.activity_comic_avg
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding.toolbar.inflateMenu(R.menu.menu_setting)
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.setting){
+                navigatorHelper.navigateSettingActivity()
+            }
+            return@setOnMenuItemClickListener false
+        }
     }
 }

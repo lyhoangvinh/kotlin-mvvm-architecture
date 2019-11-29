@@ -16,6 +16,7 @@ import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
 import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgActivity
+import com.lyhoangvinh.simple.ui.features.setting.SettingActivity
 import lyhoangvinh.com.myutil.navigation.ActivityNavigator
 import lyhoangvinh.com.myutil.navigation.FragmentNavigator
 import lyhoangvinh.com.myutil.navigation.Navigator
@@ -34,7 +35,7 @@ class NavigatorHelper(private var mNavigator: Navigator) {
         this.mNavigator = mNavigator
     }
 
-    fun navigateIssusActivity(){
+    fun navigateIssusActivity() {
         mNavigator.startActivity(ComicPagingActivity::class.java)
         mNavigator.finishActivity()
     }
@@ -46,7 +47,12 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     }
 
     fun navigateDetailActivity(url: String) {
-        mNavigator.startActivity(DetailActivity::class.java) { intent -> intent.putExtra(Constants.EXTRA_DATA, url) }
+        mNavigator.startActivity(DetailActivity::class.java) { intent ->
+            intent.putExtra(
+                Constants.EXTRA_DATA,
+                url
+            )
+        }
     }
 
     fun navigateFromType(type: String, url: String) {
@@ -56,7 +62,12 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     }
 
     fun navigateVideosFragment() {
-        mNavigator.replaceFragmentAndAddToBackStack(R.id.container, VideoFragment().addAnimations(), null, null)
+        mNavigator.replaceFragmentAndAddToBackStack(
+            R.id.container,
+            VideoFragment().addAnimations(),
+            null,
+            null
+        )
     }
 
     fun navigateVideosFragment(category: Category?) {
@@ -65,9 +76,19 @@ class NavigatorHelper(private var mNavigator: Navigator) {
             val bundle = Bundle()
             bundle.putParcelable(Constants.EXTRA_DATA, category)
             collectionFragment.arguments = bundle
-            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, bundle, null)
+            mNavigator.replaceFragmentAndAddToBackStack(
+                R.id.container,
+                collectionFragment,
+                bundle,
+                null
+            )
         } else {
-            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, null, null)
+            mNavigator.replaceFragmentAndAddToBackStack(
+                R.id.container,
+                collectionFragment,
+                null,
+                null
+            )
         }
     }
 
@@ -77,14 +98,29 @@ class NavigatorHelper(private var mNavigator: Navigator) {
             val bundle = Bundle()
             bundle.putParcelable(Constants.EXTRA_DATA, collection)
             collectionFragment.arguments = bundle
-            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, bundle, null)
+            mNavigator.replaceFragmentAndAddToBackStack(
+                R.id.container,
+                collectionFragment,
+                bundle,
+                null
+            )
         } else {
-            mNavigator.replaceFragmentAndAddToBackStack(R.id.container, collectionFragment, null, null)
+            mNavigator.replaceFragmentAndAddToBackStack(
+                R.id.container,
+                collectionFragment,
+                null,
+                null
+            )
         }
     }
 
     fun navigateCollectionFragment() {
-        mNavigator.replaceFragmentAndAddToBackStack(R.id.container, CollectionFragment().addAnimations(), null, null)
+        mNavigator.replaceFragmentAndAddToBackStack(
+            R.id.container,
+            CollectionFragment().addAnimations(),
+            null,
+            null
+        )
     }
 
     fun navigateSearchActivity(activity: Activity) {
@@ -95,8 +131,12 @@ class NavigatorHelper(private var mNavigator: Navigator) {
         activity.startActivityTransition(SearchPagedActivity::class.java, false)
     }
 
-    fun navigateComicAvgActivity(){
+    fun navigateComicAvgActivity() {
         mNavigator.startActivity(ComicAvgActivity::class.java)
         mNavigator.finishActivity()
+    }
+
+    fun navigateSettingActivity() {
+        mNavigator.startActivity(SettingActivity::class.java)
     }
 }

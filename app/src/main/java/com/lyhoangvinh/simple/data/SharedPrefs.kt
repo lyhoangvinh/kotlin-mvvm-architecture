@@ -13,7 +13,7 @@ import com.lyhoangvinh.simple.utils.SingletonHolder
 
 @Suppress("UNCHECKED_CAST")
 class SharedPrefs private constructor(application: Application) {
-    private val mSharedPreferences: SharedPreferences
+    val mSharedPreferences: SharedPreferences
 
     init {
         mSharedPreferences = application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
