@@ -8,6 +8,7 @@ class Constants {
         const val AVGLE_ENDPOINT = BuildConfig.AVGLE_ENDPOINT
         const val KEY = BuildConfig.API_KEY
         const val EXTRA_DATA = "EXTRA_DATA"
+        const val PORTAL = "KEYWORD_PORTAL"
 
         //video
         const val TYPE_ALL = 0

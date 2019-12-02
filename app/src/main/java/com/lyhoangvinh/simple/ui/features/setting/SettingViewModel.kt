@@ -16,8 +16,6 @@ class SettingViewModel @Inject constructor(
     private val optionSharedPrefsLiveData: OptionSharedPreferenceLiveData
 ) : BaseViewModel() {
 
-    val title = "Setting"
-
     var adapter: SettingAdapter? = null
 
     fun initAdapter(adapter: SettingAdapter) {
@@ -30,7 +28,7 @@ class SettingViewModel @Inject constructor(
         })
     }
 
-    fun listOptions(i: Int): List<OptionEntity> = arrayListOf<OptionEntity>()
+    private fun listOptions(i: Int): List<OptionEntity> = arrayListOf<OptionEntity>()
         .apply {
             add(OptionEntity(0, false, "Comicvine"))
             add(OptionEntity(1, false, "AVG"))

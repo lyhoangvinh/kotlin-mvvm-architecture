@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="dto"
+            type="com.lyhoangvinh.simple.data.entities.avgle.Video" />
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/padding_4dp"
+        android:onClick="@{onClick}">
+
+        <RelativeLayout
+            android:id="@+id/rlRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imv"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadImageNotFit="@{dto.previewUrl}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_image_references_half"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/linear_gradient" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/padding_8dp"
+                android:layout_marginRight="@dimen/padding_8dp"
+                android:layout_marginBottom="@dimen/padding_8dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@{dto.title}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/ts_13_sp" />
+
+            <View
+                android:id="@+id/view_selected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_corner" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

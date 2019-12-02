@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{vm.title}" />
+            app:title="@string/title_setting" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvSetting"

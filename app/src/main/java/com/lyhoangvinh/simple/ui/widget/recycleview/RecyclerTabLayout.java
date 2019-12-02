@@ -358,21 +358,6 @@ public class RecyclerTabLayout extends RecyclerView {
             return;
         }
         mRequestScrollToTab = false;
-
-//        int left;
-//        int right;
-//        if (isLayoutRtl()) {
-//            left = view.getLeft() - mIndicatorScroll - mIndicatorGap;
-//            right = view.getRight() - mIndicatorScroll + mIndicatorGap;
-//        } else {
-//            left = view.getLeft() + mIndicatorScroll - mIndicatorGap;
-//            right = view.getRight() + mIndicatorScroll + mIndicatorGap;
-//        }
-//
-//        int top = getHeight() - mIndicatorHeight;
-//        int bottom = getHeight();
-
-//        canvas.drawRect(left, top, right, bottom, mIndicatorPaint);
     }
 
     protected boolean isLayoutRtl() {
@@ -514,6 +499,7 @@ public class RecyclerTabLayout extends RecyclerView {
         }
 
         public void updateData(int index, List<String> newList) {
+            maxTab = newList.size();
             setCurrentIndicatorPosition(index);
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(titles, newList), false);
             this.titles = newList;
@@ -723,6 +709,17 @@ public class RecyclerTabLayout extends RecyclerView {
     }
 
     public static void setBackground(View view) {
-        view.setBackground(null);
+        final int sdk = android.os.Build.VERSION.SDK_INT;
+        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            view.setBackgroundDrawable(null);
+        } else {
+            view.setBackground(null);
+        }
+    }
+
+    public void updateData(int index, List<String> data) {
+        if (mAdapter instanceof RecyclerTabLayout.CustomTabAdapter) {
+            ((RecyclerTabLayout.CustomTabAdapter) mAdapter).updateData(index, data);
+        }
     }
 }

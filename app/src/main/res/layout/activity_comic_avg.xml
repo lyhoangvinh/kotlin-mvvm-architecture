@@ -9,25 +9,50 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:title="@string/title_avg_comic"
-                app:titleTextColor="@color/colorWhite"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                app:title="@string/title_avg_comic"
+                app:titleTextColor="@color/colorText" />
+
+            <com.lyhoangvinh.simple.ui.widget.recycleview.RecyclerTabLayout
+                android:id="@+id/tabLayout"
+                rtl_tabBackground="?attr/selectableItemBackground"
+                rtl_tabIndicatorColor="?attr/colorAccent"
+                rtl_tabIndicatorHeight="2dp"
+                rtl_tabMaxWidth="264dp"
+                rtl_tabMinWidth="72dp"
+                rtl_tabPadding="0dp"
+                rtl_tabPaddingBottom="0dp"
+                rtl_tabPaddingEnd="5dp"
+                rtl_tabPaddingStart="5dp"
+                rtl_tabPaddingTop="0dp"
+                rtl_tabSelectedTextColor="?android:textColorPrimary"
+                rtl_tabTextAppearance="@android:style/TextAppearance.Small"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_40dp"
+                android:background="@color/colorWhite" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+        <!--            android:id="@+id/bottomNavigationView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content" />-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
