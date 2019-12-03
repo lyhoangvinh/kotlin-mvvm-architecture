@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.ui.features.comicavg
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.ActivityComicAvgBinding
 import com.lyhoangvinh.simple.ui.base.activity.BaseViewModelActivity
@@ -21,7 +22,14 @@ class ComicAvgActivity : BaseViewModelActivity<ActivityComicAvgBinding, ComicAvg
         val adapter = ComicAvgPagerAdapter(this)
         binding.viewPager.adapter = adapter
         binding.tabLayout.setUpWithViewPager2(binding.viewPager, null)
-        viewModel.initAdapter(adapter, binding.tabLayout.adapter as RecyclerTabLayout.CustomTabAdapter)
-        binding.viewPager.setCurrentItem(adapter.getCenterPosition(10), false)
+        viewModel.categoriesDao.liveData().observe(this, Observer {
+            binding.tabLayout?.updateData(10, arrayListOf<String>().apply {
+                for (i in 0 until it.size) {
+                    add(it[i].name.toString())
+                }
+            })
+            adapter.submitData(it)
+            binding.viewPager.setCurrentItem(adapter.getCenterPosition(10), false)
+        })
     }
 }

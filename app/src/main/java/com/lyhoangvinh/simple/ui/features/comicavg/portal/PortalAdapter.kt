@@ -12,7 +12,7 @@ import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 import com.lyhoangvinh.simple.utils.NavigatorHelper
 import javax.inject.Inject
 
-class PortalAdapter @Inject constructor(@ActivityContext context: Context, val navigatorHelper: NavigatorHelper) :
+class PortalAdapter @Inject constructor(@ActivityContext context: Context, private val navigatorHelper: NavigatorHelper) :
     BasePagedAdapter<Video, ItemPortalBinding>(context, ItemCallBack) {
     override fun itemLayoutResource() = R.layout.item_portal
     override fun createViewHolder(itemView: View) = PortalViewHolder(itemView)

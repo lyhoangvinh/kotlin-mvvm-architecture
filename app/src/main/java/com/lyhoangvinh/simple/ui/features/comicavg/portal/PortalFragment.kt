@@ -2,6 +2,7 @@ package com.lyhoangvinh.simple.ui.features.comicavg.portal
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lyhoangvinh.simple.Constants
@@ -12,6 +13,7 @@ import com.lyhoangvinh.simple.ui.base.fragment.BaseViewModelPagingFragment
 import com.lyhoangvinh.simple.ui.widget.recycleview.VerticalSpaceItemDecoration
 import com.lyhoangvinh.simple.utils.SingletonHolder
 import com.lyhoangvinh.simple.utils.calculateNoOfColumnsShow
+import kotlinx.android.synthetic.main.view_recyclerview.*
 import retrofit2.Retrofit
 
 class PortalFragment :
@@ -19,7 +21,8 @@ class PortalFragment :
     override fun getLayoutResource() = R.layout.fragment_portal
     override fun createViewModelClass() = PortalViewModel::class.java
     override fun initialize(view: View, ctx: Context?) {
-
+        super.initialize(view, ctx)
+        binding.vm = viewModel
     }
 
     override fun createItemDecoration() =

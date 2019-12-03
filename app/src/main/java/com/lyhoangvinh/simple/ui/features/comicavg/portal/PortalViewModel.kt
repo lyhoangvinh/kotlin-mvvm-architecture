@@ -1,6 +1,7 @@
 package com.lyhoangvinh.simple.ui.features.comicavg.portal
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.Constants
@@ -29,7 +30,9 @@ class PortalViewModel @Inject constructor(private val videoRepo: VideoRepo) :
         }
         videoRepo.fetchData(mCompositeDisposable).observe(lifecycleOwner, Observer {
             when (it) {
-                is VideoData -> adapter.submitList(it.videoItems)
+                is VideoData -> {
+                    adapter.submitList(it.videoItems)
+                }
                 is StateData -> {
                     if (isFirstState) {
                         adapter.submitState(it.state)
@@ -37,11 +40,13 @@ class PortalViewModel @Inject constructor(private val videoRepo: VideoRepo) :
                         isFirstState = true
                     }
                     publishState(it.state)
+                    Log.d("TEXTXXX", it.state.toString())
                 }
             }
             if (isFirstState) {
                 isFirstState = false
                 adapter.submitState(State(Status.SUCCESS, null))
+                Log.d("TEXTXXX", "isFirstState")
             }
         })
         videoRepo.setUpRepo(keyword)

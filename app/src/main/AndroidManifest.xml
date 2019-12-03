@@ -72,8 +72,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.features.comicavg.ComicAvgActivity"
-            android:screenOrientation="portrait" />
+            android:name=".ui.features.comicavg.ComicAvgActivity"/>
 
         <activity
             android:name=".ui.features.setting.SettingActivity"
