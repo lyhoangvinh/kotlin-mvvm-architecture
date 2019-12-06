@@ -61,8 +61,8 @@ fun ImageView.loadImage(url: String) {
         .load(url)
         .placeholder(R.drawable.ic_placeholder_rectangle_200px)
         .error(R.drawable.poster_show_not_available)
-        .centerCrop()
         .fit()
+        .centerCrop()
         .into(this, object : Callback {
             override fun onSuccess() {
 

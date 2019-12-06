@@ -8,11 +8,13 @@ import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.data.entities.avgle.Collection
+import com.lyhoangvinh.simple.data.entities.comic.ImageAll
 import com.lyhoangvinh.simple.ui.features.avg.main.AvgActivity
 import com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionFragment
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.SearchPagedActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
+import com.lyhoangvinh.simple.ui.features.comic.detail.ImageDetailActivity
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
 import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgActivity
@@ -138,5 +140,11 @@ class NavigatorHelper(private var mNavigator: Navigator) {
 
     fun navigateSettingActivity() {
         mNavigator.startActivity(SettingActivity::class.java)
+    }
+
+    fun navigateImageDetailActivity(imageAll: ImageAll) {
+        mNavigator.startActivity(ImageDetailActivity::class.java) {
+            it.putExtra(Constants.EXTRA_DATA, imageAll)
+        }
     }
 }

@@ -26,7 +26,7 @@ abstract class SimpleNetworkBoundSourceFourRemote<T1, T2, T3, T4>(
         // since realm was create on Main Thread, so if we need to touch on realm database after calling
         // api, must make request on main thread by setting shouldUpdateUi params = true
         makeRequest(this.getRemote1(), this.getRemote2(), this.getRemote3(), this.getRemote4(), true, object :
-            PlainResponseZipFourConsumer<T1, T2, T3, T4> {
+            PlainResponseFourConsumer<T1, T2, T3, T4> {
             override fun accept(dto: ResponseFourZip<T1, T2, T3, T4>) {
                 Log.d(TAG, "SimpleNetworkBoundSource: call API success!")
                 saveCallResult(dto, isRefresh)

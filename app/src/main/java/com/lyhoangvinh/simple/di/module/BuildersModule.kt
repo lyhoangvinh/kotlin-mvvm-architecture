@@ -26,6 +26,8 @@ import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivityModule
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashActivity
 import com.lyhoangvinh.simple.ui.features.avg.splash.SplashModule
+import com.lyhoangvinh.simple.ui.features.comic.detail.ImageDetailActivity
+import com.lyhoangvinh.simple.ui.features.comic.detail.ImageDetailModule
 import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgActivity
 import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgModule
 import com.lyhoangvinh.simple.ui.features.comicavg.portal.PortalFragment
@@ -85,4 +87,7 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [SettingModule::class])
     abstract fun settingActivity(): SettingActivity
+
+    @ContributesAndroidInjector(modules = [ImageDetailModule::class])
+    abstract fun imageDetailActivity(): ImageDetailActivity
 }

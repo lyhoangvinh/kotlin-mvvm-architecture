@@ -9,9 +9,10 @@ import com.lyhoangvinh.simple.databinding.ItemComicsBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.adapter.BasePagedAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
+import com.lyhoangvinh.simple.utils.NavigatorHelper
 import javax.inject.Inject
 
-class ComicAdapter @Inject constructor(@ActivityContext context: Context) :
+class ComicAdapter @Inject constructor(@ActivityContext context: Context, private val navigatorHelper: NavigatorHelper) :
     BasePagedAdapter<Issues, ItemComicsBinding>(context, IssuesDiffCallBack) {
 
     override fun itemLayoutResource() = R.layout.item_comics
@@ -20,6 +21,9 @@ class ComicAdapter @Inject constructor(@ActivityContext context: Context) :
 
     override fun onBindViewHolder(binding: ItemComicsBinding, dto: Issues, position: Int) {
         binding.dto = dto
+        binding.onClick = View.OnClickListener {
+            navigatorHelper.navigateImageDetailActivity(dto.images)
+        }
     }
 
     class ComicViewHolder(itemView: View) : BaseViewHolder<ItemComicsBinding>(itemView)

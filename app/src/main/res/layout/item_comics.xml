@@ -1,127 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
-        <variable name="dto"
-                  type="com.lyhoangvinh.simple.data.entities.comic.Issues"/>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="dto"
+            type="com.lyhoangvinh.simple.data.entities.comic.Issues" />
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:paddingBottom="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                android:textStyle="bold"
-                android:maxLines="2"
-                android:ellipsize="end"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@={dto.volume.name}"
-                tools:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXX"/>
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingBottom="10dp"
+            android:text="@={dto.volume.name}"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXX" />
 
         <ImageView
-                android:id="@+id/imv"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:paddingStart="16dp"
-                android:paddingEnd="10dp"
-                app:loadImageURL="@{dto.images.medium_url}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintDimensionRatio="H,3:1.8"
-                tools:src="@drawable/ic_placeholder_rectangle_200px"/>
+            android:id="@+id/imv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:paddingStart="16dp"
+            android:paddingEnd="10dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="H,3:1.8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintWidth_percent="0.5"
+            app:loadImageURL="@{dto.images.medium_url}"
+            tools:src="@drawable/ic_placeholder_rectangle_200px" />
 
         <ImageView
-                android:id="@+id/imgTime"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                app:layout_constraintStart_toEndOf="@id/imv"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                app:srcCompat="@drawable/ic_access_time_black_24dp"/>
+            android:id="@+id/imgTime"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_constraintStart_toEndOf="@id/imv"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
         <TextView
-                android:id="@+id/tvTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                app:layout_constraintStart_toEndOf="@id/imgTime"
-                app:layout_constraintBottom_toBottomOf="@id/imgTime"
-                tools:text="xxxxxxxxxxxxxxx"
-                android:layout_marginEnd="16dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="12sp"
-                android:textColor="@android:color/black"
-                android:layout_marginStart="10dp"
-                app:setAddedDate="@{dto.dateAdded}"/>
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgTime"
+            app:layout_constraintStart_toEndOf="@id/imgTime"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:setAddedDate="@{dto.dateAdded}"
+            tools:text="xxxxxxxxxxxxxxx" />
 
         <ImageView
-                android:id="@+id/imgFavResource"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@id/imgTime"
-                app:layout_constraintStart_toEndOf="@id/imv"
-                app:srcCompat="@drawable/ic_access_time_black_24dp"/>
+            android:id="@+id/imgFavResource"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toEndOf="@id/imv"
+            app:layout_constraintTop_toBottomOf="@id/imgTime"
+            app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
         <TextView
-                android:id="@+id/tvDateLastUpdated"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@id/imgTime"
-                app:layout_constraintStart_toEndOf="@id/imgFavResource"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                android:layout_marginEnd="16dp"
-                android:maxLines="2"
-                android:textSize="12sp"
-                android:ellipsize="end"
-                app:setLastUpdated="@{dto.dateLastUpdated}"
-                tools:text="xxxxxxxxxxxxxxxxxxxxxxxxx"
-                android:textColor="@android:color/black"
-                android:layout_marginStart="10dp"/>
+            android:id="@+id/tvDateLastUpdated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/imgFavResource"
+            app:layout_constraintTop_toBottomOf="@id/imgTime"
+            app:setLastUpdated="@{dto.dateLastUpdated}"
+            tools:text="xxxxxxxxxxxxxxxxxxxxxxxxx" />
 
         <TextView
-                android:id="@+id/tvMake"
-                android:layout_width="70dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/imv"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/bg_corner_gray_thin"
-                android:text="Click"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="12sp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"/>
+            android:id="@+id/tvMake"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_corner_gray_thin"
+            android:gravity="center"
+            android:onClick="@{onClick}"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="5dp"
+            android:text="Click"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/imv"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@android:color/darker_gray"
-                android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/imv"
-                android:layout_marginTop="16dp"/>
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/imv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

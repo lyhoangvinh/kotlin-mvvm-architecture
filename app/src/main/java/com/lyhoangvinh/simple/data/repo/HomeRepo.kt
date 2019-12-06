@@ -14,7 +14,7 @@ import com.lyhoangvinh.simple.data.entities.avgle.*
 import com.lyhoangvinh.simple.data.itemviewmodel.*
 import com.lyhoangvinh.simple.data.response.*
 import com.lyhoangvinh.simple.data.services.AvgleService
-import com.lyhoangvinh.simple.data.source.base.PlainResponseZipFourConsumer
+import com.lyhoangvinh.simple.data.source.base.PlainResponseFourConsumer
 import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
@@ -200,7 +200,7 @@ class HomeRepo @Inject constructor(
             avgleService.getCollections(1, 10),
             avgleService.getAllVideos((0..10).random()),
             object :
-                PlainResponseZipFourConsumer<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>> {
+                PlainResponseFourConsumer<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>> {
                 override fun accept(dto: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
                     execute {
                         categoriesDao.deleteAll()

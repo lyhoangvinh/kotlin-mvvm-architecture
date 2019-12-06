@@ -40,13 +40,11 @@ class PortalViewModel @Inject constructor(private val videoRepo: VideoRepo) :
                         isFirstState = true
                     }
                     publishState(it.state)
-                    Log.d("TEXTXXX", it.state.toString())
                 }
             }
             if (isFirstState) {
                 isFirstState = false
                 adapter.submitState(State(Status.SUCCESS, null))
-                Log.d("TEXTXXX", "isFirstState")
             }
         })
         videoRepo.setUpRepo(keyword)

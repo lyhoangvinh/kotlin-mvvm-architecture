@@ -11,7 +11,6 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 
 
 abstract class BaseRepo {
@@ -71,7 +70,7 @@ abstract class BaseRepo {
     fun <T1, T2> createResource(
         remote1: Single<T1>,
         remote2: Single<T2>,
-        onSave: PlainResponseZipBiConsumer<T1, T2>
+        onSave: PlainResponseBiConsumer<T1, T2>
     ): Flowable<Resource<ResponseBiZip<T1, T2>>> {
         return Flowable.create({
             object : SimpleNetworkBoundSourceBiRemote<T1, T2>(it, true) {
@@ -121,7 +120,7 @@ abstract class BaseRepo {
         remote2: Single<T2>,
         remote3: Single<T3>,
         remote4: Single<T4>,
-        onSave: PlainResponseZipFourConsumer<T1, T2, T3, T4>,
+        onSave: PlainResponseFourConsumer<T1, T2, T3, T4>,
         onError: PlainConsumer<ErrorEntity>
     ): Flowable<Resource<ResponseFourZip<T1, T2, T3, T4>>> {
         return Flowable.create({

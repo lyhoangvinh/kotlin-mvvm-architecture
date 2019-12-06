@@ -78,6 +78,8 @@
             android:name=".ui.features.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.features.comic.detail.ImageDetailActivity"/>
+
         <receiver android:name=".receiver.NetworkReceiver" />
 
     </application>

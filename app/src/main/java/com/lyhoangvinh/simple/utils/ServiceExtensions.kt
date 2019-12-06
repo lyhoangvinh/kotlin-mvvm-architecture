@@ -10,12 +10,9 @@ import com.google.gson.*
 import com.lyhoangvinh.simple.BuildConfig
 import com.lyhoangvinh.simple.data.entities.Entities
 import com.lyhoangvinh.simple.data.entities.ErrorEntity
-import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
-import com.lyhoangvinh.simple.data.source.base.PlainResponseZipFourConsumer
-import com.lyhoangvinh.simple.data.response.BaseResponseComic
-import com.lyhoangvinh.simple.data.response.ResponseBiZip
-import com.lyhoangvinh.simple.data.response.ResponseFourZip
-import com.lyhoangvinh.simple.data.source.base.PlainResponseZipBiConsumer
+import com.lyhoangvinh.simple.data.response.*
+import com.lyhoangvinh.simple.data.source.base.PlainResponseFourConsumer
+import com.lyhoangvinh.simple.data.source.base.PlainResponseBiConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainEntitiesPagingConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
@@ -173,7 +170,7 @@ class ServiceResponseConverter(
 fun <T1, T2> makeRequest(
     request1: Single<T1>,
     request2: Single<T2>, shouldUpdateUi: Boolean,
-    @NonNull responseConsumer: PlainResponseZipBiConsumer<T1, T2>,
+    @NonNull responseConsumer: PlainResponseBiConsumer<T1, T2>,
     @Nullable errorConsumer: PlainConsumer<ErrorEntity>?,
     @Nullable onComplete: Action?
 ): Disposable {
@@ -203,7 +200,7 @@ fun <T1, T2> makeRequest(
 fun <T1, T2> makeRequest(
     request1: Single<T1>,
     request2: Single<T2>, shouldUpdateUi: Boolean,
-    @NonNull responseConsumer: PlainResponseZipBiConsumer<T1, T2>,
+    @NonNull responseConsumer: PlainResponseBiConsumer<T1, T2>,
     @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
 ): Disposable {
     return makeRequest(request1, request2, shouldUpdateUi, responseConsumer, errorConsumer, null)
@@ -220,7 +217,7 @@ fun <T1, T2, T3, T4> makeRequest(
     request3: Single<T3>,
     request4: Single<T4>,
     shouldUpdateUi: Boolean,
-    @NonNull responseConsumer: PlainResponseZipFourConsumer<T1, T2, T3, T4>,
+    @NonNull responseConsumer: PlainResponseFourConsumer<T1, T2, T3, T4>,
     @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
 ): Disposable {
     var single1 = request1.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
@@ -251,7 +248,6 @@ fun <T1, T2, T3, T4> makeRequest(
             errorConsumer?.accept(ErrorEntity.getError(throwable))
         })
 }
-
 
 fun makeOkHttpClientBuilder(context: Context): OkHttpClient.Builder {
     val logging = HttpLoggingInterceptor()
