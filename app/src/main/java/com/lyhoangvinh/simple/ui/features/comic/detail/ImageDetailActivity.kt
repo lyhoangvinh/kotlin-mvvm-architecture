@@ -12,7 +12,7 @@ class ImageDetailActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.repo.bitmapResult.observe(this, Observer {
-            binding.imv.setImageBitmap(it.bitmap)
+            binding.imv.setImageBitmap(it)
         })
     }
 }

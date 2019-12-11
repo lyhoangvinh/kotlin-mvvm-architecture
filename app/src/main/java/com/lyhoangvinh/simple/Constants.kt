@@ -24,5 +24,10 @@ class Constants {
         const val OPTIONS_1 = 0
         const val OPTIONS_2 = 1
         const val OPTIONS_3 = 2
+
+        //quality
+        const val THUMB = 0
+        const val MEDIUM = 1
+        const val SUPPER = 2
     }
 }

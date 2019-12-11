@@ -1,5 +1,6 @@
 package com.lyhoangvinh.simple.utils
 
+import android.graphics.Bitmap
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.lyhoangvinh.simple.data.entities.BitmapWithQuality
@@ -16,7 +17,7 @@ import io.reactivex.schedulers.Schedulers
 
 fun loadProgressively(
     picasso: Picasso,
-    imageAll: ImageAll, @NonNull responseConsumer: PlainConsumer<BitmapWithQuality>,
+    imageAll: ImageAll, @NonNull responseConsumer: PlainConsumer<Bitmap>,
     @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
 ) = makeProgressively(
         loadImageAndIgnoreError(picasso, imageAll.thumbUrl.toString()),
@@ -30,13 +31,13 @@ fun loadProgressively(
  * Make 3 Request
  */
 fun makeProgressively(
-    request1: Single<BitmapWithQuality>,
-    request2: Single<BitmapWithQuality>,
-    request3: Single<BitmapWithQuality>,
-    @NonNull responseConsumer: PlainConsumer<BitmapWithQuality>,
+    request1: Single<Bitmap>,
+    request2: Single<Bitmap>,
+    request3: Single<Bitmap>,
+    @NonNull responseConsumer: PlainConsumer<Bitmap>,
     @Nullable errorConsumer: PlainConsumer<ErrorEntity>?
 ): Disposable {
-    return Single.merge(request1, request2, request3)
+    return Single.mergeDelayError(request1, request2, request3)
         .subscribeOn(Schedulers.io())
         .unsubscribeOn(Schedulers.io())
         .subscribe({ o ->
@@ -48,6 +49,6 @@ fun makeProgressively(
         })
 }
 
-fun loadImageAndIgnoreError(picasso: Picasso, url: String): Single<BitmapWithQuality> =
+fun loadImageAndIgnoreError(picasso: Picasso, url: String): Single<Bitmap> =
     Single.create(ImageFetcherSingleSubscribe(picasso, url))
 

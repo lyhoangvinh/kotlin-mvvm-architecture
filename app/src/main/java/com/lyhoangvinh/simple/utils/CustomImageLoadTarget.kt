@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import io.reactivex.SingleEmitter
 
-class CustomImageLoadTarget(private val emitter: SingleEmitter<BitmapWithQuality>,
+class CustomImageLoadTarget(private val emitter: SingleEmitter<Bitmap>,
                             private val unSubscribe: (Target) -> Unit) : Target {
 
     init {
@@ -19,7 +19,7 @@ class CustomImageLoadTarget(private val emitter: SingleEmitter<BitmapWithQuality
     }
 
     override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-        emitter.onSuccess(BitmapWithQuality(bitmap))
+        emitter.onSuccess(bitmap)
         unSubscribe(this)
     }
 

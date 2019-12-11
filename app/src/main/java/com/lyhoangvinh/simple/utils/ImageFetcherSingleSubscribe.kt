@@ -1,6 +1,6 @@
 package com.lyhoangvinh.simple.utils
 
-import com.lyhoangvinh.simple.data.entities.BitmapWithQuality
+import android.graphics.Bitmap
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import io.reactivex.SingleEmitter
@@ -11,11 +11,11 @@ import lyhoangvinh.com.myutil.thread.UIThreadExecutor
 class ImageFetcherSingleSubscribe(
     private val picasso: Picasso,
     private val url: String
-) : SingleOnSubscribe<BitmapWithQuality> {
+) : SingleOnSubscribe<Bitmap> {
 
     private val runningTargets = mutableListOf<Target>()
 
-    override fun subscribe(emitter: SingleEmitter<BitmapWithQuality>) {
+    override fun subscribe(emitter: SingleEmitter<Bitmap>) {
         val target = CustomImageLoadTarget(emitter) {
             removeTargetAndCancelRequest(it)
         }

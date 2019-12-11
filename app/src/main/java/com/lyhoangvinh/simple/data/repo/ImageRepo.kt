@@ -1,6 +1,6 @@
 package com.lyhoangvinh.simple.data.repo
- 
-import com.lyhoangvinh.simple.data.entities.BitmapWithQuality
+
+import android.graphics.Bitmap
 import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.entities.comic.ImageAll
 import com.lyhoangvinh.simple.data.source.base.Resource
@@ -15,18 +15,18 @@ import javax.inject.Inject
 
 class ImageRepo @Inject constructor() {
 
-    val bitmapResult = SafeMutableLiveData<BitmapWithQuality>()
+    val bitmapResult = SafeMutableLiveData<Bitmap>()
 
-    fun createResource(imageAll: ImageAll): Flowable<Resource<BitmapWithQuality>> =
+    fun createResource(imageAll: ImageAll): Flowable<Resource<Bitmap>> =
         Flowable.create({ loadImage(imageAll, it) }, BackpressureStrategy.BUFFER)
 
     private fun loadImage(
         imageAll: ImageAll,
-        emitter: FlowableEmitter<Resource<BitmapWithQuality>>
+        emitter: FlowableEmitter<Resource<Bitmap>>
     ) {
         emitter.onNext(Resource.loading(null))
-        loadProgressively(Picasso.get(), imageAll, object : PlainConsumer<BitmapWithQuality> {
-            override fun accept(t: BitmapWithQuality) {
+        loadProgressively(Picasso.get(), imageAll, object : PlainConsumer<Bitmap> {
+            override fun accept(t: Bitmap) {
                 bitmapResult.setValue(t)
                 emitter.onNext(Resource.success(t))
             }
