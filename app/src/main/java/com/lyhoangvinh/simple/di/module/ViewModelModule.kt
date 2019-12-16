@@ -10,7 +10,7 @@ import com.lyhoangvinh.simple.ui.features.avg.main.home.HomeViewModel
 import com.lyhoangvinh.simple.ui.features.avg.search.local.SearchViewModel
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.SearchPagedViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoViewModel
-import com.lyhoangvinh.simple.ui.features.avg.splash.SplashViewModel
+import com.lyhoangvinh.simple.ui.features.splash.SplashViewModel
 import com.lyhoangvinh.simple.ui.features.comic.detail.ImageDetailViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleViewModel

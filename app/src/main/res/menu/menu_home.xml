@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/setting"
-        android:icon="@drawable/ic_refresh_24dp"
-        android:title="@string/title_refresh"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/title_setting"
         app:iconTint="@color/colorWhite"
         app:showAsAction="always" />
 </menu>

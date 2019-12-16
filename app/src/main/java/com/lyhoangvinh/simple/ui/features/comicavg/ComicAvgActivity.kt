@@ -5,14 +5,12 @@ import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.databinding.ActivityComicAvgBinding
 import com.lyhoangvinh.simple.ui.base.activity.BaseViewModelActivity
-import com.lyhoangvinh.simple.ui.widget.recycleview.RecyclerTabLayout
-import javax.inject.Inject
 
 class ComicAvgActivity : BaseViewModelActivity<ActivityComicAvgBinding, ComicAvgViewModel>() {
     override fun getLayoutResource() = R.layout.activity_comic_avg
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.toolbar.inflateMenu(R.menu.menu_setting)
+        binding.toolbar.inflateMenu(R.menu.menu_home)
         binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.setting) {
                 navigatorHelper.navigateSettingActivity()

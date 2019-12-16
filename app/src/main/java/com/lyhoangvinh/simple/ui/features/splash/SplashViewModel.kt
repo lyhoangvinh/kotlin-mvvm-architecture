@@ -1,7 +1,6 @@
-package com.lyhoangvinh.simple.ui.features.avg.splash
+package com.lyhoangvinh.simple.ui.features.splash
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.Constants

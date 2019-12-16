@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@null"
+        app:iconTint="@color/colorWhite"
+        app:showAsAction="always"/>
 
     <item android:title="@null"
-        android:icon="@drawable/ic_home_black_24dp"/>
-
-    <item android:title="@null"
-        />
+        app:iconTint="@color/colorWhite"
+        app:showAsAction="ifRoom"/>
 </menu>

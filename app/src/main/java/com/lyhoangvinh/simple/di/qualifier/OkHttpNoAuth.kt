@@ -2,7 +2,6 @@ package com.lyhoangvinh.simple.di.qualifier
 
 import javax.inject.Qualifier
 
-
 /**
  * NO Authorization header [okhttp3.OkHttpClient]
  */

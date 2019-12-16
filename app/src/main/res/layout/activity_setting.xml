@@ -10,22 +10,33 @@
             type="com.lyhoangvinh.simple.ui.features.setting.SettingViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="@string/title_setting" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/title_setting"
+                app:titleTextColor="@color/colorWhite" />
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvSetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/appBar"
             tools:listitem="@layout/item_setting" />
 
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>

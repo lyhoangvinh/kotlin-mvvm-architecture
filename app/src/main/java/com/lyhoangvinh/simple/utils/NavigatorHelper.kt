@@ -14,8 +14,8 @@ import com.lyhoangvinh.simple.ui.features.avg.detail.DetailActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.collection.CollectionFragment
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.SearchPagedActivity
 import com.lyhoangvinh.simple.ui.features.avg.main.video.VideoFragment
+import com.lyhoangvinh.simple.ui.features.splash.SplashActivity
 import com.lyhoangvinh.simple.ui.features.comic.detail.ImageDetailActivity
-import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicActivity
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
 import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgActivity
 import com.lyhoangvinh.simple.ui.features.setting.SettingActivity
@@ -25,16 +25,14 @@ import lyhoangvinh.com.myutil.navigation.Navigator
 
 class NavigatorHelper(private var mNavigator: Navigator) {
 
-    fun NavigatorHelper(mNavigator: FragmentNavigator) {
+    fun NavigatorHelper(mNavigator: FragmentNavigator): NavigatorHelper {
         this.mNavigator = mNavigator
+        return this
     }
 
-    fun NavigatorHelper(mNavigator: ActivityNavigator) {
+    fun NavigatorHelper(mNavigator: ActivityNavigator): NavigatorHelper {
         this.mNavigator = mNavigator
-    }
-
-    fun NavigatorHelper(mNavigator: Navigator) {
-        this.mNavigator = mNavigator
+        return this
     }
 
     fun navigateIssusActivity() {
@@ -146,5 +144,12 @@ class NavigatorHelper(private var mNavigator: Navigator) {
         mNavigator.startActivity(ImageDetailActivity::class.java) {
             it.putExtra(Constants.EXTRA_DATA, imageAll)
         }
+    }
+
+    fun navigateSplashActivity(activity: Activity) {
+        mNavigator.startActivity(SplashActivity::class.java){
+            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        activity.finishAffinity()
     }
 }

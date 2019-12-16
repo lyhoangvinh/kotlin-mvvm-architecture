@@ -24,8 +24,8 @@ import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleActivity
 import com.lyhoangvinh.simple.ui.features.comic.testfragment.ComicSingleActivityModule
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivity
 import com.lyhoangvinh.simple.ui.features.comic.testpaging.ComicPagingActivityModule
-import com.lyhoangvinh.simple.ui.features.avg.splash.SplashActivity
-import com.lyhoangvinh.simple.ui.features.avg.splash.SplashModule
+import com.lyhoangvinh.simple.ui.features.splash.SplashActivity
+import com.lyhoangvinh.simple.ui.features.splash.SplashModule
 import com.lyhoangvinh.simple.ui.features.comic.detail.ImageDetailActivity
 import com.lyhoangvinh.simple.ui.features.comic.detail.ImageDetailModule
 import com.lyhoangvinh.simple.ui.features.comicavg.ComicAvgActivity

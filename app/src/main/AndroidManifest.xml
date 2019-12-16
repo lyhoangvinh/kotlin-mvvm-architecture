@@ -36,7 +36,7 @@
         </activity>
 
         <activity
-            android:name="com.lyhoangvinh.simple.ui.features.avg.splash.SplashActivity"
+            android:name="com.lyhoangvinh.simple.ui.features.splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

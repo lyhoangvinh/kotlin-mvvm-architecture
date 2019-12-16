@@ -14,9 +14,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
                 app:title="@string/title_avg_comic"
-                app:titleTextColor="@color/colorText" />
+                app:titleTextColor="@color/colorWhite" />
 
             <com.lyhoangvinh.simple.ui.widget.recycleview.RecyclerTabLayout
                 android:id="@+id/tabLayout"

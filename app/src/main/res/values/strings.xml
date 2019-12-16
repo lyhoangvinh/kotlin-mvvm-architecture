@@ -16,4 +16,5 @@
     <string name="title_avg">Avg</string>
     <string name="title_avg_comic">Avg Comic</string>
     <string name="title_setting">Setting</string>
+    <string name="title_refresh">Refresh</string>
 </resources>

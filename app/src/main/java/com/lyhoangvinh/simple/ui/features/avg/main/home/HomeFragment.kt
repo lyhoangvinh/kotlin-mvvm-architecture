@@ -1,15 +1,12 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.home
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import com.lyhoangvinh.simple.MyApplication
 import com.lyhoangvinh.simple.R
-import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.databinding.FragmentHomeBinding
 import com.lyhoangvinh.simple.ui.base.fragment.BaseViewModelRecyclerViewFragment
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple.HomeSimpleAdapter
-import com.lyhoangvinh.simple.utils.removeStatusBar
 import com.lyhoangvinh.simple.utils.setStatusBarColor
 
 class HomeFragment : BaseViewModelRecyclerViewFragment<FragmentHomeBinding, HomeViewModel, HomeSimpleAdapter>() {
@@ -26,7 +23,7 @@ class HomeFragment : BaseViewModelRecyclerViewFragment<FragmentHomeBinding, Home
             ) / 2
         val mHeight = mWidth * 5 / 7
         viewModel.setLayoutParams(mWidth, mHeight, activity!!)
-        binding.toolbar.inflateMenu(R.menu.menu_setting)
+        binding.toolbar.inflateMenu(R.menu.menu_home)
         binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.setting){
                 navigatorHelper.navigateSettingActivity()

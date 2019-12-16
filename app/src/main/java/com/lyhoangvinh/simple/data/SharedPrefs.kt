@@ -26,10 +26,10 @@ class SharedPrefs private constructor(application: Application) {
     operator fun <T> get(key: String, anonymousClass: Class<T>): T {
         return when (anonymousClass) {
             String::class.java -> mSharedPreferences.getString(key, "") as T
-            Boolean::class.java -> java.lang.Boolean.valueOf(mSharedPreferences.getBoolean(key, false)) as T
-            Float::class.java -> java.lang.Float.valueOf(mSharedPreferences.getFloat(key, 0f)) as T
-            Int::class.java -> Integer.valueOf(mSharedPreferences.getInt(key, 0)) as T
-            Long::class.java -> java.lang.Long.valueOf(mSharedPreferences.getLong(key, 0)) as T
+            Boolean::class.java -> mSharedPreferences.getBoolean(key, false) as T
+            Float::class.java -> mSharedPreferences.getFloat(key, 0f) as T
+            Int::class.java -> mSharedPreferences.getInt(key, 0) as T
+            Long::class.java -> mSharedPreferences.getLong(key, 0) as T
             else -> Gson().fromJson(mSharedPreferences.getString(key, ""), anonymousClass)
         }
     }
