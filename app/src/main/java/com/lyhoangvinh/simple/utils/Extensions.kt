@@ -332,7 +332,7 @@ fun Context.calculateNoOfColumnsShow(): Int {
 
 fun Activity.calculateNoOfColumnsShow(): Int = applicationContext.calculateNoOfColumnsShow()
 
-fun Fragment.calculateNoOfColumnsShow(): Int = activity!!.calculateNoOfColumnsShow()
+fun Fragment.calculateNoOfColumnsShow(): Int = activity?.calculateNoOfColumnsShow()!!
 
 fun View.setDelayedClickable(clickable: Boolean, delayedMillis: Long) {
     if (delayedMillis > 0) {
