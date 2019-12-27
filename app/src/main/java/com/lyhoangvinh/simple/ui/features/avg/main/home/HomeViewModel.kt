@@ -10,15 +10,13 @@ import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
 import com.lyhoangvinh.simple.ui.features.avg.main.home.adapter.simple.HomeSimpleAdapter
 import com.lyhoangvinh.simple.ui.observableUi.ConnectionObservable
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo, val connectionObservable: ConnectionObservable) : BaseListDataViewModel<HomeSimpleAdapter>() {
 
     override fun fetchData(page: Int) {
-        execute(true, homeRepo.getRepoHome(), object : PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
-                override fun accept(t: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
-                }
-            })
+        execute(true, homeRepo.getRepoHome(), null)
     }
 
     fun setLayoutParams(mWidth: Int, mHeight: Int, activity: Activity) {

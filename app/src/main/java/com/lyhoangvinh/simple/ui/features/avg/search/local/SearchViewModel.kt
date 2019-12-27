@@ -9,6 +9,7 @@ import com.lyhoangvinh.simple.data.response.ResponseBiZip
 import com.lyhoangvinh.simple.data.response.VideosResponseAvgle
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(private val searchRepo: SearchRepo) :
@@ -22,14 +23,10 @@ class SearchViewModel @Inject constructor(private val searchRepo: SearchRepo) :
     }
 
     override fun fetchData(page: Int) {
-        execute(true, searchRepo.search(isRefreshed, keyword, page),
-            object :
-                PlainConsumer<ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
-                override fun accept(t: ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
-                    isRefreshed = false
-                    canLoadMore = t.t1?.response?.hasMore!!
-                }
-            })
+        execute(true, searchRepo.search(isRefreshed, keyword, page), newPlainConsumer {
+            isRefreshed = false
+            canLoadMore = it.t1?.response?.hasMore!!
+        })
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
