@@ -9,6 +9,7 @@ import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
 import com.lyhoangvinh.simple.ui.features.comic.testactivity.ComicAdapter
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import javax.inject.Inject
 
 class ComicSingleViewModel @Inject constructor(private val issuesRepo: IssuesRepo) : BaseListDataViewModel<ComicAdapter>() {
@@ -21,11 +22,9 @@ class ComicSingleViewModel @Inject constructor(private val issuesRepo: IssuesRep
     }
 
     override fun fetchData(page: Int) {
-        execute(true, issuesRepo.getRepoIssues(isRefreshed, page), object : PlainConsumer<BaseResponseComic<Issues>> {
-            override fun accept(t: BaseResponseComic<Issues>) {
-                isRefreshed = false
-                canLoadMore = t.results.isNotEmpty()
-            }
+        execute(true, issuesRepo.getRepoIssues(isRefreshed, page), newPlainConsumer {
+            isRefreshed = false
+            canLoadMore = it.results.isNotEmpty()
         })
     }
 

@@ -8,6 +8,7 @@ import com.lyhoangvinh.simple.data.repo.IssuesRepo
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseListDataViewModel
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import javax.inject.Inject
 
 class ComicViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
@@ -22,12 +23,11 @@ class ComicViewModel @Inject constructor(private val issuesRepo: IssuesRepo) :
     }
 
     override fun fetchData(page: Int) {
-        execute(true, issuesRepo.getRepoIssues(isRefreshed, page), object : PlainConsumer<BaseResponseComic<Issues>> {
-            override fun accept(t: BaseResponseComic<Issues>) {
+        execute(true, issuesRepo.getRepoIssues(isRefreshed, page),
+            newPlainConsumer {
                 isRefreshed = false
-                canLoadMore = t.results.isNotEmpty()
-            }
-        })
+                canLoadMore = it.results.isNotEmpty()
+            })
     }
 
     fun clearData() {
