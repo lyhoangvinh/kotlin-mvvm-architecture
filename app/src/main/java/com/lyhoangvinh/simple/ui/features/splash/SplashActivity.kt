@@ -1,6 +1,8 @@
 package com.lyhoangvinh.simple.ui.features.splash
 
 import android.os.Bundle
+import android.widget.CheckBox
+import android.widget.CompoundButton
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.databinding.ActivitySplashBinding

@@ -20,6 +20,8 @@ import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.genericCastOrNull
+import com.lyhoangvinh.simple.utils.newPlainConsumer
+import com.lyhoangvinh.simple.utils.newPlainResponseFourConsumer
 import io.reactivex.Flowable
 import javax.inject.Inject
 
@@ -199,43 +201,37 @@ class HomeRepo @Inject constructor(
             avgleService.getCollections((1..10).random(), (5..10).random()),
             avgleService.getCollections(1, 10),
             avgleService.getAllVideos((0..10).random()),
-            object :
-                PlainResponseFourConsumer<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>> {
-                override fun accept(dto: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
-                    execute {
-                        categoriesDao.deleteAll()
-                        collectionDao.deleteAll()
-                        videosDao.deleteType(Constants.TYPE_HOME)
+            newPlainResponseFourConsumer {
+                execute {
+                    categoriesDao.deleteAll()
+                    collectionDao.deleteAll()
+                    videosDao.deleteType(Constants.TYPE_HOME)
 
-                        categoriesDao.insertIgnore(dto.t1?.response?.categories!!)
-                        categoriesDao.updateIgnore(dto.t1?.response?.categories!!)
+                    categoriesDao.insertIgnore(it.t1?.response?.categories!!)
+                    categoriesDao.updateIgnore(it.t1?.response?.categories!!)
 
-                        val collectionsHome = dto.t2?.response?.collections!!
-                        for (x in 0 until collectionsHome.size) {
-                            collectionsHome[x].type = Constants.TYPE_HOME_BANNER
-                        }
-                        collectionDao.insertIgnore(collectionsHome)
-                        collectionDao.updateIgnore(collectionsHome)
-
-                        val collectionsHomeBottom = dto.t3?.response?.collections!!
-                        for (x in 0 until collectionsHome.size) {
-                            collectionsHomeBottom[x].type = Constants.TYPE_HOME_BOTTOM
-                        }
-                        collectionDao.insertIgnore(collectionsHomeBottom)
-                        collectionDao.updateIgnore(collectionsHomeBottom)
-
-                        val videos = dto.t4?.response?.videos!!
-                        for (x in 0 until videos.size) {
-                            videos[x].type = Constants.TYPE_HOME
-                        }
-                        videosDao.insertIgnore(videos)
-                        videosDao.updateIgnore(videos)
+                    val collectionsHome = it.t2?.response?.collections!!
+                    for (x in 0 until collectionsHome.size) {
+                        collectionsHome[x].type = Constants.TYPE_HOME_BANNER
                     }
-                }
-            }, object : PlainConsumer<ErrorEntity> {
-                override fun accept(t: ErrorEntity) {
+                    collectionDao.insertIgnore(collectionsHome)
+                    collectionDao.updateIgnore(collectionsHome)
 
+                    val collectionsHomeBottom = it.t3?.response?.collections!!
+                    for (x in 0 until collectionsHome.size) {
+                        collectionsHomeBottom[x].type = Constants.TYPE_HOME_BOTTOM
+                    }
+                    collectionDao.insertIgnore(collectionsHomeBottom)
+                    collectionDao.updateIgnore(collectionsHomeBottom)
+
+                    val videos = it.t4?.response?.videos!!
+                    for (x in 0 until videos.size) {
+                        videos[x].type = Constants.TYPE_HOME
+                    }
+                    videosDao.insertIgnore(videos)
+                    videosDao.updateIgnore(videos)
                 }
-            })
+            }
+            , newPlainConsumer {})
     }
 }

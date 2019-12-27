@@ -35,6 +35,8 @@ import androidx.core.math.MathUtils
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.data.response.ResponseFourZip
+import com.lyhoangvinh.simple.data.source.base.PlainResponseFourConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.squareup.picasso.Callback
@@ -355,6 +357,13 @@ fun View.setDelayedClickable(clickable: Boolean) {
 fun <T> newPlainConsumer(consumer: (T) -> Unit) = object : PlainConsumer<T> {
     override fun accept(t: T) {
         consumer.invoke(t)
+    }
+}
+
+fun <T1, T2, T3, T4> newPlainResponseFourConsumer(consumer: (ResponseFourZip<T1, T2, T3, T4>) -> Unit) = object :
+    PlainResponseFourConsumer<T1, T2, T3, T4> {
+    override fun accept(dto: ResponseFourZip<T1, T2, T3, T4>) {
+        consumer.invoke(dto)
     }
 }
 
