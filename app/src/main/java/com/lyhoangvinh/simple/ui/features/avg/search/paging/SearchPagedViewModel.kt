@@ -13,6 +13,7 @@ import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.interfaces.OnClickable
 import com.lyhoangvinh.simple.ui.features.avg.search.paging.suggestion.SearchSuggestionsAdapter
 import com.lyhoangvinh.simple.ui.observableUi.StateObservable
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import javax.inject.Inject
 
 class SearchPagedViewModel @Inject constructor(
@@ -37,9 +38,9 @@ class SearchPagedViewModel @Inject constructor(
         }
     }
 
-    var searchSuggestionsListener = object : OnClickable{
+    var searchSuggestionsListener = object : OnClickable {
         override fun accept() {
-            if (!TextUtils.isEmpty(keyword)){
+            if (!TextUtils.isEmpty(keyword)) {
                 suggestions(keyword)
             }
             stateObservable.notifyShowClearText(keyword.isNotEmpty())
@@ -58,17 +59,12 @@ class SearchPagedViewModel @Inject constructor(
     }
 
     fun suggestions(keyword: String) {
-        execute(
-            false,
-            searchHistoryDao.search(keyword),
-            object : PlainConsumer<List<SearchHistory>> {
-                override fun accept(t: List<SearchHistory>) {
-                    if (t.isNullOrEmpty()) {
-                        searchSuggestionsAdapter.submitList(t)
-                    }
-                    stateObservable.notifyShowSuggestionView(VisibilityView(!t.isNullOrEmpty()))
-                }
-            })
+        execute(false, searchHistoryDao.search(keyword), newPlainConsumer {
+            if (it.isNullOrEmpty()) {
+                searchSuggestionsAdapter.submitList(it)
+            }
+            stateObservable.notifyShowSuggestionView(VisibilityView(!it.isNullOrEmpty()))
+        })
     }
 
     override fun fetchData() {

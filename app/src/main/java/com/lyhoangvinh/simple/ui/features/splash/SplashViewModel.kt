@@ -6,10 +6,9 @@ import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.SharedPrefs
 import com.lyhoangvinh.simple.data.repo.HomeRepo
-import com.lyhoangvinh.simple.data.response.*
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.lyhoangvinh.simple.utils.ConnectionLiveData
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
@@ -25,14 +24,10 @@ class SplashViewModel @Inject constructor(
         } else {
             connectionLiveData.observe(lifecycleOwner, Observer {
                 if (it.isConnected) {
-                    execute(true,
-                        homeRepo.getRepoHome(), object :
-                            PlainConsumer<ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>> {
-                            override fun accept(t: ResponseFourZip<BaseResponseAvgle<CategoriesResponse>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<CollectionsResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>) {
-                                when (options) {
-                                    Constants.OPTIONS_2 -> openHome()
-                                    Constants.OPTIONS_3 -> openComicAvg()
-                                }
+                    execute(true, homeRepo.getRepoHome(), newPlainConsumer {
+                            when (options) {
+                                Constants.OPTIONS_2 -> openHome()
+                                Constants.OPTIONS_3 -> openComicAvg()
                             }
                         })
                 }

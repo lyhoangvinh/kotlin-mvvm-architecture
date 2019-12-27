@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.entities.avgle.Category
@@ -41,9 +42,10 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     }
 
     fun navigateAvgleActivity() {
-//        mNavigator.startActivityWithTransition(AvgActivity::class.java, PlainConsumer { }, true, true)
-        mNavigator.startActivity(AvgActivity::class.java)
-        mNavigator.finishActivity()
+        Handler().postDelayed({
+            mNavigator.startActivity(AvgActivity::class.java)
+            mNavigator.finishActivity()
+        }, 500L)
     }
 
     fun navigateDetailActivity(url: String) {

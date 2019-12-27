@@ -41,7 +41,11 @@ abstract class BaseViewModel : ViewModel() {
      * @param bundle argument data
      */
     @CallSuper
-    fun onCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?, navigatorHelper: NavigatorHelper) {
+    fun onCreate(
+        lifecycleOwner: LifecycleOwner,
+        bundle: Bundle?,
+        navigatorHelper: NavigatorHelper
+    ) {
         this.lifecycleOwner = lifecycleOwner
         this.navigatorHelper = navigatorHelper
         if (isFirstTimeUiCreate) {
@@ -118,7 +122,7 @@ abstract class BaseViewModel : ViewModel() {
         if (showProgress && publishState) {
             publishState(State.loading(null))
         }
-        val disposable = makeRequest(request, true, object : PlainConsumer<T> {
+        mCompositeDisposable.add(makeRequest(request, true, object : PlainConsumer<T> {
             override fun accept(t: T) {
                 responseConsumer?.accept(t)
                 if (publishState) {
@@ -132,11 +136,14 @@ abstract class BaseViewModel : ViewModel() {
                     publishState(State.error(t.getMessage()))
                 }
             }
-        })
-        mCompositeDisposable.add(disposable)
+        }))
     }
 
-    protected fun <T> execute(showProgress: Boolean, request: Single<T>, responseConsumer: PlainConsumer<T>) {
+    protected fun <T> execute(
+        showProgress: Boolean,
+        request: Single<T>,
+        responseConsumer: PlainConsumer<T>
+    ) {
         execute(showProgress, true, request, responseConsumer, null)
     }
 

@@ -35,6 +35,8 @@ import androidx.core.math.MathUtils
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lyhoangvinh.simple.R
+import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
+import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -44,6 +46,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.function.Consumer
 import kotlin.math.hypot
 
 fun ImageView.loadImageIssues(url: String) {
@@ -347,6 +350,12 @@ fun View.setDelayedClickable(clickable: Boolean, delayedMillis: Long) {
 
 fun View.setDelayedClickable(clickable: Boolean) {
     setDelayedClickable(clickable, 300L)
+}
+
+fun <T> newPlainConsumer(consumer: (T) -> Unit) = object : PlainConsumer<T> {
+    override fun accept(t: T) {
+        consumer.invoke(t)
+    }
 }
 
 /**

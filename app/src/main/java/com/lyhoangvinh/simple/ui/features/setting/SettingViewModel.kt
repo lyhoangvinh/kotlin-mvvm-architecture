@@ -1,13 +1,10 @@
 package com.lyhoangvinh.simple.ui.features.setting
 
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.lyhoangvinh.simple.Constants
-import com.lyhoangvinh.simple.data.SharedPrefs
 import com.lyhoangvinh.simple.data.entities.OptionEntity
+import com.lyhoangvinh.simple.data.services.AvgleService
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.lyhoangvinh.simple.utils.OptionSharedPreferenceLiveData
 import javax.inject.Inject
