@@ -7,6 +7,7 @@ import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.loadProgressively
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import com.squareup.picasso.Picasso
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -20,20 +21,11 @@ class ImageRepo @Inject constructor() {
     fun createResource(imageAll: ImageAll): Flowable<Resource<Bitmap>> =
         Flowable.create({ loadImage(imageAll, it) }, BackpressureStrategy.BUFFER)
 
-    private fun loadImage(
-        imageAll: ImageAll,
-        emitter: FlowableEmitter<Resource<Bitmap>>
-    ) {
+    private fun loadImage(imageAll: ImageAll, emitter: FlowableEmitter<Resource<Bitmap>>) {
         emitter.onNext(Resource.loading(null))
-        loadProgressively(Picasso.get(), imageAll, object : PlainConsumer<Bitmap> {
-            override fun accept(t: Bitmap) {
-                bitmapResult.setValue(t)
-                emitter.onNext(Resource.success(t))
-            }
-        }, object : PlainConsumer<ErrorEntity> {
-            override fun accept(t: ErrorEntity) {
-                emitter.onNext(Resource.error(t.getMessage(), null))
-            }
-        })
+        loadProgressively(Picasso.get(), imageAll, newPlainConsumer {
+            bitmapResult.setValue(it)
+            emitter.onNext(Resource.success(it))
+        }, newPlainConsumer { emitter.onNext(Resource.error(it.getMessage(), null)) })
     }
 }

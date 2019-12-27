@@ -15,7 +15,7 @@ class ImageDetailViewModel @Inject constructor(val repo: ImageRepo) : BaseViewMo
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
         val imageAll = bundle?.getParcelable<ImageAll>(Constants.EXTRA_DATA)
         if (imageAll != null){
-            execute(true, repo.createResource(imageAll), null)
+            execute(true, repo.createResource(imageAll))
         }
     }
 }

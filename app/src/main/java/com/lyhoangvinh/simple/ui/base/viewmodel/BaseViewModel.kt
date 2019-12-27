@@ -91,12 +91,8 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    protected fun <T> execute(
-        showProgress: Boolean,
-        resourceFollowable: Flowable<Resource<T>>,
-        responseConsumer: PlainConsumer<T>?
-    ) {
-        val disposable = resourceFollowable.observeOn(AndroidSchedulers.mainThread())
+    protected fun <T> execute(showProgress: Boolean, resourceFollowable: Flowable<Resource<T>>, responseConsumer: PlainConsumer<T>?) {
+        mCompositeDisposable.add(resourceFollowable.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
             .subscribe { resource ->
                 if (resource != null) {
@@ -110,15 +106,14 @@ abstract class BaseViewModel : ViewModel() {
                         publishState(resource.state)
                     }
                 }
-            }
-        mCompositeDisposable.add(disposable)
+            })
     }
 
-    protected fun <T> execute(
-        showProgress: Boolean, publishState: Boolean, request: Single<T>,
-        responseConsumer: PlainConsumer<T>?,
-        errorConsumer: PlainConsumer<ErrorEntity>?
-    ) {
+    protected fun <T> execute(showProgress: Boolean, resourceFollowable: Flowable<Resource<T>>){
+        execute(showProgress, resourceFollowable, null)
+    }
+
+    protected fun <T> execute(showProgress: Boolean, publishState: Boolean, request: Single<T>, responseConsumer: PlainConsumer<T>?, errorConsumer: PlainConsumer<ErrorEntity>?) {
         if (showProgress && publishState) {
             publishState(State.loading(null))
         }
@@ -139,11 +134,7 @@ abstract class BaseViewModel : ViewModel() {
         }))
     }
 
-    protected fun <T> execute(
-        showProgress: Boolean,
-        request: Single<T>,
-        responseConsumer: PlainConsumer<T>
-    ) {
+    protected fun <T> execute(showProgress: Boolean, request: Single<T>, responseConsumer: PlainConsumer<T>) {
         execute(showProgress, true, request, responseConsumer, null)
     }
 
