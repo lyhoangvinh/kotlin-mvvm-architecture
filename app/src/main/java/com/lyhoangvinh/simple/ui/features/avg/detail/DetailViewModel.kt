@@ -6,9 +6,10 @@ import androidx.lifecycle.LifecycleOwner
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
+import com.lyhoangvinh.simple.ui.observableUi.ConnectionObservable
 import javax.inject.Inject
 
-class DetailViewModel @Inject constructor() : BaseViewModel() {
+class DetailViewModel @Inject constructor(val connectionObservable: ConnectionObservable) : BaseViewModel() {
 
     var url = ""
 
@@ -41,6 +42,7 @@ class DetailViewModel @Inject constructor() : BaseViewModel() {
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
+        connectionObservable.observableConnection(lifecycleOwner)
         if (bundle != null) {
             url = bundle.getString(Constants.EXTRA_DATA)!!
         }

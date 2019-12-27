@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.lyhoangvinh.simple.data.entities.Connection" />
+
         <import type="android.view.View" />
 
         <import type="com.lyhoangvinh.simple.data.entities.Status" />
@@ -58,8 +60,8 @@
                 tools:visibility="visible" />
 
             <include
-                android:id="@+id/viewNoConnection"
-                layout="@layout/view_error_connection" />
+                app:currentConnection="@{vm.connectionObservable.currentConnection}"
+                layout="@layout/layout_state_network_off" />
         </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
