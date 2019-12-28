@@ -16,7 +16,7 @@ class ComicPagingViewModel @Inject constructor(private val issuesRepo: IssuesRep
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {
-//        issuesRepo.livePagingData(setStateLiveData, mCompositeDisposable).observe(lifecycleOwner, Observer {
+//        issuesRepo.livePagingData(stateLiveData, mCompositeDisposable).observe(lifecycleOwner, Observer {
 //            adapter.submitList(it)
 //        })
         issuesRepo.liveLocalPagingData(stateLiveData, mCompositeDisposable).observe(lifecycleOwner, Observer {

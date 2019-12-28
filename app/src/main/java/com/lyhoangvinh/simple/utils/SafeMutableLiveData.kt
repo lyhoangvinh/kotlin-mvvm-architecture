@@ -16,4 +16,8 @@ class SafeMutableLiveData<T> : MutableLiveData<T>() {
             super.postValue(value)
         }
     }
+
+    override fun getValue(): T? {
+        return super.getValue()
+    }
 }

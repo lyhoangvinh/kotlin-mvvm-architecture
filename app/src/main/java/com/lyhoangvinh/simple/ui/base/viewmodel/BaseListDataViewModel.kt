@@ -1,15 +1,12 @@
 package com.lyhoangvinh.simple.ui.base.viewmodel
 
 import android.os.Handler
-import android.os.Looper
 import androidx.annotation.CallSuper
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
-import com.lyhoangvinh.simple.data.entities.DataEmpty
 import com.lyhoangvinh.simple.ui.base.interfaces.LoadMoreable
 import com.lyhoangvinh.simple.ui.base.interfaces.Refreshable
-import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 
 
 abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewModel(),
@@ -41,7 +38,7 @@ abstract class BaseListDataViewModel<A : RecyclerView.Adapter<*>> : BaseViewMode
     }
 
     fun refresh(delay: Int) {
-        Handler(Looper.myLooper()).postDelayed({ this.refresh() }, delay.toLong())
+        Handler().postDelayed({ this.refresh() }, delay.toLong())
     }
 
     /**

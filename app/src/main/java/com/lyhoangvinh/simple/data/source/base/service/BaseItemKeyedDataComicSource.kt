@@ -5,13 +5,12 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.paging.DataSource
 import androidx.paging.ItemKeyedDataSource
-import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.entities.State
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
+import com.lyhoangvinh.simple.ui.base.interfaces.newPlainPagingConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.makeRequest
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Provider
@@ -53,18 +52,12 @@ abstract class BaseItemKeyedDataComicSource<T> :
 
     private fun callApi(loadInitialCallback: LoadInitialCallback<T>? = null, loadCallback: LoadCallback<T>? = null) {
         publishState(State.loading(null))
-        compositeDisposable.add(makeRequest(this.getRequest(), object : PlainPagingConsumer<T> {
-            override fun accept(t: List<T>) {
-                loadInitialCallback?.onResult(t)
-                loadCallback?.onResult(t)
-                publishState(State.success(null))
-                pageNumber++
-            }
-        }, object : PlainConsumer<ErrorEntity> {
-            override fun accept(t: ErrorEntity) {
-                publishState(State.error(t.getMessage()))
-            }
-        }))
+        compositeDisposable.add(makeRequest(this.getRequest(), newPlainPagingConsumer {
+            loadInitialCallback?.onResult(it)
+            loadCallback?.onResult(it)
+            publishState(State.success(null))
+            pageNumber++
+        }, newPlainConsumer {publishState(State.error(it.getMessage()))}))
     }
 
     override fun getKey(item: T) = pageNumber

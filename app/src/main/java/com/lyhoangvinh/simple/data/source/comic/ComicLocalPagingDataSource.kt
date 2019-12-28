@@ -6,7 +6,6 @@ import com.lyhoangvinh.simple.data.entities.comic.Issues
 import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.services.ComicVineService
 import com.lyhoangvinh.simple.data.source.base.local.BaseLocalPageKeyedDataSource
-import com.lyhoangvinh.simple.utils.ConnectionLiveData
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Provider
@@ -15,10 +14,12 @@ import javax.inject.Singleton
 @Singleton
 class ComicLocalPagingDataSource @Inject constructor(
     private val comicVineService: ComicVineService,
-    private val issuesDao: IssuesDao,
-    connectionLiveData: ConnectionLiveData
+    private val issuesDao: IssuesDao
 ) :
-    BaseLocalPageKeyedDataSource<Issues>(connectionLiveData), Provider<BaseLocalPageKeyedDataSource<Issues>> {
+    BaseLocalPageKeyedDataSource<Issues>(), Provider<BaseLocalPageKeyedDataSource<Issues>> {
+    override fun get(): BaseLocalPageKeyedDataSource<Issues> {
+        return this
+    }
 
     override fun getResult(): List<Issues> = issuesDao.getAll()
 
@@ -34,10 +35,8 @@ class ComicLocalPagingDataSource @Inject constructor(
         comicVineService.getIssues(20, page, Constants.KEY, "json", "cover_date: desc")
 
     @Singleton
-    class ComicLocalPagingFactory @Inject constructor(provider: ComicLocalPagingDataSource) : Factory<Issues>(provider)
-
-    override fun get(): BaseLocalPageKeyedDataSource<Issues> {
-        return this
+    class ComicLocalPagingFactory @Inject constructor(private val comicVineService: ComicVineService,
+                                                      private val issuesDao: IssuesDao) : Factory<Issues>() {
+        override fun createDataSource() = ComicLocalPagingDataSource(comicVineService, issuesDao)
     }
-
 }

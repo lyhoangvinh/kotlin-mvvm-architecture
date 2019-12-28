@@ -3,15 +3,15 @@ package com.lyhoangvinh.simple.data.source.base.service
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
-import com.lyhoangvinh.simple.data.entities.ErrorEntity
-import com.lyhoangvinh.simple.data.response.BaseResponseComic
 import com.lyhoangvinh.simple.data.entities.State
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainPagingConsumer
+import com.lyhoangvinh.simple.data.response.BaseResponseComic
+import com.lyhoangvinh.simple.ui.base.interfaces.newPlainPagingConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.makeRequest
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Provider
@@ -31,13 +31,19 @@ abstract class BasePageKeyedDataComicSource<T> : PageKeyedDataSource<Int, T>() {
     lateinit var compositeDisposable: CompositeDisposable
 
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, T>) {
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<Int, T>
+    ) {
         Log.d(TAG_X, "1-loadInitial: requestedLoadSize ${params.requestedLoadSize}")
         callApi(page = 0, loadInitialCallback = callback)
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, T>) {
-        Log.d(TAG_X, "2-loadAfter: key ${params.key}, requestedLoadSize ${params.requestedLoadSize}")
+        Log.d(
+            TAG_X,
+            "2-loadAfter: key ${params.key}, requestedLoadSize ${params.requestedLoadSize}"
+        )
         callApi(page = params.key, loadCallback = callback)
     }
 
@@ -55,20 +61,13 @@ abstract class BasePageKeyedDataComicSource<T> : PageKeyedDataSource<Int, T>() {
         loadCallback: LoadCallback<Int, T>? = null
     ) {
         publishState(State.loading(null))
-        compositeDisposable.add(makeRequest(this.getRequest(page), object : PlainPagingConsumer<T> {
-            override fun accept(t: List<T>) {
-                val nextPage = page + 1
-                loadInitialCallback?.onResult(t, 0, t.size, null, nextPage)
-                loadCallback?.onResult(t, nextPage)
-                publishState(State.success(null))
-            }
-        }, object : PlainConsumer<ErrorEntity> {
-            override fun accept(t: ErrorEntity) {
-                publishState(State.error(t.getMessage()))
-            }
-        }))
+        compositeDisposable.add(makeRequest(this.getRequest(page), newPlainPagingConsumer {
+            val nextPage = page + 1
+            loadInitialCallback?.onResult(it, 0, it.size, null, nextPage)
+            loadCallback?.onResult(it, nextPage)
+            publishState(State.success(null))
+        }, newPlainConsumer { publishState(State.error(it.getMessage())) }))
     }
-
 
     abstract fun getRequest(page: Int): Single<BaseResponseComic<T>>
 
@@ -89,8 +88,11 @@ abstract class BasePageKeyedDataComicSource<T> : PageKeyedDataSource<Int, T>() {
 
     abstract class Factory<T>(private val provider: Provider<BasePageKeyedDataComicSource<T>>) :
         DataSource.Factory<Int, T>() {
-
-        fun setUpProvider(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable) {
+        private val sourceLiveData = MutableLiveData<BasePageKeyedDataComicSource<T>>()
+        fun setUpProvider(
+            stateLiveData: SafeMutableLiveData<State>,
+            compositeDisposable: CompositeDisposable
+        ) {
             this.provider.get().stateLiveData = stateLiveData
             this.provider.get().compositeDisposable = compositeDisposable
         }
@@ -100,10 +102,11 @@ abstract class BasePageKeyedDataComicSource<T> : PageKeyedDataSource<Int, T>() {
         }
 
         fun invalidate() {
-            provider.get().invalidate()
+            sourceLiveData.value?.invalidate()
         }
 
         override fun create(): DataSource<Int, T> {
+            sourceLiveData.postValue(provider.get())
             return provider.get()
         }
     }

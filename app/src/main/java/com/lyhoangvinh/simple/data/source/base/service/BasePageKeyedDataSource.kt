@@ -1,20 +1,17 @@
 package com.lyhoangvinh.simple.data.source.base.service
 
-import android.inputmethodservice.Keyboard
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.lyhoangvinh.simple.data.entities.Entities
-import com.lyhoangvinh.simple.data.entities.ErrorEntity
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.response.BaseResponseAvgle
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
-import com.lyhoangvinh.simple.ui.base.interfaces.PlainEntitiesPagingConsumer
+import com.lyhoangvinh.simple.ui.base.interfaces.newPlainEntitiesPagingConsumer
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import com.lyhoangvinh.simple.utils.makeRequestAvg
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Provider
@@ -32,15 +29,21 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
 
     val stateLiveData = SafeMutableLiveData<State>()
 
-    lateinit var compositeDisposable : CompositeDisposable
+    lateinit var compositeDisposable: CompositeDisposable
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, E>) {
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<Int, E>
+    ) {
         Log.d(TAG_X, "1-loadInitial: requestedLoadSize ${params.requestedLoadSize}")
         callApi(page = 0, loadInitialCallback = callback)
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, E>) {
-        Log.d(TAG_X, "2-loadAfter: key ${params.key}, requestedLoadSize ${params.requestedLoadSize}")
+        Log.d(
+            TAG_X,
+            "2-loadAfter: key ${params.key}, requestedLoadSize ${params.requestedLoadSize}"
+        )
         callApi(page = params.key, loadCallback = callback)
     }
 
@@ -58,18 +61,17 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
         loadCallback: LoadCallback<Int, E>? = null
     ) {
         publishState(State.loading(null))
-        compositeDisposable.add(makeRequestAvg(this.getRequest(page), object : PlainEntitiesPagingConsumer<E, T> {
-            override fun accept(t: List<E>) {
-                val nextPage = page + 1
-                loadInitialCallback?.onResult(t, 0, t.size, null, nextPage)
-                loadCallback?.onResult(t, nextPage)
-                publishState(State.success(null))
-            }
-        }, object : PlainConsumer<ErrorEntity> {
-            override fun accept(t: ErrorEntity) {
-                publishState(State.error(t.getMessage()))
-            }
-        }))
+        compositeDisposable.add(
+            makeRequestAvg(
+                this.getRequest(page),
+                newPlainEntitiesPagingConsumer {
+                    val nextPage = page + 1
+                    loadInitialCallback?.onResult(it, 0, it.size, null, nextPage)
+                    loadCallback?.onResult(it, nextPage)
+                    publishState(State.success(null))
+                },
+                newPlainConsumer { publishState(State.error(it.getMessage())) })
+        )
     }
 
     abstract fun getRequest(page: Int): Single<BaseResponseAvgle<T>>

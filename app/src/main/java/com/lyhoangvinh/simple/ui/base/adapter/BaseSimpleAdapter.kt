@@ -1,7 +1,6 @@
 package com.lyhoangvinh.simple.ui.base.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
+import com.lyhoangvinh.simple.utils.inflate
 
 abstract class BaseSimpleAdapter<T, B : ViewDataBinding>(
     @ActivityContext val context: Context,
@@ -25,8 +25,7 @@ abstract class BaseSimpleAdapter<T, B : ViewDataBinding>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<B> {
-        val view = LayoutInflater.from(context).inflate(itemLayoutResource(), parent, false)
-        return createViewHolder(view)
+        return createViewHolder(parent.inflate(context, itemLayoutResource()))
     }
 
     override fun getItemCount(): Int {

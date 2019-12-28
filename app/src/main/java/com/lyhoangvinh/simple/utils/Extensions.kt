@@ -9,36 +9,31 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.text.TextUtils
 import android.transition.ChangeBounds
 import android.transition.Slide
-import android.view.Gravity
-import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
-import androidx.core.animation.addListener
+import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
-import androidx.core.math.MathUtils
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
 import com.lyhoangvinh.simple.data.source.base.PlainResponseFourConsumer
+import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
-import com.lyhoangvinh.simple.ui.base.viewmodel.BaseViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,7 +43,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.function.Consumer
 import kotlin.math.hypot
 
 fun ImageView.loadImageIssues(url: String) {
@@ -59,6 +53,14 @@ fun ImageView.loadImageIssues(url: String) {
 //        .centerCrop()
 //        .fit()
 //        .into(this)
+}
+/**
+ * Allows calls like
+ *
+ * `viewGroup.inflate(R.layout.foo)`
+ */
+fun ViewGroup.inflate(@ActivityContext context:Context,@LayoutRes layout: Int, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layout, this, attachToRoot)
 }
 
 fun ImageView.loadImage(url: String) {
@@ -365,6 +367,10 @@ fun <T1, T2, T3, T4> newPlainResponseFourConsumer(consumer: (ResponseFourZip<T1,
     override fun accept(dto: ResponseFourZip<T1, T2, T3, T4>) {
         consumer.invoke(dto)
     }
+}
+
+fun <T> MutableLiveData<T>.updateValueIfNew(newValue: T) {
+    if (this.value != newValue) value = newValue
 }
 
 /**

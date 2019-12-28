@@ -1,12 +1,10 @@
 package com.lyhoangvinh.simple.ui.features.avg.main.video
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.lyhoangvinh.simple.Constants
 import com.lyhoangvinh.simple.data.entities.State
-import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.data.entities.avgle.Category
 import com.lyhoangvinh.simple.data.entities.avgle.Collection
 import com.lyhoangvinh.simple.data.entities.avgle.StateData
@@ -60,7 +58,7 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) :
             }
             if (isFirstState) {
                 isFirstState = false
-                adapter.submitState(State(Status.SUCCESS, null))
+                adapter.submitState(State.success(null))
             }
         })
         videoRepo.setUpRepo(query)

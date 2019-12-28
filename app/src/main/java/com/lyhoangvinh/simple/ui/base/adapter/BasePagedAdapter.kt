@@ -1,7 +1,6 @@
 package com.lyhoangvinh.simple.ui.base.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
@@ -13,7 +12,7 @@ import com.lyhoangvinh.simple.data.entities.Status
 import com.lyhoangvinh.simple.databinding.ItemLoadingBinding
 import com.lyhoangvinh.simple.di.qualifier.ActivityContext
 import com.lyhoangvinh.simple.utils.genericCastOrNull
-import com.lyhoangvinh.simple.utils.setVisibility
+import com.lyhoangvinh.simple.utils.inflate
 
 abstract class BasePagedAdapter<T, B : ViewDataBinding>(
     @ActivityContext val context: Context, diffUtil: DiffUtil.ItemCallback<T>
@@ -34,8 +33,8 @@ abstract class BasePagedAdapter<T, B : ViewDataBinding>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  BaseViewHolder<B> {
         return when(viewType){
-            ITEM_DATA -> genericCastOrNull(this.createViewHolder(LayoutInflater.from(context).inflate(itemLayoutResource(), parent, false)))
-            else -> genericCastOrNull(LoadingViewHolder(LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false)))
+            ITEM_DATA -> genericCastOrNull(createViewHolder(parent.inflate(context, itemLayoutResource())))
+            else -> genericCastOrNull(LoadingViewHolder(parent.inflate(context, R.layout.item_loading)))
         }
     }
 

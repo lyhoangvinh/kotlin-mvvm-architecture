@@ -9,13 +9,11 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import com.lyhoangvinh.simple.data.entities.ErrorEntity
-import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.data.entities.State
 import com.lyhoangvinh.simple.data.entities.Status
+import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.ui.base.interfaces.PlainConsumer
-import com.lyhoangvinh.simple.utils.NavigatorHelper
-import com.lyhoangvinh.simple.utils.SafeMutableLiveData
-import com.lyhoangvinh.simple.utils.makeRequest
+import com.lyhoangvinh.simple.utils.*
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,7 +26,7 @@ abstract class BaseViewModel : ViewModel() {
     protected var mCompositeDisposable = CompositeDisposable()
 
     @NonNull
-    var stateLiveData = SafeMutableLiveData<State>()
+    val stateLiveData = SafeMutableLiveData<State>()
 
     private var isFirstTimeUiCreate = true
 
@@ -83,15 +81,19 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun publishState(state: State) {
-        stateLiveData.setValue(state)
+        stateLiveData.updateValueIfNew(state)
         if (!TextUtils.isEmpty(state.message)) {
             // if state has a message, after show it, we should reset to prevent
             // message will still be shown if fragment / activity is rotated (re-observe state live data)
-            Handler().postDelayed({ stateLiveData.setValue(State.success(null)) }, 100)
+            Handler().postDelayed({ stateLiveData.updateValueIfNew(State.success(state.message)) }, 100)
         }
     }
 
-    protected fun <T> execute(showProgress: Boolean, resourceFollowable: Flowable<Resource<T>>, responseConsumer: PlainConsumer<T>?) {
+    protected fun <T> execute(
+        showProgress: Boolean,
+        resourceFollowable: Flowable<Resource<T>>,
+        responseConsumer: PlainConsumer<T>?
+    ) {
         mCompositeDisposable.add(resourceFollowable.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.newThread())
             .subscribe { resource ->
@@ -109,7 +111,7 @@ abstract class BaseViewModel : ViewModel() {
             })
     }
 
-    protected fun <T> execute(showProgress: Boolean, resourceFollowable: Flowable<Resource<T>>){
+    protected fun <T> execute(showProgress: Boolean, resourceFollowable: Flowable<Resource<T>>) {
         execute(showProgress, resourceFollowable, null)
     }
 
@@ -117,19 +119,15 @@ abstract class BaseViewModel : ViewModel() {
         if (showProgress && publishState) {
             publishState(State.loading(null))
         }
-        mCompositeDisposable.add(makeRequest(request, true, object : PlainConsumer<T> {
-            override fun accept(t: T) {
-                responseConsumer?.accept(t)
-                if (publishState) {
-                    publishState(State.success(null))
-                }
+        mCompositeDisposable.add(makeRequest(request, true, newPlainConsumer {
+            responseConsumer?.accept(it)
+            if (publishState) {
+                publishState(State.success(null))
             }
-        }, object : PlainConsumer<ErrorEntity> {
-            override fun accept(t: ErrorEntity) {
-                errorConsumer?.accept(t)
-                if (publishState) {
-                    publishState(State.error(t.getMessage()))
-                }
+        }, newPlainConsumer {
+            errorConsumer?.accept(it)
+            if (publishState) {
+                publishState(State.error(it.getMessage()))
             }
         }))
     }

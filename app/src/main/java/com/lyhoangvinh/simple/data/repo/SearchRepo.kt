@@ -19,7 +19,6 @@ import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.ui.base.adapter.ItemViewModel
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
-import java.sql.Timestamp
 import javax.inject.Inject
 
 class SearchRepo @Inject constructor(
@@ -111,7 +110,7 @@ class SearchRepo @Inject constructor(
                 ) {
                     val data1 = data.t1
                     val data2 = data.t1
-                    val newList: ArrayList<Video> = ArrayList()
+                    val newList = arrayListOf<Video>()
                     if (data1 != null && data1.success && data1.response.videos.isNotEmpty()) {
                         newList.addAll(data1.response.videos)
                     }
