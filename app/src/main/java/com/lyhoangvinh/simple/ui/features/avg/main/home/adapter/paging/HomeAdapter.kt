@@ -37,18 +37,11 @@ class HomeAdapter @Inject constructor(@ActivityContext val context: Context) : B
         }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): BaseItemViewHolder<ItemViewModel, ViewDataBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemViewHolder<ItemViewModel, ViewDataBinding> {
         when (viewType) {
-            ITEM_SEARCH -> SearchViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.item_search, parent, false)
-            )
+            ITEM_SEARCH -> SearchViewHolder(LayoutInflater.from(context).inflate(R.layout.item_search, parent, false))
 
-            else -> LoadingViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false)
-            )
+            else -> LoadingViewHolder(LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false))
         }
         throw RuntimeException("Not support type=$viewType")
     }

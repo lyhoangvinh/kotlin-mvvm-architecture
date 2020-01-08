@@ -373,6 +373,13 @@ fun <T> MutableLiveData<T>.updateValueIfNew(newValue: T) {
     if (this.value != newValue) value = newValue
 }
 
+fun <T> List<T>.compare(actual: List<T>): Boolean {
+    for (t in this) {
+        return actual.any { it == t }
+    }
+    return false
+}
+
 /**
  * Excute room
 </T> */

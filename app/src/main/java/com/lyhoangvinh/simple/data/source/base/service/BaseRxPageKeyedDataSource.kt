@@ -37,6 +37,8 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
 
     private var compositeDisposable: CompositeDisposable? = null
 
+    private var infinity = false
+
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, E>
@@ -95,13 +97,11 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
                     Log.d("source", "addRequest: resource changed: $resource")
                     if (resource.data != null) {
                         val nextPage = page + 1
-                        loadInitialCallback?.onResult(
-                            resource.data.response.listData(),
-                            0,
-                            resource.data.response.listData().size,
-                            null,
-                            nextPage
-                        )
+                        if (infinity) {
+                            loadInitialCallback?.onResult(resource.data.response.listData(), null, nextPage)
+                        } else {
+                            loadInitialCallback?.onResult(resource.data.response.listData(), 0, resource.data.response.listData().size, null, nextPage)
+                        }
                         loadCallback?.onResult(resource.data.response.listData(), nextPage)
                         if (loadInitialCallback != null) {
                             if (resource.data.response.listData().isNullOrEmpty()) {
