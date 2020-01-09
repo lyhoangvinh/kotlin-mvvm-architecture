@@ -15,8 +15,6 @@ class SettingActivity : BaseViewModelActivity<ActivitySettingBinding, SettingVie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.vm = viewModel
-        binding.rcvSetting.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcvSetting.adapter = settingAdapter
         viewModel.initAdapter(settingAdapter)
         binding.toolbar.inflateMenu(R.menu.menu_setting)

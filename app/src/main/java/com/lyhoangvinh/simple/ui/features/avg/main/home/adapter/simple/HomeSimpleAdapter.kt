@@ -147,8 +147,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         BaseItemSimpleViewHolder<CollectionBannerItem, ViewBannerBinding>(view) {
         override fun setItem(data: CollectionBannerItem, binding: ViewBannerBinding) {
             super.setItem(data, binding)
-            @Suppress("DEPRECATION") val pixel =
-                genericCastOrNull<AppCompatActivity>(context).windowManager.defaultDisplay.width / 2
+            @Suppress("DEPRECATION") val pixel = genericCastOrNull<AppCompatActivity>(context).windowManager.defaultDisplay.width / 2
             binding.viewPage.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, pixel)
             binding.viewPage.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
             binding.viewPage.initIndicator()
@@ -174,9 +173,7 @@ class HomeSimpleAdapter @Inject constructor(@ActivityContext context: Context, p
         }
     }
 
-    private class CollectionItemSimpleViewHolder(
-        private val context: Context,
-        view: View,
+    private class CollectionItemSimpleViewHolder(private val context: Context, view: View,
         private val mWidth: Int,
         private val mHeight: Int,
         private val navigatorHelper: NavigatorHelper

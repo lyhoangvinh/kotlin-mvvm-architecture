@@ -13,6 +13,7 @@ import com.lyhoangvinh.simple.data.source.base.Resource
 import com.lyhoangvinh.simple.data.source.base.service.BasePageKeyedDataSource
 import com.lyhoangvinh.simple.data.source.base.service.BaseRxPageKeyedDataSource
 import com.lyhoangvinh.simple.utils.SafeMutableLiveData
+import com.lyhoangvinh.simple.utils.newPlainConsumer
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -31,7 +32,9 @@ class VideoDataSource @Inject constructor(private val avgleService: AvgleService
     }
 
     override fun getResourceFollowable(page: Int): Flowable<Resource<BaseResponseAvgle<VideosResponseAvgle>>> =
-        createResource(avgleService.getVideosFromKeyword(page, chId), null)
+        createResource(avgleService.getVideosFromKeyword(page, chId), newPlainConsumer {
+
+        })
 
     @Singleton
     class VideoFactory @Inject constructor(private val avgleService: AvgleService) :

@@ -26,9 +26,14 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableList
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.transition.TransitionManager
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.lyhoangvinh.simple.BR
 import com.lyhoangvinh.simple.R
 import com.lyhoangvinh.simple.data.response.ResponseFourZip
 import com.lyhoangvinh.simple.data.source.base.PlainResponseFourConsumer
@@ -384,3 +389,83 @@ fun <T> MutableLiveData<T>.updateValueIfNew(newValue: T) {
 //        .observeOn(AndroidSchedulers.mainThread())
 //        .subscribe()
 //}
+//https://medium.com/androiddevelopers/android-data-binding-list-tricks-ef3d5630555e
+
+fun<T> ViewGroup.bindLayout(inflater: LayoutInflater , layoutId:Int, entry: T) : ViewDataBinding = entry.let {
+    val binding : ViewDataBinding = DataBindingUtil.inflate(inflater, layoutId, this, false)
+    binding.setVariable(BR.dto, it)
+    return@let binding
+}
+
+fun ViewGroup.resetViews(layoutId:Int, entries: ObservableList<Any>){
+    removeAllViews()
+    if (layoutId == 0) {
+        return
+    }
+    val inflater : LayoutInflater = genericCastOrNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)!!)
+    for (entry in entries) {
+        val binding =  bindLayout(inflater, layoutId, entry)
+        addView(binding.root)
+    }
+}
+
+fun<T> ViewGroup.resetViews(layoutId:Int, entries: List<T>){
+    removeAllViews()
+    if (layoutId == 0) {
+        return
+    }
+    val inflater : LayoutInflater = genericCastOrNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)!!)
+    for (entry in entries) {
+        val binding = bindLayout(inflater, layoutId, entry)
+        addView(binding.root)
+    }
+}
+
+fun ViewGroup.entryChangeListener(layoutId: Int) = object : ObservableList.OnListChangedCallback<ObservableList<Any>>() {
+
+    override fun onChanged(sender: ObservableList<Any>?) {
+        resetViews(layoutId, sender!!)
+    }
+
+    override fun onItemRangeRemoved(sender: ObservableList<Any>?, positionStart: Int, itemCount: Int) {
+        resetViews(layoutId, sender!!)
+        TransitionManager.beginDelayedTransition(this@entryChangeListener)
+        for (i in 0 until itemCount) {
+            removeViewAt(positionStart)
+        }
+    }
+
+    override fun onItemRangeMoved(sender: ObservableList<Any>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
+        TransitionManager.beginDelayedTransition(this@entryChangeListener)
+        for (i in 0 until itemCount) {
+            val view = getChildAt(fromPosition)!!
+            removeViewAt(fromPosition)
+            val destination = if (fromPosition > toPosition) toPosition + i else toPosition
+            addView(view, destination)
+        }
+    }
+
+    override fun onItemRangeInserted(sender: ObservableList<Any>?, positionStart: Int, itemCount: Int) {
+        val end = positionStart + itemCount
+        TransitionManager.beginDelayedTransition(this@entryChangeListener)
+        val inflater : LayoutInflater = genericCastOrNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)!!)
+        for (i in end - 1 downTo positionStart){
+            val data = sender?.get(i)!!
+            val binding = bindLayout(inflater, layoutId, data)
+            addView(binding.root, positionStart)
+        }
+    }
+
+    override fun onItemRangeChanged(sender: ObservableList<Any>?, positionStart: Int, itemCount: Int) {
+        val end = positionStart + itemCount
+        val inflater : LayoutInflater = genericCastOrNull(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)!!)
+        TransitionManager.beginDelayedTransition(this@entryChangeListener)
+        for (i in positionStart until end){
+            val data = sender?.get(i)!!
+            val binding = bindLayout(inflater, layoutId, data)
+            binding.setVariable(BR.dto, data)
+            removeViewAt(i)
+            addView(binding.root, i)
+        }
+    }
+}

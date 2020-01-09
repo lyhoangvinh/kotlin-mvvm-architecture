@@ -13,15 +13,13 @@ import com.lyhoangvinh.simple.ui.base.adapter.BaseSimpleAdapter
 import com.lyhoangvinh.simple.ui.base.adapter.BaseViewHolder
 import javax.inject.Inject
 
-class SettingAdapter @Inject constructor(@ActivityContext context: Context, val sharedPrefs: SharedPrefs) :
+class SettingAdapter @Inject constructor(@ActivityContext context: Context, private val sharedPrefs: SharedPrefs) :
     BaseSimpleAdapter<OptionEntity, ItemSettingBinding>(context, ItemCallBack) {
     override fun itemLayoutResource() = R.layout.item_setting
     override fun createViewHolder(itemView: View) = SettingViewHolder(itemView)
     override fun onBindViewHolder(binding: ItemSettingBinding, dto: OptionEntity, position: Int) {
         binding.setting = dto
-        binding.onClick = View.OnClickListener {
-            sharedPrefs.put(Constants.OPTIONS, position)
-        }
+        binding.setOnClick { sharedPrefs.put(Constants.OPTIONS, position) }
     }
 
     class SettingViewHolder(itemView: View) : BaseViewHolder<ItemSettingBinding>(itemView)
@@ -30,10 +28,7 @@ class SettingAdapter @Inject constructor(@ActivityContext context: Context, val 
             return currentItem.isCheck == nextItem.isCheck
         }
 
-        override fun areContentsTheSame(
-            currentItem: OptionEntity,
-            nextItem: OptionEntity
-        ): Boolean {
+        override fun areContentsTheSame(currentItem: OptionEntity, nextItem: OptionEntity): Boolean {
             return currentItem == nextItem
         }
     }
