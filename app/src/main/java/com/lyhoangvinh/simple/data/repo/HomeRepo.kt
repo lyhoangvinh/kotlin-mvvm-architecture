@@ -214,6 +214,7 @@ class HomeRepo @Inject constructor(
                     for (x in 0 until collectionsHome.size) {
                         collectionsHome[x].type = Constants.TYPE_HOME_BANNER
                     }
+
                     collectionDao.insertIgnore(collectionsHome)
                     collectionDao.updateIgnore(collectionsHome)
 

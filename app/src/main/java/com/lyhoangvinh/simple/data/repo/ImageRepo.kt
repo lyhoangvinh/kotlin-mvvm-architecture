@@ -22,7 +22,7 @@ class ImageRepo @Inject constructor() {
         Flowable.create({ loadImage(imageAll, it) }, BackpressureStrategy.BUFFER)
 
     private fun loadImage(imageAll: ImageAll, emitter: FlowableEmitter<Resource<Bitmap>>) {
-        emitter.onNext(Resource.loading(null))
+        emitter.onNext(Resource.loading())
         loadProgressively(Picasso.get(), imageAll, newPlainConsumer {
             bitmapResult.setValue(it)
             emitter.onNext(Resource.success(it))

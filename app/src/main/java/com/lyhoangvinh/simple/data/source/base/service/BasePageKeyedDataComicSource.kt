@@ -60,12 +60,12 @@ abstract class BasePageKeyedDataComicSource<T> : PageKeyedDataSource<Int, T>() {
         loadInitialCallback: LoadInitialCallback<Int, T>? = null,
         loadCallback: LoadCallback<Int, T>? = null
     ) {
-        publishState(State.loading(null))
+        publishState(State.loading())
         compositeDisposable.add(makeRequest(this.getRequest(page), newPlainPagingConsumer {
             val nextPage = page + 1
             loadInitialCallback?.onResult(it, 0, it.size, null, nextPage)
             loadCallback?.onResult(it, nextPage)
-            publishState(State.success(null))
+            publishState(State.success())
         }, newPlainConsumer { publishState(State.error(it.getMessage())) }))
     }
 
@@ -78,9 +78,7 @@ abstract class BasePageKeyedDataComicSource<T> : PageKeyedDataSource<Int, T>() {
             //            // message will still be shown if fragment / activity is rotated (re-observe state live data)
             Handler().postDelayed({
                 stateLiveData.setValue(
-                    State.success(
-                        null
-                    )
+                    State.success()
                 )
             }, 100)
         }

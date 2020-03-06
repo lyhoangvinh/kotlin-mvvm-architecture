@@ -70,7 +70,7 @@ fun <E, T : Entities<E>> makeRequestAvg(
     var single = request.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
     single = single.observeOn(AndroidSchedulers.mainThread())
     return single.subscribe({
-        if (it != null && it.success && it.response.listData() != null)
+        if (it != null && it.success)
             responseConsumer.accept(it.response.listData())
     }, {
         // handle error
@@ -144,9 +144,7 @@ class ServiceResponseConverter(
             if (type === String::class.java) {
                 StringResponseConverter()
             } else GsonConverterFactory.create(gSon).responseBodyConverter(type!!, annotations, retrofit)
-        } catch (ignored: OutOfMemoryError) {
-            null
-        }
+        } catch (ignored: OutOfMemoryError) { null }
     }
 
     override fun requestBodyConverter(type: Type?, parameterAnnotations: Array<Annotation>,

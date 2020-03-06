@@ -51,11 +51,11 @@ abstract class BaseItemKeyedDataComicSource<T> :
     }
 
     private fun callApi(loadInitialCallback: LoadInitialCallback<T>? = null, loadCallback: LoadCallback<T>? = null) {
-        publishState(State.loading(null))
+        publishState(State.loading())
         compositeDisposable.add(makeRequest(this.getRequest(), newPlainPagingConsumer {
             loadInitialCallback?.onResult(it)
             loadCallback?.onResult(it)
-            publishState(State.success(null))
+            publishState(State.success())
             pageNumber++
         }, newPlainConsumer {publishState(State.error(it.getMessage()))}))
     }
@@ -69,11 +69,7 @@ abstract class BaseItemKeyedDataComicSource<T> :
         if (!TextUtils.isEmpty(state.message)) {
             // if state has a message, after show it, we should reset to prevent
             //            // message will still be shown if fragment / activity is rotated (re-observe state live data)
-            Handler().postDelayed({ stateLiveData.setValue(
-                State.success(
-                    null
-                )
-            ) }, 100)
+            Handler().postDelayed({ stateLiveData.setValue(State.success()) }, 100)
         }
     }
 

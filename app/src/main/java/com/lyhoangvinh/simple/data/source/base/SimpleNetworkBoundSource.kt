@@ -18,7 +18,7 @@ import io.reactivex.Single
 abstract class SimpleNetworkBoundSource<T>(emitter: FlowableEmitter<Resource<T>>, isRefresh: Boolean) {
 
     init {
-        emitter.onNext(Resource.loading(null))
+        emitter.onNext(Resource.loading())
         // since realm was create on Main Thread, so if we need to touch on realm database after calling
         // api, must make request on main thread by setting shouldUpdateUi params = true
         makeRequest(this.getRemote(), true, object : PlainConsumer<T> {

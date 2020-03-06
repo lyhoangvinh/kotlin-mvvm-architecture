@@ -86,7 +86,7 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
         loadInitialCallback: LoadInitialCallback<Int, E>? = null,
         loadCallback: LoadCallback<Int, E>? = null
     ) {
-        publishState(State.loading(null))
+        publishState(State.loading())
         if (compositeDisposable == null) {
             return
         }
@@ -131,11 +131,7 @@ abstract class BaseRxPageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSour
             // if state has a message, after show it, we should reset to prevent
             //            // message will still be shown if fragment / activity is rotated (re-observe state live data)
             Handler().postDelayed({
-                stateLiveData?.setValue(
-                    State.success(
-                        null
-                    )
-                )
+                stateLiveData?.setValue(State.success())
             }, 100)
         }
     }

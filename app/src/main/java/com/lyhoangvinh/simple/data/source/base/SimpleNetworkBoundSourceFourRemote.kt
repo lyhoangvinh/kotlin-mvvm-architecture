@@ -22,7 +22,7 @@ abstract class SimpleNetworkBoundSourceFourRemote<T1, T2, T3, T4>(
 ) {
 
     init {
-        emitter.onNext(Resource.loading(null))
+        emitter.onNext(Resource.loading())
         // since realm was create on Main Thread, so if we need to touch on realm database after calling
         // api, must make request on main thread by setting shouldUpdateUi params = true
         makeRequest(this.getRemote1(), this.getRemote2(), this.getRemote3(), this.getRemote4(), true, object :

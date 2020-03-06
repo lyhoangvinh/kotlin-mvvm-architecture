@@ -60,7 +60,7 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
         loadInitialCallback: LoadInitialCallback<Int, E>? = null,
         loadCallback: LoadCallback<Int, E>? = null
     ) {
-        publishState(State.loading(null))
+        publishState(State.loading())
         compositeDisposable.add(
             makeRequestAvg(
                 this.getRequest(page),
@@ -68,7 +68,7 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
                     val nextPage = page + 1
                     loadInitialCallback?.onResult(it, 0, it.size, null, nextPage)
                     loadCallback?.onResult(it, nextPage)
-                    publishState(State.success(null))
+                    publishState(State.success())
                 },
                 newPlainConsumer { publishState(State.error(it.getMessage())) })
         )
@@ -83,9 +83,7 @@ abstract class BasePageKeyedDataSource<E, T : Entities<E>> : PageKeyedDataSource
             //            // message will still be shown if fragment / activity is rotated (re-observe state live data)
             Handler().postDelayed({
                 stateLiveData.setValue(
-                    State.success(
-                        null
-                    )
+                    State.success()
                 )
             }, 100)
         }

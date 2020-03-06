@@ -95,10 +95,10 @@ abstract class BaseLocalPageKeyedDataSource<T>() :
         loadCallback: LoadCallback<Int, T>? = null
     ) {
         currentPage = page
-        publishState(State.loading(null))
+        publishState(State.loading())
         compositeDisposable.add(makeRequest(this.getRequest(page), newPlainPagingConsumer {
             val nextPage = page + 1
-            publishState(State.success(null))
+            publishState(State.success())
             execute {
                 saveResultListener(isRefresh = page == 0, data = it)
                 loadInitialCallback?.onResult(getResult(), 0, getResult().size, null, nextPage)
@@ -124,7 +124,7 @@ abstract class BaseLocalPageKeyedDataSource<T>() :
             // if state has a message, after show it, we should reset to prevent
             //            // message will still be shown if fragment / activity is rotated (re-observe state live data)
             Handler().postDelayed({
-                stateLiveData.setValue(State.success(null))
+                stateLiveData.setValue(State.success())
             }, 100)
         }
     }

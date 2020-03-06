@@ -58,7 +58,7 @@ class VideoViewModel @Inject constructor(private val videoRepo: VideoRepo) :
             }
             if (isFirstState) {
                 isFirstState = false
-                adapter.submitState(State.success(null))
+                adapter.submitState(State.success())
             }
         })
         videoRepo.setUpRepo(query)

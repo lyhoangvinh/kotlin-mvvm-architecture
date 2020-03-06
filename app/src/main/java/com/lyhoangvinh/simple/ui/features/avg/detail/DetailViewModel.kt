@@ -17,10 +17,10 @@ class DetailViewModel @Inject constructor(val connectionObservable: ConnectionOb
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
             if (newProgress < 100) {
-                publishState(State.loading(null))
+                publishState(State.loading())
             }
             if (newProgress == 100) {
-                publishState(State.success(null))
+                publishState(State.success())
             }
         }
     }

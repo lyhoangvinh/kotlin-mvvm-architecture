@@ -22,7 +22,7 @@ abstract class SimpleNetworkBoundSourceBiRemote<T1, T2>(
 ) {
 
     init {
-        emitter.onNext(Resource.loading(null))
+        emitter.onNext(Resource.loading())
         // since realm was create on Main Thread, so if we need to touch on realm database after calling
         // api, must make request on main thread by setting shouldUpdateUi params = true
         makeRequest(this.getRemote1(), this.getRemote2(), true, object : PlainResponseBiConsumer<T1, T2> {

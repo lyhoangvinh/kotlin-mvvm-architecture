@@ -21,7 +21,7 @@ class CollectionViewModel @Inject constructor(private val collectionsRepo: Colle
 
     override fun fetchData() {
         collectionsRepo.invalidateDataSource()
-        publishState(State.success(null))
+        publishState(State.success())
     }
 
     override fun onFirstTimeUiCreate(lifecycleOwner: LifecycleOwner, bundle: Bundle?) {

@@ -9,11 +9,8 @@ import com.lyhoangvinh.simple.data.entities.Status.*
  * @param <T>
 </T> */
 
-class Resource<T>(status: Status, val data: T?, message: String?) {
-
-      val state: State =
-          State(status, message)
-
+data class Resource<T>(val status: Status, val data: T?, val message: String?) {
+    val state: State = State(status, message)
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -44,16 +41,15 @@ class Resource<T>(status: Status, val data: T?, message: String?) {
     companion object {
 
         fun <T> success(data: T?): Resource<T> {
-            return Resource(SUCCESS, data, null)
+            return Resource(Status.SUCCESS, data, null)
         }
 
-        fun <T> error(msg: String, data: T?): Resource<T> {
-            return Resource(ERROR, data, msg)
+        fun <T> error(message: String, data: T?): Resource<T> {
+            return Resource(Status.ERROR, data, message)
         }
 
-        fun <T> loading(data: T?): Resource<T> {
-            return Resource(LOADING, data, null)
+        fun <T> loading(): Resource<T> {
+            return Resource(Status.LOADING, null, null)
         }
-
     }
 }

@@ -77,7 +77,7 @@ abstract class BaseViewModel : ViewModel() {
     fun disposeAllExecutions() {
         mCompositeDisposable.dispose()
         mCompositeDisposable = CompositeDisposable()
-        publishState(State.success(null))
+        publishState(State.success())
     }
 
     fun publishState(state: State) {
@@ -85,7 +85,7 @@ abstract class BaseViewModel : ViewModel() {
         if (!TextUtils.isEmpty(state.message)) {
             // if state has a message, after show it, we should reset to prevent
             // message will still be shown if fragment / activity is rotated (re-observe state live data)
-            Handler().postDelayed({ stateLiveData.updateValueIfNew(State.success(state.message)) }, 100)
+            Handler().postDelayed({ stateLiveData.updateValueIfNew(State.success()) }, 100)
         }
     }
 
@@ -117,12 +117,12 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun <T> execute(showProgress: Boolean, publishState: Boolean, request: Single<T>, responseConsumer: PlainConsumer<T>?, errorConsumer: PlainConsumer<ErrorEntity>?) {
         if (showProgress && publishState) {
-            publishState(State.loading(null))
+            publishState(State.loading())
         }
         mCompositeDisposable.add(makeRequest(request, true, newPlainConsumer {
             responseConsumer?.accept(it)
             if (publishState) {
-                publishState(State.success(null))
+                publishState(State.success())
             }
         }, newPlainConsumer {
             errorConsumer?.accept(it)

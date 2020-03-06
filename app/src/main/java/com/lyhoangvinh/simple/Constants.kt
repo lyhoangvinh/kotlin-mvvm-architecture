@@ -1,7 +1,5 @@
 package com.lyhoangvinh.simple
 
-import retrofit2.http.OPTIONS
-
 class Constants {
     companion object {
         const val COMIC_ENDPOINT = BuildConfig.COMIC_ENDPOINT

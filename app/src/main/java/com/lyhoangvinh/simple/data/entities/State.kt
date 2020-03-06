@@ -1,6 +1,11 @@
 package com.lyhoangvinh.simple.data.entities
 
-class State(var status: Status, var message: String?) {
+data class State(var status: Status, var message: String?) {
+    companion object {
+        fun loading() = State(Status.LOADING, null)
+        fun success() = State(Status.SUCCESS, null)
+        fun error(message: String? = null) = State(Status.ERROR, message)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -26,29 +31,5 @@ class State(var status: Status, var message: String?) {
 
     override fun toString(): String {
         return "status: $status, message: $message"
-    }
-
-    companion object {
-
-        fun loading(message: String?): State {
-            return State(
-                Status.LOADING,
-                message
-            )
-        }
-
-        fun error(message: String?): State {
-            return State(
-                Status.ERROR,
-                message
-            )
-        }
-
-        fun success(message: String?): State {
-            return State(
-                Status.SUCCESS,
-                message
-            )
-        }
     }
 }
