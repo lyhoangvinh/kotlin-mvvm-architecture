@@ -476,3 +476,12 @@ fun ViewGroup.entryChangeListener(layoutId: Int) = object : ObservableList.OnLis
         }
     }
 }
+
+/**
+ * Observes only non-null content
+ */
+fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, nonNullContent: T.() -> Unit) {
+    this.observe(owner, Observer {
+        it?.let(nonNullContent)
+    })
+}
