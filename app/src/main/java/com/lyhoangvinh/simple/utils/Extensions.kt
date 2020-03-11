@@ -30,6 +30,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableList
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.transition.TransitionManager
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -481,7 +483,7 @@ fun ViewGroup.entryChangeListener(layoutId: Int) = object : ObservableList.OnLis
  * Observes only non-null content
  */
 fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, nonNullContent: T.() -> Unit) {
-    this.observe(owner, Observer {
+    this.observe(owner, androidx.lifecycle.Observer {
         it?.let(nonNullContent)
     })
 }
