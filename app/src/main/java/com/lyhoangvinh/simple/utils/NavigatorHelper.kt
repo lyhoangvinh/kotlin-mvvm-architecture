@@ -24,32 +24,26 @@ import lyhoangvinh.com.myutil.navigation.ActivityNavigator
 import lyhoangvinh.com.myutil.navigation.FragmentNavigator
 import lyhoangvinh.com.myutil.navigation.Navigator
 
-class NavigatorHelper(private var mNavigator: Navigator) {
-
-    fun NavigatorHelper(mNavigator: FragmentNavigator): NavigatorHelper {
-        this.mNavigator = mNavigator
-        return this
-    }
-
-    fun NavigatorHelper(mNavigator: ActivityNavigator): NavigatorHelper {
-        this.mNavigator = mNavigator
-        return this
-    }
+class NavigatorHelper {
+    private var navigator: Navigator
+    constructor(navigator: Navigator) { this.navigator = navigator }
+    constructor(navigator: FragmentNavigator) { this.navigator = navigator }
+    constructor(navigator: ActivityNavigator) { this.navigator = navigator }
 
     fun navigateIssusActivity() {
-        mNavigator.startActivity(ComicPagingActivity::class.java)
-        mNavigator.finishActivity()
+        navigator.startActivity(ComicPagingActivity::class.java)
+        navigator.finishActivity()
     }
 
     fun navigateAvgleActivity() {
         Handler().postDelayed({
-            mNavigator.startActivity(AvgActivity::class.java)
-            mNavigator.finishActivity()
+            navigator.startActivity(AvgActivity::class.java)
+            navigator.finishActivity()
         }, 500L)
     }
 
     fun navigateDetailActivity(url: String) {
-        mNavigator.startActivity(DetailActivity::class.java) { intent ->
+        navigator.startActivity(DetailActivity::class.java) { intent ->
             intent.putExtra(
                 Constants.EXTRA_DATA,
                 url
@@ -60,11 +54,11 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     fun navigateFromType(type: String, url: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setDataAndType(Uri.parse(url), type)
-        mNavigator.startActivity(intent)
+        navigator.startActivity(intent)
     }
 
     fun navigateVideosFragment() {
-        mNavigator.replaceFragmentAndAddToBackStack(
+        navigator.replaceFragmentAndAddToBackStack(
             R.id.container,
             VideoFragment().addAnimations(),
             null,
@@ -78,14 +72,14 @@ class NavigatorHelper(private var mNavigator: Navigator) {
             val bundle = Bundle()
             bundle.putParcelable(Constants.EXTRA_DATA, category)
             collectionFragment.arguments = bundle
-            mNavigator.replaceFragmentAndAddToBackStack(
+            navigator.replaceFragmentAndAddToBackStack(
                 R.id.container,
                 collectionFragment,
                 bundle,
                 null
             )
         } else {
-            mNavigator.replaceFragmentAndAddToBackStack(
+            navigator.replaceFragmentAndAddToBackStack(
                 R.id.container,
                 collectionFragment,
                 null,
@@ -100,14 +94,14 @@ class NavigatorHelper(private var mNavigator: Navigator) {
             val bundle = Bundle()
             bundle.putParcelable(Constants.EXTRA_DATA, collection)
             collectionFragment.arguments = bundle
-            mNavigator.replaceFragmentAndAddToBackStack(
+            navigator.replaceFragmentAndAddToBackStack(
                 R.id.container,
                 collectionFragment,
                 bundle,
                 null
             )
         } else {
-            mNavigator.replaceFragmentAndAddToBackStack(
+            navigator.replaceFragmentAndAddToBackStack(
                 R.id.container,
                 collectionFragment,
                 null,
@@ -117,7 +111,7 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     }
 
     fun navigateCollectionFragment() {
-        mNavigator.replaceFragmentAndAddToBackStack(
+        navigator.replaceFragmentAndAddToBackStack(
             R.id.container,
             CollectionFragment().addAnimations(),
             null,
@@ -134,22 +128,22 @@ class NavigatorHelper(private var mNavigator: Navigator) {
     }
 
     fun navigateComicAvgActivity() {
-        mNavigator.startActivity(ComicAvgActivity::class.java)
-        mNavigator.finishActivity()
+        navigator.startActivity(ComicAvgActivity::class.java)
+        navigator.finishActivity()
     }
 
     fun navigateSettingActivity() {
-        mNavigator.startActivity(SettingActivity::class.java)
+        navigator.startActivity(SettingActivity::class.java)
     }
 
     fun navigateImageDetailActivity(imageAll: ImageAll) {
-        mNavigator.startActivity(ImageDetailActivity::class.java) {
+        navigator.startActivity(ImageDetailActivity::class.java) {
             it.putExtra(Constants.EXTRA_DATA, imageAll)
         }
     }
 
     fun navigateSplashActivity(activity: Activity) {
-        mNavigator.startActivity(SplashActivity::class.java){
+        navigator.startActivity(SplashActivity::class.java){
             it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK
         }
         activity.finishAffinity()
