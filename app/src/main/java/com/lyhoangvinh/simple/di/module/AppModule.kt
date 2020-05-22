@@ -25,7 +25,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideGSon(): Gson = GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+//        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
         .disableHtmlEscaping()
         .setPrettyPrinting()
