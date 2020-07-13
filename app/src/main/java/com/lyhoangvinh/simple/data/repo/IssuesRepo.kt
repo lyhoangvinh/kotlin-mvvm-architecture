@@ -18,89 +18,15 @@ import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class IssuesRepo @Inject constructor(
-    private val comicVineService: ComicVineService,
-    private val issuesDao: IssuesDao,
-    private val comicPagingFactory: ComicPagingDataSource.ComicPagingFactory,
-    private val comicLocalPagingFactory: ComicLocalPagingDataSource.ComicLocalPagingFactory
-) :
-    BaseRepo() {
-
-    fun liveData(): LiveData<PagedList<Issues>> {
-        val config = PagedList.Config.Builder()
-            .setPageSize(20)
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(20)
-            .setPrefetchDistance(10)
-            .build()
-        return LivePagedListBuilder(issuesDao.getAllPaged(), config).build()
-    }
-
-    fun livePagingData(
-        stateLiveData: SafeMutableLiveData<State>,
-        compositeDisposable: CompositeDisposable
-    ): LiveData<PagedList<Issues>> {
-        val config = PagedList.Config.Builder()
-            .setPageSize(20)
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(20)
-            .setPrefetchDistance(10)
-            .build()
-        comicPagingFactory.setUpProvider(stateLiveData, compositeDisposable)
-        return LivePagedListBuilder(comicPagingFactory, config).build()
-    }
-
-    fun clear() {
-//        comicPagingFactory.clear()
-        comicLocalPagingFactory.clear()
-    }
-
-    fun invalidate() {
-//        comicPagingFactory.invalidate()
-        comicLocalPagingFactory.reset()
-    }
-
-    fun liveLocalPagingData(
-        stateLiveData: SafeMutableLiveData<State>,
-        compositeDisposable: CompositeDisposable
-    ): LiveData<PagedList<Issues>> {
-        val config = PagedList.Config.Builder()
-            .setPageSize(20)
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(40)
-            .setPrefetchDistance(10)
-            .build()
-        comicLocalPagingFactory.setUpProvider(stateLiveData, compositeDisposable)
-        return LivePagedListBuilder(comicLocalPagingFactory, config).build()
-    }
-
-    fun delete(t: Issues) = issuesDao.delete(t)
-
-    fun insert(t: Issues) = issuesDao.insert(t)
-
-    fun getRepoIssues(refresh: Boolean, offset: Int): Flowable<Resource<BaseResponseComic<Issues>>> {
-        return createResource(refresh, comicVineService.getIssues(
-            20, offset, Constants.KEY,
-            "json",
-            "cover_date: desc"
-        ), onSave = object : OnSaveResultListener<BaseResponseComic<Issues>> {
-            override fun onSave(data: BaseResponseComic<Issues>, isRefresh: Boolean) {
-                if (data.results.isNotEmpty()) {
-                    execute {
-                        if (isRefresh) {
-                            issuesDao.removeAll()
-                        }
-                        issuesDao.insertIgnore(data.results)
-                        issuesDao.updateIgnore(data.results)
-                    }
-                }
-            }
-        })
-    }
-
-    fun deleteAll() {
-        execute {
-            issuesDao.removeAll()
-        }
-    }
+interface IssuesRepo {
+    fun invalidate()
+    fun clear()
+    fun deleteAll()
+    fun insert(t: Issues)
+    fun delete(t: Issues)
+    fun liveData(): LiveData<PagedList<Issues>>
+    fun getRepoIssues(refresh: Boolean, offset: Int): Flowable<Resource<BaseResponseComic<Issues>>>
+    fun livePagingData(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable): LiveData<PagedList<Issues>>
+    fun liveLocalPagingData(stateLiveData: SafeMutableLiveData<State>, compositeDisposable: CompositeDisposable): LiveData<PagedList<Issues>>
 }
+

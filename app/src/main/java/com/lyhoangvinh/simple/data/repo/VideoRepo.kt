@@ -10,33 +10,8 @@ import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class VideoRepo @Inject constructor(private val videoFactory: VideoDataSource.VideoFactory) :
-    BaseRepo() {
-
-    fun setUpRepo(chId: String) {
-        execute {
-            videoFactory.setChId(chId)
-            videoFactory.invalidate()
-        }
-    }
-
-    fun fetchData(compositeDisposable: CompositeDisposable): MediatorLiveData<MergedData> {
-        val stateLiveData = SafeMutableLiveData<State>()
-        return MediatorLiveData<MergedData>().apply {
-            addSource(LivePagedListBuilder(videoFactory.apply {
-                setCompositeDisposable(compositeDisposable)
-                setStateLiveData(stateLiveData)
-            }, PagedList.Config.Builder().apply {
-                setPageSize(50)
-                    .setEnablePlaceholders(true)
-                    .setInitialLoadSizeHint(100)
-                    .setPrefetchDistance(50)
-            }.build()).build()) {
-                value = VideoData(it)
-            }
-            addSource(stateLiveData) {
-                value = StateData(it)
-            }
-        }
-    }
+interface VideoRepo  {
+    fun setUpRepo(chId: String)
+    fun fetchData(compositeDisposable: CompositeDisposable): MediatorLiveData<MergedData>
 }
+

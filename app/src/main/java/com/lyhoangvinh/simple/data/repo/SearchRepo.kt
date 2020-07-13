@@ -21,119 +21,15 @@ import com.lyhoangvinh.simple.utils.SafeMutableLiveData
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class SearchRepo @Inject constructor(
-    private val avgleService: AvgleService,
-    private val videosDao: VideosDao,
-    private val searchHistoryDao: SearchHistoryDao
-) : BaseRepo() {
-
-    fun insertHistory(keyword: String, url: String, timestamp: String) {
-        execute {
-            searchHistoryDao.insert(
-                SearchHistory(
-                    keyword = keyword,
-                    url = url,
-                    timestamp = timestamp
-                )
-            )
-        }
-    }
-
-    fun deleteHistory(searchHistory: SearchHistory) {
-        execute { searchHistoryDao.delete(searchHistory) }
-    }
-
-    fun deleteAllSearchData(){
-        execute {
-            videosDao.deleteType(Constants.TYPE_SEARCH)
-         }
-    }
-
-    fun mergedData(): LiveData<List<ItemViewModel>> {
-        val config = PagedList.Config.Builder()
-            .setPageSize(10)
-            .setInitialLoadSizeHint(20)
-            .setEnablePlaceholders(true)
-            .build()
-        val liveDataMerger = MediatorLiveData<MergedData>()
-        liveDataMerger.addSource(LivePagedListBuilder(searchHistoryDao.liveDataFactory(), config).build()) {
-            liveDataMerger.value = SearchHistoryData(it!!)
-        }
-
-        liveDataMerger.addSource(videosDao.liveDataFromType(Constants.TYPE_SEARCH)) {
-            liveDataMerger.value = SearchData(it!!)
-        }
-
-        val pagedList = ArrayList<ItemViewModel>()
-        return Transformations.switchMap(liveDataMerger) {
-            val liveData = SafeMutableLiveData<List<ItemViewModel>>()
-            when (it) {
-                is SearchHistoryData -> {
-                    for (i in it.searchHistory.indices) {
-                        pagedList.add(
-                            SearchHistoryItem(
-                                it.searchHistory[i],
-                                it.searchHistory[i].toString()
-                            )
-                        )
-                    }
-                }
-                is SearchData -> {
-                    for (i in it.videoItems.indices) {
-                        pagedList.add(
-                            SearchDataItem(
-                                it.videoItems[i],
-                                it.videoItems[i].toString()
-                            )
-                        )
-                    }
-                }
-            }
-            liveData.setValue(pagedList)
-            return@switchMap liveData
-        }
-    }
-
+interface SearchRepo {
+    fun insertHistory(keyword: String, url: String, timestamp: String)
+    fun deleteHistory(searchHistory: SearchHistory)
+    fun deleteAllSearchData()
+    fun mergedData(): LiveData<List<ItemViewModel>>
     fun search(
         isRefresh: Boolean,
         query: String,
         page: Int
-    ): Flowable<Resource<ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>>> {
-        return createResource(isRefresh,
-            avgleService.searchVideos(query, page),
-            avgleService.searchJav(query, page),
-            object :
-                OnSaveBiResultListener<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>> {
-                override fun onSave(
-                    data: ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>,
-                    isRefresh: Boolean
-                ) {
-                    val data1 = data.t1
-                    val data2 = data.t1
-                    val newList = arrayListOf<Video>()
-                    if (data1 != null && data1.success && data1.response.videos.isNotEmpty()) {
-                        newList.addAll(data1.response.videos)
-                    }
-                    if (data2 != null && data2.success && data2.response.videos.isNotEmpty()) {
-                        newList.addAll(data2.response.videos)
-                    }
-
-                    for (x in 0 until newList.size) {
-                        newList[x].type = Constants.TYPE_SEARCH
-                    }
-                    if (isRefresh) {
-                        execute {
-                            videosDao.deleteType(Constants.TYPE_SEARCH)
-                            videosDao.insertIgnore(newList)
-                            videosDao.updateIgnore(newList)
-                        }
-                    } else {
-                        execute {
-                            videosDao.insertIgnore(newList)
-                            videosDao.updateIgnore(newList)
-                        }
-                    }
-                }
-            })
-    }
+    ): Flowable<Resource<ResponseBiZip<BaseResponseAvgle<VideosResponseAvgle>, BaseResponseAvgle<VideosResponseAvgle>>>>
 }
+

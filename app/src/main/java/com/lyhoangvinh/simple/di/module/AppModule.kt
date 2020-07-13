@@ -8,6 +8,7 @@ import com.lyhoangvinh.simple.di.qualifier.ApplicationContext
 import com.lyhoangvinh.simple.utils.DateDeserializer
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.GlobalScope
 import lyhoangvinh.com.myutil.thread.BackgroundThreadExecutor
 import lyhoangvinh.com.myutil.thread.UIThreadExecutor
 import java.lang.reflect.Modifier
@@ -39,4 +40,8 @@ class AppModule {
     @Provides
     @Singleton
     fun provideUIThreadExecutor(): UIThreadExecutor = UIThreadExecutor.getInstance()
+
+    @Provides
+    @Singleton
+    fun providerGlobalScope() : GlobalScope = GlobalScope
 }

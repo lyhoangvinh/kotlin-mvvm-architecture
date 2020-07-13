@@ -1,13 +1,10 @@
 package com.lyhoangvinh.simple.di.component
 
 import com.lyhoangvinh.simple.MyApplication
-import com.lyhoangvinh.simple.di.module.AppModule
-import com.lyhoangvinh.simple.di.module.BuildersModule
-import com.lyhoangvinh.simple.di.module.DataModule
+import com.lyhoangvinh.simple.di.module.*
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
-import com.lyhoangvinh.simple.di.module.NetworkModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -21,7 +18,8 @@ import javax.inject.Singleton
         AppModule::class,
         NetworkModule::class,
         DataModule::class,
-        BuildersModule::class]
+        BuildersModule::class,
+        RepositoryModule::class]
 )
 interface AppComponent : AndroidInjector<MyApplication> {
     @Suppress("DEPRECATION")
