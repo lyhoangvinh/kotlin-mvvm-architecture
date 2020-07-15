@@ -65,7 +65,7 @@ abstract class BaseViewModel : ViewModel() {
      * but view model will survive, so if we don't un-reference them, memory leaks will occur
      */
     open fun onDestroyView() {
-
+        isFirstTimeUiCreate = true
     }
 
     @CallSuper
