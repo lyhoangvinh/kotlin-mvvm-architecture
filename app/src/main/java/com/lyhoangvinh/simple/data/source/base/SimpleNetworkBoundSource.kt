@@ -21,7 +21,7 @@ abstract class SimpleNetworkBoundSource<T>(emitter: FlowableEmitter<Resource<T>>
         emitter.onNext(Resource.loading())
         // since realm was create on Main Thread, so if we need to touch on realm database after calling
         // api, must make request on main thread by setting shouldUpdateUi params = true
-        makeRequest(this.getRemote(), true, object : PlainConsumer<T> {
+        emitter.setDisposable(makeRequest(this.getRemote(), true, object : PlainConsumer<T> {
             override fun accept(t: T) {
                 Log.d(TAG, "SimpleNetworkBoundSource: call API success!")
                 saveCallResult(t, isRefresh)
@@ -32,7 +32,7 @@ abstract class SimpleNetworkBoundSource<T>(emitter: FlowableEmitter<Resource<T>>
                 Log.d(TAG, "SimpleNetworkBoundSource: call API error: " + t.getMessage())
                 emitter.onNext(Resource.error(t.getMessage(), null))
             }
-        })
+        }))
     }
 
     abstract fun getRemote(): Single<T>

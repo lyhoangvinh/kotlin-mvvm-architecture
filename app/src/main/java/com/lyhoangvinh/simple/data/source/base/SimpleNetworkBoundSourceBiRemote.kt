@@ -25,7 +25,7 @@ abstract class SimpleNetworkBoundSourceBiRemote<T1, T2>(
         emitter.onNext(Resource.loading())
         // since realm was create on Main Thread, so if we need to touch on realm database after calling
         // api, must make request on main thread by setting shouldUpdateUi params = true
-        makeRequest(this.getRemote1(), this.getRemote2(), true, object : PlainResponseBiConsumer<T1, T2> {
+        emitter.setDisposable(makeRequest(this.getRemote1(), this.getRemote2(), true, object : PlainResponseBiConsumer<T1, T2> {
             override fun accept(dto: ResponseBiZip<T1, T2>) {
                 Log.d(TAG, "SimpleNetworkBoundSource: call API success!")
                 saveCallResult(dto, isRefresh)
@@ -36,7 +36,7 @@ abstract class SimpleNetworkBoundSourceBiRemote<T1, T2>(
                 Log.d(TAG, "SimpleNetworkBoundSource: call API error: " + t.getMessage())
                 emitter.onNext(Resource.error(t.getMessage(), null))
             }
-        })
+        }))
     }
 
     abstract fun getRemote1(): Single<T1>
