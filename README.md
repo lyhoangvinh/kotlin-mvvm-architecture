@@ -183,6 +183,15 @@ class SafeMutableLiveData<T> : MutableLiveData<T>() {
 All pull requests are welcome, make sure to follow the [contribution guidelines](CONTRIBUTING.md)
 when you submit pull request.
 
+### App
+Project development follow Advance MVVM Template with Dagger 2, RxAndroid, Room, LiveData and Unit Testing.
+
+Sample app:
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+      alt="Download from Google Play"
+      height="80">](https://play.google.com/store/apps/details?id=com.lyhoangvinh.tftacticsguide)
+
 License
 =======
 
