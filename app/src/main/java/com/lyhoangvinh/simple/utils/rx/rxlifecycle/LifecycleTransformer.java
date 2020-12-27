@@ -34,7 +34,7 @@ import io.reactivex.SingleTransformer;
 /**
  * Transformer that continues a subscription until a second Observable emits an event.
  */
-
+//@ParametersAreNonnullByDefault
 public final class LifecycleTransformer<T> implements ObservableTransformer<T, T>,
         FlowableTransformer<T, T>,
         SingleTransformer<T, T>,
