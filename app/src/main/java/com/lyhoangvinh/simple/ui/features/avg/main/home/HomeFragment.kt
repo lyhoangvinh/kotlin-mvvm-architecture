@@ -25,10 +25,8 @@ class HomeFragment : BaseViewModelRecyclerViewFragment<FragmentHomeBinding, Home
         viewModel.setLayoutParams(mWidth, mHeight, activity!!)
         binding.toolbar.inflateMenu(R.menu.menu_home)
         binding.toolbar.setOnMenuItemClickListener {
-            if (it.itemId == R.id.setting){
-                navigatorHelper.navigateSettingActivity()
-            }
-            return@setOnMenuItemClickListener false
+            if (it.itemId == R.id.setting) navigatorHelper.navigateSettingActivity()
+            false
         }
     }
 }

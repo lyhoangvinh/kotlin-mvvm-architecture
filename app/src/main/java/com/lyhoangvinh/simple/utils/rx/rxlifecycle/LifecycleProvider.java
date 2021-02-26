@@ -23,6 +23,7 @@ import io.reactivex.annotations.NonNull;
  * Useful if you are writing utilities on top of rxlifecycle-components
  * or implementing your own component not supported by this library.
  */
+
 public interface LifecycleProvider<E> {
     /**
      * @return a sequence of lifecycle events
